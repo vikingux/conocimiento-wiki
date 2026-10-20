@@ -1,0 +1,80 @@
+# conocimiento.wiki
+Un sistema de conocimiento general para cualquier campo: un despacho jurídico, un equipo de software, una oficina pública, una escuela o una panadería. Escribes en texto plano y el mismo archivo se ve como página, tablero, presentación o mapa.
+
+// perfil: lnd-1.1 · claves: es · ámbito: sitio público · vistas sugeridas: web, slides
+
+---
+
+@hero hero-acerca
+titulo: Lo que sabe tu equipo, en archivos que se pueden leer, citar y revisar.
+subtitulo: Personas y agentes de IA trabajan sobre los mismos archivos `.lnd`. Cada dato puede llevar su fuente y cada decisión dice por qué se tomó.
+fuente::
+.@tarea t-llamar
+titulo: Llamar al cliente
+estado: en_curso
+responsable: Ana
+.@@
+::
+@@
+
+@heading h-que
+texto: Qué es
+nivel: 1
+sub: Un formato abierto y un visor que funciona sin internet.
+@@
+
+@features f-que
+titulo: En pocas palabras
+item: **Texto plano.** Un `.lnd` se abre con cualquier editor y vive en tu carpeta, tu USB o tu repositorio.
+item: **Bloques con id.** Una tarea, un pago, un paso de un trámite o una decisión es un bloque con un id estable al que se puede enlazar.
+item: **Fuentes a la vista.** Un dato con fuente se marca Verificado; uno sin comprobar, Supuesto.
+item: **Muchas vistas, un archivo.** Web, tablero kanban, presentación, misión, mapa y fuente.
+item: **Sin dependencias externas.** Este visor abre los documentos sin conexión, desde un archivo HTML.
+@@
+
+@heading h-para
+texto: Para cualquier campo, no solo para programadores
+nivel: 1
+@@
+
+@table tb-campos
+titulo: Tres demos de ejemplo ficticio, en el mismo visor
+
+| Campo | Qué se documenta | Abrir |
+|---|---|---|
+| Despacho jurídico | Caso completo: línea de tiempo, tablero, perfiles, pagos y la ruta del cliente | [Demo abogado](?demo=demo-abogado&vista=web) |
+| Primera app con IA | Qué quería, qué le pedí a la IA, qué salió y qué aprendí, con tablero y una decisión | [Demo desarrollo](?demo=demo-desarrollo&vista=web) |
+| Entidad pública | Inscribir o actualizar el RUC ante el SRI, con fuentes oficiales | [Demo RUC](?demo=demo-ruc&vista=web) |
+@@
+
+@heading h-mapa
+texto: Recorre el sitio
+nivel: 1
+@@
+
+@features f-mapa
+item: [Paquetes y precios de lanzamiento](?demo=paquetes&vista=web)
+item: [Empieza en 10 pasos](?demo=pasos&vista=web)
+item: [Guía para agentes: MCP y skill](?demo=documentacion&vista=web)
+item: [Ejemplos cotidianos](?demo=ejemplos&vista=web)
+item: [Escuelas y ONG](?demo=escuelas-ong&vista=web)
+item: [Contacto](?demo=contacto&vista=web)
+@@
+
+@nota n-ficticio
+tipo: aviso
+
+Los casos de las demos son **ejemplo ficticio**: personas, empresas, montos y fechas inventados para mostrar el formato. La demo del RUC usa fuentes oficiales públicas, pero es ilustrativa y no es asesoría legal ni tributaria.
+@@
+
+@cta cta-acerca
+texto: ¿Quieres verlo con los documentos de tu equipo?
+url: ?demo=contacto&vista=web
+boton: Escríbenos
+@@
+
+@nota n-autor
+tipo: pie
+
+Autor: [entusideas.com](https://entusideas.com)
+@@

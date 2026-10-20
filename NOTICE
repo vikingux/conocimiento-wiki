@@ -1,0 +1,9 @@
+conocimiento.wiki 0.9.2
+Copyright (c) 2026 vikingux
+
+Este repositorio incluye partes de terceros:
+
+- Lucide (https://lucide.dev): íconos en demo/sitio/index.html. Licencia ISC.
+  Texto completo: demo/fuente/ui/lucide/LICENSE-lucide.txt
+- Fraunces, Public Sans e IBM Plex Mono: fuentes en fonts/, visor/fonts/ y
+  demo/sitio/fonts/. SIL Open Font License 1.1. Texto completo: OFL.txt en cada carpeta.

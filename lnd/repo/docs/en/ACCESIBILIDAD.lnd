@@ -1,0 +1,59 @@
+# Accessibility · renderer and site
+Target: WCAG 2.2 level AA for the reference renderer (`renderer/render.html`) and for the static site. This page says what is built in, how it was tested and what is still missing.
+
+// profile: lnd-1.1 · scope: accesibilidad · suggested_views: web
+// locale: en · translation: borrador redactado con IA; las ediciones es y zh-CN son traducción automática
+
+---
+
+@heading h-built
+text: What is built in
+level: 1
+@@
+
+@features f-built
+item: **Landmarks and skip link.** A header, main region and footer on every page; a skip link is the first element you reach with Tab.
+item: **Keyboard.** Every view and the command palette work with the keyboard. Focus is always visible.
+item: **Announcements.** Mode buttons expose their pressed state; view changes are announced through a polite live region; the palette and the panels are dialogs.
+item: **Contrast.** Text meets 4.5:1 in the light, dark and night themes. One set of design tokens drives the renderer and the site, so the checks hold everywhere.
+item: **Images.** Every photo has a description; decorative images have an empty `alt`. `@image` requires `alt` and the validator flags it (`LND-MED-001`).
+item: **Languages.** Each page declares its language; the renderer interface is available in English, Spanish and Chinese (`?lang=en|es|zh`, or the browser language).
+@@
+
+@heading h-panel
+text: Accessibility panel in the renderer
+level: 1
+sub: Open it with the A key or from the palette (Ctrl K). Settings are kept in this browser (localStorage) and never leave it.
+@@
+
+@table tb-panel
+title: Accessibility panel in the renderer
+
+| Setting | Effect |
+|---|---|
+| Text size | 100 %, 125 % or 150 % |
+| High contrast | Black on white, or white on black in the dark theme |
+| Reduce motion | Turns off every animation, regardless of the system setting |
+| Readable font | System sans-serif with wider letter and line spacing; no font downloads |
+| Underline links | All links underlined |
+@@
+
+@heading h-site
+text: The site without JavaScript
+level: 1
+
+The site follows `prefers-color-scheme`, `prefers-contrast` and `prefers-reduced-motion` with CSS only. Touch targets are at least 24 × 24 px; main navigation and buttons are 44 px tall.
+@@
+
+@heading h-test
+text: How it was tested
+level: 1
+
+axe-core 4.11, run locally with no network, on the main site pages and on the renderer views (Web, Map, Board, Source), in light and dark. Result for this build (2026-10-19): 196 failing nodes before the changes (194 color contrast, 2 SVG without a text alternative), 0 after, across 22 page-and-theme runs. Automated tests catch only part of the problems; a review with a screen reader (NVDA, VoiceOver) is still pending.
+@@
+
+@note n-gaps
+type: limits
+
+**Known gaps.** The Map view is a drawing: it has a text alternative (the block list and the Source view), but moving around the map itself needs a pointer or the arrow keys. Report problems at [info@conocimiento.wiki](mailto:info@conocimiento.wiki).
+@@

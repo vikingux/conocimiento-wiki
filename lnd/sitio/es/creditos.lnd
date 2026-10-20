@@ -1,0 +1,31 @@
+# Créditos de las fotos
+Las fotos del sitio vienen de Unsplash y se usan bajo la [Licencia de Unsplash](https://unsplash.com/license). Están autoalojadas (sin enlaces a servidores externos), en webp y sin metadatos EXIF.
+
+// perfil: lnd-1.1 · ámbito: sitio público · vistas sugeridas: web
+// página: creditos.html · idioma: es · traducción: automática (IA)
+
+---
+
+@pagina p-creditos
+slug: creditos
+titulo: Créditos de las fotos · LANDDY
+descripcion: Créditos de las fotos: autor y enlace original de cada foto.
+@@
+
+@table tb-creditos
+titulo: Créditos de las fotos
+
+| Foto | Autor | Original | Archivos |
+|---|---|---|---|
+| Cuaderno abierto y bolígrafos | Kelly Sikkema | [unsplash.com](https://unsplash.com/photos/an-open-notebook-and-pens-on-a-desk-hBdaqrr5Z3k) | `assets/img/cuaderno-800.webp`, `-1600.webp` |
+| Mapa topográfico | Etienne Girardet | [unsplash.com](https://unsplash.com/photos/a-map-of-the-area-of-a-mountain-PtpRmtsh6A0) | `assets/img/mapa-relieve-800.webp`, `-1600.webp` |
+| Equipo con notas adhesivas | Vitaly Gariev | [unsplash.com](https://unsplash.com/photos/diverse-team-collaborating-on-sticky-notes-Imk2h0pyOvo) | `assets/img/equipo-800.webp`, `-1600.webp` |
+| Biblioteca moderna | Fer Troulik | [unsplash.com](https://unsplash.com/photos/modern-library-interior-with-floor-to-ceiling-bookshelves-TQ8ICns1tgE) | `assets/img/biblioteca-800.webp`, `-1600.webp` |
+| Mapa de caminos dibujado a mano | Europeana (Raphaël Verwilghen, dominio público) | [unsplash.com](https://unsplash.com/photos/map-showing-transportation-routes-and-urban-areas-h2ISQGCqARg) | `assets/img/mapa-rutas-800.webp`, `-1600.webp` |
+@@
+
+@nota n-licencia
+tipo: licencia
+
+La Licencia de Unsplash permite usar las fotos gratis, también con fines comerciales, sin pedir permiso; el crédito es una cortesía que damos igual. El mapa de caminos además es de dominio público (Europeana).
+@@

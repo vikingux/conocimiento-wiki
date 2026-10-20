@@ -1,0 +1,123 @@
+# Research notebook: two questions, one notebook
+An agentic notebook written as .lnd. Each research task is a block, each finding keeps its source, each lesson is reusable memory, and each decision says how sure it is or abstains. One case is technical (search for a help center), one is not (a neighborhood bakery choosing a flour supplier). Example data; nothing here was measured.
+
+// profile: lnd-1.1 · keys: en · scope: example · suggested_views: board, web, source
+
+---
+
+@source f-bakery-quotes
+title: Three flour quotes received by the bakery, week 1
+url: https://example.org/bakery/quotes
+date: 2026-10-12
+@@
+
+@source f-bakery-tasting
+title: Blind tasting of bread made with each flour, six regular customers
+url: https://example.org/bakery/tasting
+date: 2026-10-15
+@@
+
+@source f-search-trial
+title: Trial of two search approaches on 40 real help-center questions
+url: https://example.org/help/search-trial
+date: 2026-10-16
+@@
+
+@task t-quotes
+title: Ask three mills for a price and delivery quote
+status: done
+priority: high
+owner: team
+@@
+
+@task t-tasting
+title: Bake the same loaf with each flour and run a blind tasting
+status: done
+priority: high
+depends_on: t-quotes
+owner: team
+@@
+
+@task t-search-trial
+title: Compare keyword search and meaning-based search on real questions
+status: done
+priority: medium
+owner: team
+@@
+
+@task t-traffic
+title: Collect one week of real traffic before choosing where the help center runs
+status: pending
+priority: medium
+depends_on: d-hosting
+owner: team
+@@
+
+@claim c-flour-b
+text: Customers picked the bread made with flour B in four of six tastings.
+source: f-bakery-tasting
+certainty: Assumed
+@@
+
+@claim c-flour-delivery
+text: Only mills A and B deliver twice a week; mill C delivers once.
+source: f-bakery-quotes
+certainty: Verified
+@@
+
+@claim c-search
+text: Meaning-based search found the right article for 31 of 40 questions; keyword search found 24.
+source: f-search-trial
+certainty: Assumed
+@@
+
+@experience x-taste-blind
+lesson: Run tastings blind and with regular customers; staff always prefer the flour they already know.
+origin: @(c-flour-b)
+applies_to: bakery, suppliers, tasting
+uses: 1
+status: Assumed
+@@
+
+@experience x-real-questions
+lesson: Test search with questions people actually asked, not with questions the team wrote.
+origin: @(c-search)
+applies_to: search, help center
+uses: 2
+status: Verified
+@@
+
+@decision d-flour
+question: Which mill supplies the bakery's flour from next month?
+options: Mill A · Mill B · Mill C
+criterion: Customers liked the bread | 3 | 3 | 4 | 3
+criterion: Delivers twice a week | 2 | 5 | 5 | 1
+criterion: Price per sack | 1 | 4 | 3 | 5
+chosen: Mill B
+candidates: Mill B · Mill A
+confidence: 0.7
+status: decided
+date: 2026-10-18
+source: @(c-flour-b) · @(c-flour-delivery)
+reopen_if: two late deliveries in one month or customers start leaving bread on the plate
+@@
+
+@decision d-search
+question: Which search does the help center use first?
+options: Keyword search · Meaning-based search
+candidates: Meaning-based search · Keyword search
+chosen: Meaning-based search
+confidence: 0.6
+status: decided
+date: 2026-10-19
+source: @(c-search)
+reopen_if: fewer than 70 of 100 real questions find the right article after one month
+@@
+
+@decision d-hosting
+question: Where does the help center run?
+options: Static host · Own server · Both
+candidates: Static host · Own server
+status: abstained
+reopen_if: we have one week of real traffic numbers
+@@

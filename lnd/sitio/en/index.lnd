@@ -1,0 +1,66 @@
+# A wiki your agents can cite
+Public site home, English edition.
+
+// profile: lnd-1.1 · scope: public site · suggested_views: web
+// page: en/index.html · translated from es/inicio.lnd with AI assistance, pending native review
+
+---
+
+@pagina p-inicio
+slug: index
+title: LANDDY · a wiki your agents can cite
+descripcion: Your agents read a wiki that lives in your Git, cite where every fact comes from, and propose changes as pull requests.
+alterno: ../inicio.html
+@@
+
+@hero hero-inicio
+title: Your agents read a wiki that lives in your Git, and cite where every fact comes from.
+subtitulo: Write once in `.lnd`, an open text format. The same file reads as a page, slides or a board, and an agent cites it by file and block.
+cta_texto: Investors
+cta_url: investors.html
+cta2_texto: Open the offline viewer
+cta2_url: ../visor.html
+@@
+
+@heading h-problema
+text: The agent forgets, and when it remembers it cannot say where from
+level: 1
+
+Every session starts from zero. Project decisions live in chats, PDFs and spreadsheets; the agent repeats them wrong or invents them with confidence, with no source and no date. Pasting context by hand every session does not scale, and the copy goes stale.
+@@
+
+@image im-cuaderno
+src: assets/img/cuaderno-1600.webp
+alt: Open notebook with blank pages next to pens and a ruler on a desk
+credito: Kelly Sikkema
+title: Write it once, in plain text.
+formato: banda
+@@
+
+@features f-como
+title: How we solve it
+item: **A text file made of blocks.** Every fact, task or step has a stable id. The agent cites `decisions.lnd#d-14`, not «something I read».
+item: **Verified is visibly different from assumed.** Every claim carries its mark and its source.
+item: **Your Git is the source of truth.** If you leave, you already have the files. The agent's changes arrive as pull requests you accept.
+@@
+
+@heading h-hoy
+text: What you can open today
+level: 1
+sub: No account, no network, from this site.
+@@
+
+@stat st-hoy
+value: 9
+label: views of the same file in the viewer: Web, Slides, Board, Map, Mission, TV, Source, Markdown and HTML (**Today**)
+value: 21
+label: stable diagnostic codes in the `lnd_check.py` validator (**Today**)
+value: 0
+label: network requests when opening the viewer or this site (**Today**, tested in an offline browser)
+@@
+
+@cta cta-lista
+text: The private wiki for agents opens with a one-time launch price for people on the waiting list. The launch page is in Spanish for now.
+url: ../lanzamiento.html
+boton: Launch plan (Spanish)
+@@

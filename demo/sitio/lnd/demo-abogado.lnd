@@ -1,0 +1,398 @@
+# Demo abogado · Caso «Rivas c. Inmobiliaria Horizonte»
+Un caso legal completo en un solo archivo: línea de tiempo, notas, tablero, perfiles, tareas, historias de usuario, entidades, honorarios y pagos, y la ruta del cliente de principio a fin. **Ejemplo ficticio**: personas, empresas, montos y fechas son inventados. No es asesoría legal.
+
+// perfil: lnd-1.1 · claves: es · ámbito: demo · caso ficticio · vistas sugeridas: web, tablero, slides, mision
+
+---
+
+@hero hero-caso
+titulo: Devolución de la garantía de un arriendo
+subtitulo: Caso RV-014 (ejemplo ficticio). La clienta reclama la garantía que la arrendadora no devolvió al terminar el contrato.
+fuente::
+.@pago pg-anticipo
+concepto: Anticipo 50 %
+monto: US$ 125
+estado: pagado
+.@@
+::
+@@
+
+@cta cta-tablero
+texto: El caso entero también se ve como tablero kanban.
+url: ?demo=demo-abogado&vista=tablero
+boton: Ver el tablero
+@@
+
+@stat st-monto
+valor: US$ 1.200
+etiqueta: garantía reclamada (ficticio)
+@@
+
+@stat st-estado
+valor: Resuelto
+etiqueta: acuerdo en mediación, día 41 (ficticio)
+@@
+
+---
+
+@heading h-perfiles
+texto: Perfiles
+nivel: 1
+@@
+
+@profile pf-cliente
+nombre: Lucía Rivas (ficticia)
+rol: Clienta · arrendataria
+etiqueta: cliente
+etiqueta: primera consulta
+
+Diseñadora gráfica. Vivió dos años en el departamento. Entregó las llaves con un acta firmada y fotos del estado del inmueble.
+@@
+
+@profile pf-abogado
+nombre: Abg. Martín Ortega (ficticio)
+rol: Abogado responsable · Ortega & Asociados (ficticio)
+etiqueta: abogado
+etiqueta: civil y arrendamientos
+@@
+
+@profile pf-asistente
+nombre: Sofía Paredes (ficticia)
+rol: Asistente legal · documentos y agenda
+etiqueta: equipo
+@@
+
+@profile pf-contraparte
+nombre: Inmobiliaria Horizonte S.A. (ficticia)
+rol: Contraparte · arrendadora
+etiqueta: contraparte
+
+Representada por su gerente comercial (ficticio). Alega daños en el piso de madera para retener la garantía.
+@@
+
+---
+
+@heading h-entidades
+texto: Entidades
+nivel: 1
+@@
+
+@entidad en-contrato
+nombre: Contrato de arriendo N.º 88 (ficticio)
+tipo: contrato
+vigencia: 2024-09-01 a 2026-08-31 (ficticio)
+garantia: US$ 1.200 (ficticio)
+@@
+
+@entidad en-inmueble
+nombre: Departamento 3B, Edificio Las Acacias (ficticio)
+tipo: inmueble
+ciudad: Ciudad Ejemplo
+@@
+
+@entidad en-mediacion
+nombre: Centro de Mediación Ciudad Ejemplo (ficticio)
+tipo: centro de mediación
+@@
+
+@entidad en-juzgado
+nombre: Unidad Judicial Civil de Ciudad Ejemplo (ficticia)
+tipo: juzgado
+nota: Solo si la mediación fracasa.
+@@
+
+---
+
+@heading h-tiempo
+texto: Línea de tiempo
+nivel: 1
+@@
+
+@timeline tl-caso
+titulo: Del primer contacto al acuerdo (fechas ficticias)
+evento: 2026-09-02 — La clienta escribe por el formulario del estudio
+evento: 2026-09-04 — Primera consulta de 30 minutos; se abre el caso RV-014
+evento: 2026-09-05 — Firma de la carta de honorarios y pago del anticipo
+evento: 2026-09-08 — Carta de reclamo a la inmobiliaria con acta de entrega y fotos
+evento: 2026-09-19 — La inmobiliaria responde: retiene la garantía por daños en el piso
+evento: 2026-09-22 — Decisión: proponer mediación antes de demandar
+evento: 2026-10-06 — Primera audiencia de mediación
+evento: 2026-10-13 — Acuerdo: devolución de US$ 1.050 en dos cuotas
+evento: 2026-10-20 — Primera cuota recibida por la clienta
+@@
+
+---
+
+@heading h-notas
+texto: Notas del caso
+nivel: 1
+@@
+
+@nota n-hechos
+tipo: hechos
+
+La clienta entregó el inmueble el 2026-08-31 con un acta firmada por ambas partes. El acta no menciona daños. Las fotos del día de entrega muestran el piso en buen estado (ficticio).
+@@
+
+@nota n-estrategia
+tipo: estrategia
+
+Pedir primero por escrito. Si no responde, mediación: es más rápida y barata que un juicio para este monto. Guardar la demanda como plan B.
+@@
+
+@afirmacion c-acta
+texto: El acta de entrega firmada por ambas partes no registra daños en el inmueble.
+fuente: f-acta
+certeza: Verificado
+@@
+
+@fuente f-acta
+titulo: Acta de entrega del departamento 3B, 2026-08-31 (documento ficticio)
+fecha: 2026-08-31
+@@
+
+@decision d-via
+pregunta: ¿Mediación o demanda directa?
+opciones: Mediación · Demanda
+criterio: Tiempo hasta resolver (5 = más rápido) | 3 | 4 | 2
+criterio: Costo para la clienta (5 = menor) | 3 | 4 | 2
+criterio: Fuerza de la prueba escrita | 2 | 3 | 4
+elegida: Mediación
+candidatas: Mediación · Demanda
+confianza: 0.7
+estado: decidida
+fecha: 2026-09-22
+fuente: @(c-acta)
+reabrir_si: la inmobiliaria no acude a dos convocatorias de mediación
+@@
+
+@experiencia x-acta-fotos
+leccion: En arriendos, pide al cliente el acta de entrega y fotos con fecha desde la primera consulta: son la prueba que más pesa.
+origen: @(c-acta)
+aplica_a: arrendamientos, prueba, primera consulta
+usos: 3
+estado: Supuesto
+@@
+
+---
+
+@heading h-tablero
+texto: Tablero del caso
+nivel: 1
+@@
+
+@tablero tb-caso
+titulo: Caso RV-014
+columna: pendiente · Pendiente
+columna: en_curso · En curso · wip 3
+columna: revision · Revisión
+columna: hecho · Hecho
+hecho: hecho
+@@
+
+@tarea t-consulta
+titulo: Primera consulta y apertura del caso
+estado: hecho
+prioridad: P0
+fase: Inicio
+responsable: Martín
+@@
+
+@tarea t-honorarios
+titulo: Carta de honorarios firmada y anticipo
+estado: hecho
+prioridad: P0
+fase: Inicio
+responsable: Sofía
+depende: t-consulta
+@@
+
+@tarea t-reclamo
+titulo: Redactar y enviar carta de reclamo
+estado: hecho
+prioridad: P0
+fase: Reclamo
+responsable: Martín
+depende: t-honorarios
+@@
+
+@tarea t-mediacion
+titulo: Solicitar mediación y preparar la audiencia
+estado: hecho
+prioridad: P0
+fase: Mediación
+responsable: Martín
+depende: t-reclamo
+@@
+
+@tarea t-acuerdo
+titulo: Revisar el acta de acuerdo con la clienta
+estado: revision
+prioridad: P0
+fase: Mediación
+responsable: Martín
+depende: t-mediacion
+@@
+
+@tarea t-cuota2
+titulo: Confirmar la segunda cuota de la devolución
+estado: en_curso
+prioridad: P1
+fase: Cierre
+responsable: Sofía
+depende: t-acuerdo
+@@
+
+@tarea t-demanda
+titulo: Borrador de demanda (plan B, solo si falla el acuerdo)
+estado: pendiente
+prioridad: P2
+fase: Plan B
+responsable: Martín
+@@
+
+@tarea t-cierre
+titulo: Informe final y cierre del expediente
+estado: pendiente
+prioridad: P1
+fase: Cierre
+responsable: Sofía
+depende: t-cuota2
+@@
+
+---
+
+@heading h-historias
+texto: Historias de usuario
+nivel: 1
+sub: Qué necesita cada persona del sistema del estudio.
+@@
+
+@historia hu-cliente
+como: clienta
+quiero: ver en qué paso va mi caso sin llamar al estudio
+para: estar tranquila y saber qué me toca hacer
+criterio: El tablero muestra el paso actual y la próxima fecha.
+@@
+
+@historia hu-abogado
+como: abogado
+quiero: tener hechos, pruebas y decisiones con su fuente en un solo archivo
+para: preparar una audiencia en minutos
+criterio: Cada afirmación del caso enlaza su documento.
+@@
+
+@historia hu-asistente
+como: asistente legal
+quiero: ver qué pagos faltan y qué tareas vencen esta semana
+para: avisar a tiempo a la clienta y al abogado
+@@
+
+---
+
+@heading h-pagos
+texto: Honorarios y pagos
+nivel: 1
+sub: Montos ficticios.
+@@
+
+@table tb-honorarios
+titulo: Carta de honorarios (ficticio)
+
+| Concepto | Monto | Cuándo |
+|---|---|---|
+| Consulta inicial | US$ 40 | Al abrir el caso |
+| Honorario fijo, reclamo y mediación | US$ 250 | 50 % anticipo, 50 % al acuerdo |
+| Honorario si hay demanda | US$ 450 adicionales | Solo si se demanda |
+@@
+
+@pago pg-consulta
+concepto: Consulta inicial
+monto: US$ 40
+fecha: 2026-09-04
+estado: pagado
+@@
+
+@pago pg-anticipo
+concepto: Anticipo 50 % del honorario fijo
+monto: US$ 125
+fecha: 2026-09-05
+estado: pagado
+@@
+
+@pago pg-saldo
+concepto: Saldo 50 % al firmar el acuerdo
+monto: US$ 125
+fecha: 2026-10-13
+estado: pendiente
+@@
+
+---
+
+@heading h-ruta
+texto: Ruta del cliente
+nivel: 1
+sub: Simulación de punta a punta, del primer mensaje a la resolución.
+@@
+
+@proceso pr-ruta
+titulo: Ruta de la clienta en el caso RV-014
+inicio: r-01
+
+Cada paso dice qué hace la clienta, qué hace el estudio y qué queda escrito.
+@@
+
+@paso r-01
+titulo: Primer contacto
+orden: 1
+rel: siguiente @(r-02)
+
+La clienta escribe por el formulario. El estudio responde el mismo día con dos horarios para la consulta.
+@@
+
+@paso r-02
+titulo: Primera consulta
+orden: 2
+rel: siguiente @(r-03)
+
+Cuenta su caso y entrega el contrato, el acta y las fotos. Se abre el expediente RV-014 en un `.lnd`.
+@@
+
+@paso r-03
+titulo: Propuesta y carta de honorarios
+orden: 3
+rel: siguiente @(r-04)
+
+Recibe la estrategia en una página y el costo por escrito. Firma y paga el anticipo.
+@@
+
+@paso r-04
+titulo: Reclamo por escrito
+orden: 4
+rel: siguiente @(r-05)
+
+El estudio envía la carta de reclamo. La clienta ve el paso marcado como hecho en su tablero.
+@@
+
+@paso r-05
+titulo: Mediación
+orden: 5
+rel: siguiente @(r-06)
+
+Audiencia con la inmobiliaria. El abogado lleva hechos y pruebas con su fuente.
+@@
+
+@paso r-06
+titulo: Acuerdo
+orden: 6
+rel: siguiente @(r-07)
+
+Devolución de US$ 1.050 en dos cuotas (ficticio). La clienta revisa el acta antes de firmar.
+@@
+
+@paso r-07
+titulo: Cierre
+orden: 7
+
+Segunda cuota confirmada, informe final y expediente cerrado. La lección queda como `@experiencia` para el próximo caso.
+@@

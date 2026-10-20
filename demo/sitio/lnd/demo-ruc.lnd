@@ -1,0 +1,260 @@
+# Demo RUC · Inscribir o actualizar el RUC de una entidad pública
+Cómo documentar, con fuentes oficiales, el trámite del RUC (Registro Único de Contribuyentes) de una entidad del sector público o una empresa pública en Ecuador, que administra el SRI (Servicio de Rentas Internas). **Ilustrativo, no es asesoría legal ni tributaria.** Fuentes consultadas el 2026-10-20; los requisitos cambian, verifícalos en sri.gob.ec antes de hacer el trámite. La entidad del ejemplo es **ejemplo ficticio**.
+
+// perfil: lnd-1.1 · claves: es · idioma: es-EC · ámbito: demo · trámite / proceso · vistas sugeridas: web, mision, tablero, slides
+
+---
+
+@proceso pr-ruc-publico
+titulo: RUC de una entidad pública o empresa pública
+entidad: SRI · Servicio de Rentas Internas
+pais: EC
+costo: 0
+canal: presencial
+canal: en_linea
+inicio: p-00
+vigente_al: 2026-10-20
+fuente: f-gobec
+estado: ilustrativo
+
+Según la Ley de RUC citada por gob.ec, las entidades del sector público también están obligadas a inscribirse en el RUC. El trámite no tiene costo. Ejemplo: la «Empresa Pública Municipal de Agua de Ciudad Ejemplo» (ficticia) necesita su RUC.
+@@
+
+@afirmacion c-obligadas
+texto: La Ley de RUC (Art. 3, citado por gob.ec) obliga a inscribirse en el RUC a las entidades del sector público.
+fuente: f-gobec
+vigente_al: 2026-10-20
+certeza: Verificado
+@@
+
+@afirmacion c-costo
+texto: El trámite de inscripción del RUC para persona jurídica no tiene costo.
+fuente: f-gobec
+vigente_al: 2026-10-20
+certeza: Verificado
+@@
+
+@afirmacion c-desconcentrados
+texto: Los entes desconcentrados que sean entes contables independientes pueden inscribirse por separado, presentando el acto que avale la desconcentración (Reglamento de la Ley de RUC, Art. 2, citado por gob.ec).
+fuente: f-gobec
+vigente_al: 2026-10-20
+certeza: Verificado
+@@
+
+---
+
+@heading h-req
+texto: Requisitos específicos: sector público y empresas públicas
+nivel: 1
+sub: Ficha oficial del SRI, trámite presencial y electrónico.
+@@
+
+@table tb-req
+titulo: Qué se presenta (según la ficha del SRI)
+fuente: f-sri-ficha
+
+| Requisito | Detalle | Presencial | Electrónico |
+|---|---|---|---|
+| Solicitud de inscripción y actualización general del RUC, sociedades, sector privado y público | Formato vigente en sri.gob.ec, sección requisitos; firmada por el representante legal | Original y copia simple | Original; en SRI en línea no se exige firma electrónica del formulario |
+| Documento de creación | Publicación en el Registro Oficial de la ley, decreto, ordenanza o resolución de creación | Original y copia simple | Copia simple |
+| Documento que nombra al representante legal | Acto administrativo o documento oficial emitido por el órgano competente | Original y copia simple | Copia simple |
+| Identificación del representante legal | Cédula, pasaporte, credencial de refugiado o licencia de conducir | Original o copia simple, según el documento | Igual |
+| Ubicación de la sociedad | Código CUEN de la planilla eléctrica, o factura de agua o teléfono, entre otros | Original o copia simple, según el documento | Igual |
+@@
+
+@afirmacion c-creacion
+texto: Para el sector público y las empresas públicas, el documento de creación es la publicación en el Registro Oficial de la ley, decreto, ordenanza o resolución que crea la entidad (Resolución NAC-DGERCGC17-00000587, Art. 2).
+fuente: f-res587
+vigente_al: 2026-10-20
+certeza: Verificado
+@@
+
+@afirmacion c-actualizar
+texto: Para actualizar el RUC se presenta la documentación que acredite los cambios, la identificación del sujeto pasivo y del compareciente y, cuando corresponda, la autorización (Resolución NAC-DGERCGC17-00000587, Art. 3).
+fuente: f-res587
+vigente_al: 2026-10-20
+certeza: Verificado
+@@
+
+@nota n-observaciones
+tipo: observaciones de la ficha
+
+Si no se tiene el documento original, se presenta copia notariada o certificada. Si los documentos tienen firma electrónica, solo se aceptan los originales en medio magnético. Si lo presenta un tercero, aplica la hoja de requisitos para ingreso por terceros.
+@@
+
+---
+
+@heading h-pasos
+texto: Pasos
+nivel: 1
+sub: Dos canales, según gob.ec. Ábrelo en la vista Misión para marcar cada paso.
+@@
+
+@paso p-00
+titulo: Reunir los documentos y elegir el canal
+orden: 0
+tipo: decision
+rel: siguiente @(p-pr1 presencial)
+rel: siguiente @(p-el1 en línea)
+
+Ten listos los documentos de la tabla de requisitos. Revisa en las incertidumbres de abajo si el canal en línea aplica a tu caso.
+@@
+
+@paso p-pr1
+titulo: Presencial · acudir a un centro de atención del SRI y pedir turno
+orden: 1
+canal: presencial
+fuente: f-gobec
+rel: siguiente @(p-pr2)
+
+Horario nacional de 08:00 a 17:00 según gob.ec.
+@@
+
+@paso p-pr2
+titulo: Presencial · presentar requisitos en ventanilla y recibir la contestación
+orden: 2
+canal: presencial
+fuente: f-gobec
+@@
+
+@paso p-el1
+titulo: En línea · entrar a SRI en línea con número de identificación y clave
+orden: 1
+canal: en_linea
+fuente: f-gobec
+verificar: si
+rel: siguiente @(p-el2)
+@@
+
+@paso p-el2
+titulo: En línea · «Trámites y notificaciones» → «Ingreso de trámites y anexos»
+orden: 2
+canal: en_linea
+fuente: f-gobec
+rel: siguiente @(p-el3)
+
+Selecciona el servicio, carga los requisitos y anexos, completa el detalle y los datos de notificación.
+@@
+
+@paso p-el3
+titulo: En línea · «Finalizar» y «Aceptar»
+orden: 3
+canal: en_linea
+fuente: f-gobec
+@@
+
+---
+
+@heading h-dudas
+texto: Lo que no está claro
+nivel: 1
+sub: Preferimos decirlo antes que adivinar.
+@@
+
+@nota n-duda-clave
+tipo: incertidumbre
+verificar: si
+
+El canal en línea pide número de identificación y clave de SRI en línea. Las fuentes revisadas no explican cómo obtiene esa clave una entidad pública **nueva** que aún no tiene RUC. Para una primera inscripción, confirma con el SRI si debe ser presencial.
+@@
+
+@nota n-duda-suspension
+tipo: incertidumbre
+verificar: si
+
+En la ficha de gob.ec, uno de los procedimientos en línea dice «Escoger la opción suspensión de RUC», aunque el trámite es de inscripción. Parece un error de la ficha; no lo seguimos.
+@@
+
+@nota n-duda-plazos
+tipo: incertidumbre
+verificar: si
+
+No verificamos plazos legales para inscribirse ni para actualizar, ni el tiempo de respuesta del SRI. Tampoco si una entidad desconcentrada necesita requisitos adicionales a la ficha.
+@@
+
+---
+
+@heading h-tablero
+texto: Tablero interno de la entidad (ficticio)
+nivel: 1
+@@
+
+@tablero tb-ruc
+titulo: Inscripción del RUC · EP de Agua (ficticia)
+columna: pendiente · Pendiente
+columna: en_curso · En curso
+columna: hecho · Hecho
+hecho: hecho
+@@
+
+@tarea t-ro
+titulo: Conseguir la publicación en el Registro Oficial de la ordenanza de creación
+estado: hecho
+prioridad: P0
+responsable: Asesoría jurídica
+@@
+
+@tarea t-nombramiento
+titulo: Copia del acto que nombra al gerente como representante legal
+estado: hecho
+prioridad: P0
+responsable: Talento humano
+@@
+
+@tarea t-cuen
+titulo: Planilla eléctrica con el código CUEN del local
+estado: en_curso
+prioridad: P1
+responsable: Administración
+@@
+
+@tarea t-solicitud
+titulo: Llenar la solicitud vigente y hacerla firmar por el representante legal
+estado: pendiente
+prioridad: P0
+responsable: Financiero
+depende: t-ro, t-nombramiento, t-cuen
+@@
+
+@tarea t-confirmar
+titulo: Confirmar con el SRI el canal para la primera inscripción
+estado: pendiente
+prioridad: P0
+responsable: Financiero
+@@
+
+---
+
+@heading h-fuentes
+texto: Fuentes oficiales
+nivel: 1
+sub: Consultadas el 2026-10-20.
+@@
+
+@fuente f-sri-ficha
+titulo: SRI · Ficha de requisitos específicos de sociedades sector público y empresas públicas (PDF, creado el 2024-07-16)
+url: https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/7a58ce0c-a6b3-477c-aaec-b6e6bd62c9a9/REQUISITOS%20PARA%20INSCRIPCI%c3%93N%20O%20ACTUALIZACI%c3%93N%20DE%20%20%20SOCIEDADES%20P%c3%9aBLICAS%20SECTOR%20P%c3%9aBLICO%20Y%20EMPRESAS%20P%c3%9aBLICAS.pdf
+emisor: Servicio de Rentas Internas
+fecha: 2026-10-20
+@@
+
+@fuente f-res587
+titulo: SRI · Resolución NAC-DGERCGC17-00000587, requisitos para inscripción, actualización y suspensión del RUC (texto compilado, última reforma 2025-08-26)
+url: https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/ce37adae-c978-4c46-8456-8efb6de61433/RESOLUCION%20NAC-DGERCGC17-00000587.pdf
+emisor: Servicio de Rentas Internas
+fecha: 2026-10-20
+@@
+
+@fuente f-gobec
+titulo: gob.ec · Inscripción del RUC para persona jurídica (ficha actualizada el 2026-03-18)
+url: https://www.gob.ec/sri/tramites/inscripcion-registro-unico-contribuyente-ruc-persona-juridica
+emisor: Guía Oficial de Trámites y Servicios, información del SRI
+fecha: 2026-10-20
+@@
+
+@fuente f-sri-requisitos
+titulo: SRI · Requisitos sociedades (índice de fichas)
+url: https://www.sri.gob.ec/requisitos-sociedades
+emisor: Servicio de Rentas Internas
+fecha: 2026-10-20
+@@

@@ -1,0 +1,107 @@
+# Decisiones que se pueden auditar · guía de `@decision`
+Casi todos los equipos guardan una decisión como un párrafo que dice qué se eligió. `@decision` guarda además la pregunta, las opciones, los criterios con sus pesos, y enlaza cada razón a una afirmación marcada Verificado o Supuesto. Una persona la puede revisar, un pull request la puede cambiar y un agente la puede leer sin adivinar.
+
+// perfil: lnd-1.1 · ámbito: guía · vistas sugeridas: web, carta, fuente
+// idioma: es · traducción: automática (IA) desde el inglés, sin revisión humana · perfil 1.1
+
+---
+
+@heading h-why
+texto: Por qué escribir así las decisiones
+nivel: 1
+icono: :scale:
+@@
+
+@features f-why
+item: **Las razones apuntan a evidencia.** Cada `fuente: @(id)` enlaza una afirmación. La decisión muestra si esa afirmación es Verificado o Supuesto, así que una razón débil se ve débil.
+item: **El puntaje se puede recalcular.** Peso × nota, sumado por opción. Cualquiera lo recalcula desde el texto.
+item: **Git guarda la historia.** Un peso que cambia es un diff de una línea en un pull request, con revisor y fecha.
+item: **Las personas fijan pesos, los agentes proponen.** Un agente puede juntar evidencia, poner notas y sugerir una opción. Una persona fija los pesos y cierra la decisión.
+item: **Sabe cuándo reabrirse.** `reabrir_si` dice qué condición la reabre. Un agente que ve la condición cumplida marca la decisión como abierta en lugar de ignorarla en silencio.
+@@
+
+@heading h-example
+texto: Ejemplo completo: una licencia para un formato abierto
+nivel: 1
+sub: El bloque de abajo está vivo: abre este archivo en el renderer y míralo en Web, Carta y Fuente.
+@@
+
+@decision d-license
+titulo: Licencia de las herramientas de referencia de un formato abierto
+pregunta: ¿MIT o Apache-2.0 para el renderer, el parser y el validador?
+opciones: MIT · Apache-2.0
+criterio: Concesión explícita de patentes | 3 | 0 | 3
+criterio: Texto de licencia corto | 1 | 3 | 1
+criterio: Compatible con proyectos solo GPLv2 | 1 | 3 | 1
+fuente: @(a-patent)
+fuente: @(a-gpl2)
+fuente: @(a-implementers)
+elegida: Apache-2.0
+puntaje: 11/15
+estado: decidida
+fecha: 2026-10-19
+reabrir_si: una implementación importante no puede aceptar Apache-2.0
+icono: :scale:
+
+Las notas van de 0 a 3. MIT suma 6 y Apache-2.0 suma 11. Los pesos dicen que, para un formato que deben implementar muchas herramientas independientes, la protección de patentes pesa tres veces más que un texto corto.
+@@
+
+@afirmacion a-patent
+texto: Apache-2.0 incluye una licencia explícita de patentes de cada contribuidor (sección 3); MIT no menciona patentes.
+certeza: Verificado
+fuente: f-apache
+@@
+
+@afirmacion a-gpl2
+texto: Apache-2.0 se considera incompatible con software solo GPLv2, mientras que MIT es compatible.
+certeza: Verificado
+fuente: f-fsf
+@@
+
+@afirmacion a-implementers
+texto: Las organizaciones que adoptan un formato prefieren herramientas con concesión explícita de patentes.
+certeza: Supuesto
+@@
+
+@fuente f-apache
+titulo: Apache License, Version 2.0, sección 3
+uri: https://www.apache.org/licenses/LICENSE-2.0
+tipo: licencia
+@@
+
+@fuente f-fsf
+titulo: Free Software Foundation, lista de licencias y compatibilidad con la GPL
+uri: https://www.gnu.org/licenses/license-list.html
+tipo: referencia
+@@
+
+@heading h-agents
+texto: Cómo lee y escribe una decisión un agente
+nivel: 1
+
+1. Lee `pregunta`, `opciones` y cada `criterio`. Recalcula los totales; nunca confíes en un total escrito en prosa.
+2. Sigue cada `fuente: @(id)`. Informa cada afirmación con su marca. Una opción que se apoya en Supuestos se informa así.
+3. Para proponer, agrega o actualiza notas y bloques de evidencia, deja `estado: abierta` y abre un pull request. No cambies pesos ni `puntaje`, ni pongas `estado: decidida`.
+4. En cada lectura revisa `reabrir_si`. Si la condición se cumple, dilo y propone reabrir.
+5. Corre `python3 tools/lnd_check.py --estricto` antes de proponer: revisa que cada `criterio` tenga una nota por opción, que `elegida` esté entre las `opciones` y que la evidencia exista.
+@@
+
+@heading h-render
+texto: Cómo se dibuja
+nivel: 1
+
+- **Web:** la pregunta, una tabla de puntajes con la opción elegida resaltada y la lista de evidencia con la textura de certeza: sólida para Verificado, trama cobre para Supuesto, borde punteado para Por verificar.
+- **Carta:** la decisión es una estación con aristas hacia cada evidencia; una decisión sin evidencia queda sola y se nota.
+- **Fuente:** el bloque tal como se escribió, con ids estables.
+- **Tablero:** una columna por opción, cada una con su total ponderado, una barra y el peso × nota de cada criterio; la opción elegida va resaltada.
+@@
+
+@table tb-compare
+titulo: Frente a otras formas de registrar decisiones
+
+| Enfoque | Bueno para | En qué se diferencia `.lnd` |
+|---|---|---|
+| ADR / MADR (archivos Markdown) | Simple, conocido, vive en el repo | Mismo lugar y mismo flujo; `@decision` agrega opciones, pesos y evidencia con marcas de certeza legibles por máquina. Un MADR se puede convertir bloque por bloque |
+| Tablas de decisión DMN | Reglas de negocio ejecutables, herramientas estándar, evaluación automática a escala | DMN es más potente para reglas automáticas. `@decision` registra una decisión humana y sus razones; una exportación a DMN puede venir después |
+| Matriz ponderada en hoja de cálculo | Rápida de armar, conocida | La hoja no enlaza razones con fuentes, y su diff no se lee en un pull request |
+@@

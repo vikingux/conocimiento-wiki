@@ -1,0 +1,21 @@
+conocimiento.wiki · página de inicio y contenidos
+Copyright (c) 2026 vikingux. Todos los derechos reservados.
+
+Salvo que se indique otra cosa más abajo, el código y los textos de este repositorio
+(index.html, site.css, site.js, favicon.svg, demos/, notebook/, lnd/ y docs/) se publican
+para que puedas leerlos y probarlos. No se concede licencia para copiarlos, modificarlos
+ni redistribuirlos sin permiso por escrito. Contacto: info@conocimiento.wiki
+
+Excepciones:
+- visor/: Business Source License 1.1. Ver visor/LICENSE.
+- demo/ y los programas abrir-* de la release: Business Source License 1.1. Ver demo/LICENSE.
+- Íconos de Lucide en demo/: licencia ISC. Ver NOTICE.
+- fonts/ y visor/fonts/: SIL Open Font License 1.1. Ver OFL.txt en cada carpeta.
+- El formato .lnd (spec, palabras reservadas, parser y validador) se publica aparte, en el
+  repositorio lnd-format, con licencia Apache-2.0.
+
+---
+
+English: All rights reserved unless noted above. The viewer in visor/ is under the Business
+Source License 1.1 (see visor/LICENSE), and so are demo/ and the abrir-* release
+programs (see demo/LICENSE). Lucide icons are ISC (see NOTICE). Fonts are under the SIL Open Font License 1.1.

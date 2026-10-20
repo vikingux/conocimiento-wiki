@@ -1,0 +1,107 @@
+# Decisions you can audit · a guide to `@decision`
+Most teams record a decision as a paragraph that says what was chosen. `@decision` also records the question, the options, the criteria and their weights, and links every reason to a claim marked Verified or Assumption. A person can check it, a pull request can change it, and an agent can read it without guessing.
+
+// profile: lnd-1.1 · scope: guide · suggested_views: web, map, source
+// locale: en · translation: borrador redactado con IA; las ediciones es y zh-CN son traducción automática · perfil 1.1
+
+---
+
+@heading h-why
+text: Why write decisions this way
+level: 1
+icon: :scale:
+@@
+
+@features f-why
+item: **Reasons point to evidence.** Each `fuente: @(id)` links a claim. The decision shows whether that claim is Verified or an Assumption, so a weak reason looks weak.
+item: **The score is reproducible.** Weight × score, summed per option. Anyone can recompute it from the text.
+item: **Git keeps the history.** A changed weight is a one-line diff in a pull request, with a reviewer and a date.
+item: **People set weights, agents propose.** An agent may gather evidence, fill in scores and suggest a choice. A person sets the weights and closes the decision.
+item: **It knows when to reopen.** `reabrir_si` states the condition that would reopen it. An agent that sees the condition met flags the decision as open again instead of quietly ignoring it.
+@@
+
+@heading h-example
+text: Worked example: a license for an open format
+level: 1
+sub: The block below is live: open this file in the renderer and look at it in Web, Map and Source.
+@@
+
+@decision d-license
+title: License for the reference tools of an open format
+question: MIT or Apache-2.0 for the renderer, parser and validator?
+options: MIT · Apache-2.0
+criterion: Explicit patent grant | 3 | 0 | 3
+criterion: Short license text | 1 | 3 | 1
+criterion: Compatible with GPLv2-only projects | 1 | 3 | 1
+source: @(a-patent)
+source: @(a-gpl2)
+source: @(a-implementers)
+chosen: Apache-2.0
+score: 11/15
+status: decided
+date: 2026-10-19
+reopen_if: a major implementer cannot accept Apache-2.0
+icon: :scale:
+
+Scores go from 0 to 3. MIT totals 6 and Apache-2.0 totals 11. The weights say that, for a format meant to be implemented by many independent tools, patent protection matters three times more than a short text.
+@@
+
+@claim a-patent
+text: Apache-2.0 includes an explicit patent license from each contributor (section 3); MIT does not mention patents.
+certainty: Verified
+source: f-apache
+@@
+
+@claim a-gpl2
+text: Apache-2.0 is considered incompatible with GPLv2-only software, while MIT is compatible.
+certainty: Verified
+source: f-fsf
+@@
+
+@claim a-implementers
+text: Organizations that adopt a format prefer tools with an explicit patent grant.
+certainty: Assumed
+@@
+
+@source f-apache
+title: Apache License, Version 2.0, section 3
+uri: https://www.apache.org/licenses/LICENSE-2.0
+type: licencia
+@@
+
+@source f-fsf
+title: Free Software Foundation, list of licenses and GPL compatibility
+uri: https://www.gnu.org/licenses/license-list.html
+type: referencia
+@@
+
+@heading h-agents
+text: How an agent reads and writes a decision
+level: 1
+
+1. Read `pregunta`, `opciones` and every `criterio`. Recompute the totals; never trust a total written in prose.
+2. Follow every `fuente: @(id)`. Report each claim with its mark. A choice that rests on Assumptions is reported as such.
+3. To propose, add or update scores and evidence blocks, set `estado: abierta`, and open a pull request. Do not change weights or `puntaje`, and do not set `estado: decidida`.
+4. On every read, check `reabrir_si`. If the condition is met, say so and propose reopening.
+5. Run `python3 tools/lnd_check.py --estricto` before proposing: it checks that each `criterio` has one score per option, that `elegida` is one of the `opciones`, and that the evidence exists.
+@@
+
+@heading h-render
+text: How it renders
+level: 1
+
+- **Web:** the question, a score table with the chosen option highlighted, and the evidence list with the certainty texture: solid for Verified, copper hatching for Assumption, dashed for To verify.
+- **Map:** the decision is a station with edges to each piece of evidence, so a decision with no evidence stands alone and is easy to spot.
+- **Source:** the block exactly as written, with stable ids.
+- **Board:** one column per option, each with its weighted total, a bar and the weight × rating of every criterion; the chosen option is outlined.
+@@
+
+@table tb-compare
+title: Compared with other ways of recording decisions
+
+| Approach | Good at | Where `.lnd` differs |
+|---|---|---|
+| ADR / MADR (Markdown files) | Simple, widely known, lives in the repo | Same place and workflow; `@decision` adds machine-readable options, weights and evidence with certainty marks. A MADR file can be converted block by block |
+| DMN decision tables | Executable business rules, standard tooling, automated evaluation at scale | DMN is more powerful for automated rules. `@decision` records one human decision and its reasons; an export to DMN could come later |
+| Spreadsheet weighted matrix | Quick to build, familiar | The spreadsheet does not link reasons to sources, and its diff is unreadable in a pull request |
+@@

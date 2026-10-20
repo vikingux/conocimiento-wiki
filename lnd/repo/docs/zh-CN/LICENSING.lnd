@@ -1,0 +1,54 @@
+# 许可
+本仓库各部分采用什么许可、允许你做什么，以及为什么贡献只需签署。
+**本文为机器辅助翻译，待中文母语者审校。如有出入，以英文版和 LICENSE 原文为准。**
+
+// 规范版本: lnd-1.1 · 范围: legal · 建议视图: 网页
+// 语种: zh-Hans · 翻译: automática (IA) desde el inglés, sin revisión humana
+// no es asesoría legal; el texto que obliga es el archivo LICENSE
+
+---
+
+@表格 tb-parts
+标题: 各部分的许可
+
+| 部分 | 许可 | 文件 |
+|---|---|---|
+| 渲染器、解析器、校验器 | Apache License 2.0 | `LICENSE` |
+| 将来的 SDK、MCP 客户端和 CLI | Apache License 2.0 | `LICENSE` |
+| 规范文本（`spec/`） | 知识共享署名 4.0（CC BY 4.0） | `spec/LICENSE` |
+| 示例（`examples/`） | Apache License 2.0 | `LICENSE` |
+@@
+
+@章节 h-why
+文本: 为什么选择 Apache-2.0
+层级: 1
+
+Apache-2.0 允许任何人使用、修改和分发这些工具，包括用于闭源产品，只要保留许可证和 `NOTICE` 文件。它还包含明确的**专利授权**：每位贡献者授予其贡献所需的专利许可，而对这些专利提起诉讼的人，其许可随即终止。对于一个需要由许多独立工具实现的格式，这种保护比更短的许可文本更重要。
+@@
+
+@章节 h-spec
+文本: 为什么规范采用 CC BY 4.0
+层级: 1
+
+任何人都可以复制、翻译和改编规范，甚至用来编写与之竞争的实现，只要注明出处。只有实现者能自由引用规则，格式才能传播开来。
+@@
+
+@章节 h-contrib
+文本: 贡献：DCO，无需 CLA
+层级: 1
+
+贡献以与发布相同的许可进入（代码为 Apache-2.0，规范文本为 CC BY 4.0）。[Developer Certificate of Origin](https://developercertificate.org/) 的 `Signed-off-by` 行记录你有权提交该作品。本仓库不需要贡献者许可协议。
+@@
+
+@备注 n-server
+类型: alcance
+
+基于该格式构建的某些托管服务采用不同的许可，位于单独的仓库中，那些仓库可能要求签署贡献者许可协议。这不影响本仓库：这里的一切始终是 Apache-2.0 或 CC BY 4.0。
+@@
+
+@章节 h-mark
+文本: 名称与标识
+层级: 1
+
+Apache-2.0 不授予名称或标识的权利（第 6 条）。你可以说某个工具「可以读取 LANDDY `.lnd` 文件」。商标政策和与测试用例挂钩的「LANDDY 兼容」标识正在计划中。
+@@

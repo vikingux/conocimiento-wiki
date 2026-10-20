@@ -1,0 +1,72 @@
+# Ejemplos cotidianos
+`.lnd` no es solo para programadores. Estos ejemplos vienen de los ejemplos públicos del formato; son **ejemplo ficticio** y nada se midió.
+
+// perfil: lnd-1.1 · claves: es · ámbito: ejemplo · vistas sugeridas: web, tablero
+
+---
+
+@features f-lista
+titulo: Ábrelos en el visor
+item: [La panadería que elige proveedor de harina](?demo=ej-cuaderno&vista=web): cotizaciones, una cata a ciegas, lecciones y una decisión con su nivel de confianza.
+item: [Hola, .lnd](?demo=ej-hola&vista=web): el documento útil más chico, un dato con su fuente y una nota.
+@@
+
+@heading h-compras
+texto: Comprar a un proveedor
+nivel: 1
+sub: Adaptado del ejemplo público de memoria reutilizable.
+@@
+
+@fuente f-notas-compra
+titulo: Notas de compra, pedido de impresión para una feria
+fecha: 2026-10-09
+@@
+
+@afirmacion c-cotizacion
+texto: Un proveedor aceptó por teléfono un plazo de 10 días y después mandó por escrito una cotización con 25 días y un precio mayor.
+fuente: f-notas-compra
+certeza: Verificado
+@@
+
+@experiencia x-por-escrito
+leccion: Pide la cotización por escrito, con precio y fecha de entrega, antes de aceptar el plazo. Un «sí» por teléfono no es un compromiso.
+origen: @(c-cotizacion)
+aplica_a: compras, proveedores, papeleo
+usos: 2
+estado: Verificado
+@@
+
+@heading h-casa
+texto: La casa y la familia
+nivel: 1
+@@
+
+@tablero tb-casa
+titulo: Mudanza del mes
+columna: pendiente · Pendiente
+columna: en_curso · En curso · wip 2
+columna: hecho · Hecho
+hecho: hecho
+@@
+
+@tarea t-cajas
+titulo: Conseguir cajas y cinta
+estado: hecho
+prioridad: P1
+responsable: familia
+@@
+
+@tarea t-servicios
+titulo: Pedir el cambio de dirección de luz e internet
+estado: en_curso
+prioridad: P0
+responsable: familia
+@@
+
+@tarea t-camion
+titulo: Pedir dos cotizaciones de camión por escrito
+estado: pendiente
+prioridad: P0
+responsable: familia
+depende: t-cajas
+@@

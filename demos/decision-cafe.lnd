@@ -1,0 +1,23 @@
+# Qué cafetera compramos para la oficina
+Una decisión escrita una vez y leída muchas. Una persona pone los pesos y los puntajes; el visor solo los suma. Datos de ejemplo.
+
+// perfil: lnd-1.1 · claves: es · ámbito: demo · vistas sugeridas: web, fuente
+
+---
+
+@afirmacion a-tazas
+texto: En la oficina se toman unas 40 tazas al día.
+certeza: Supuesto
+@@
+
+@decision d-cafetera
+pregunta: ¿Cafetera de filtro o de cápsulas?
+opciones: Filtro · Cápsulas
+criterio: Costo por taza | 3 | 4 | 1
+criterio: Rapidez | 2 | 2 | 4
+criterio: Menos basura | 2 | 4 | 1
+elegida: Filtro
+estado: decidida
+fecha: 2026-10-20
+confianza: 0,7
+@@

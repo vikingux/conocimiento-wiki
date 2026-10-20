@@ -1,0 +1,66 @@
+# Una wiki que tus agentes pueden citar
+Inicio del sitio público.
+
+// perfil: lnd-1.1 · ámbito: sitio público · vistas sugeridas: web
+// página: inicio.html
+
+---
+
+@pagina p-inicio
+slug: inicio
+titulo: LANDDY · una wiki que tus agentes pueden citar
+descripcion: Tus agentes leen una wiki que vive en tu Git, citan de dónde sale cada dato y te proponen cambios como pull request.
+alterno: en/index.html
+@@
+
+@hero hero-inicio
+titulo: Tus agentes leen una wiki que vive en tu Git y citan de dónde sale cada dato.
+subtitulo: Escribes una vez en `.lnd`, un formato de texto abierto. El mismo archivo se lee como página, slides o tablero, y un agente lo cita con archivo y bloque.
+cta_texto: Ver qué funciona hoy
+cta_url: producto.html
+cta2_texto: Abrir el visor sin red
+cta2_url: visor.html
+@@
+
+@heading h-problema
+texto: El agente olvida, y cuando recuerda no dice de dónde
+nivel: 1
+
+Cada sesión empieza de cero. Las decisiones del proyecto viven en chats, PDF y hojas de cálculo; el agente las repite mal o las inventa con seguridad, sin fuente ni fecha. Copiar el contexto a mano en cada sesión no escala, y la copia envejece.
+@@
+
+@image im-cuaderno
+src: assets/img/cuaderno-1600.webp
+alt: Cuaderno abierto con páginas en blanco junto a bolígrafos y una regla sobre un escritorio
+credito: Kelly Sikkema
+titulo: Se escribe una vez, en texto plano.
+formato: banda
+@@
+
+@features f-como
+titulo: Cómo lo resolvemos
+item: **Un archivo de texto con bloques.** Cada dato, tarea o paso tiene un id estable. El agente cita `decisiones.lnd#d-14`, no «algo que leí».
+item: **Lo verificado se distingue de lo supuesto.** Cada afirmación lleva su marca y su fuente, y se ve distinto en pantalla.
+item: **Tu Git es la fuente de verdad.** Si te vas, ya tienes los archivos. Los cambios del agente llegan como pull request que tú aceptas.
+@@
+
+@heading h-hoy
+texto: Lo que ya puedes abrir
+nivel: 1
+sub: Sin cuenta, sin red, desde este sitio.
+@@
+
+@stat st-hoy
+valor: 9
+etiqueta: vistas del mismo archivo en el visor: Web, Slides, Tablero, Carta, Misión, TV, Fuente, Markdown y HTML (**Hoy**)
+valor: 21
+etiqueta: códigos de diagnóstico estables en el validador `lnd_check.py` (**Hoy**)
+valor: 0
+etiqueta: peticiones de red al abrir el visor o este sitio (**Hoy**, probado en navegador sin red)
+@@
+
+@cta cta-lista
+texto: La wiki privada para agentes abre con un pago único de lanzamiento para quienes estén en la lista de espera.
+url: lanzamiento.html
+boton: Ver el plan de lanzamiento
+@@

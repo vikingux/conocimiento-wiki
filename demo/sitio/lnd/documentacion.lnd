@@ -1,0 +1,103 @@
+# Guía para agentes · MCP y skill
+Cómo un agente de IA usa tus documentos `.lnd`: los lee por MCP y escribe guiándose por la skill y la spec. Los primeros pasos están en «Empieza en 10 pasos».
+
+// perfil: lnd-1.1 · claves: es · ámbito: documentación · vistas sugeridas: web, slides
+
+---
+
+@heading h-mcp
+texto: Úsalo con tu agente de IA
+nivel: 1
+sub: El agente lee tus documentos a través de MCP y escribe siguiendo la skill y la spec.
+@@
+
+@nota n-mcp
+tipo: definición
+
+**MCP** (Model Context Protocol) es un estándar abierto para que un asistente de IA use herramientas y datos de fuera. Un **servidor MCP** ofrece herramientas con nombre; el **cliente** (tu app de agente) las descubre y las llama cuando la tarea lo pide. Así el agente trabaja con tus documentos reales y no con lo que recuerda.
+@@
+
+@features f-mcp-patron
+titulo: Cómo trabaja un agente con .lnd
+item: Se conecta al servidor MCP y pide la lista de herramientas.
+item: Lista los documentos y busca el texto que necesita.
+item: Lee el documento completo antes de responder y cita el id del bloque.
+item: Para escribir, sigue la skill y la spec: bloques bien cerrados, ids estables y la fuente junto al dato.
+item: Valida el archivo y deja que una persona lo revise antes de compartirlo.
+@@
+
+@table tb-mcp
+titulo: Las 3 herramientas del visor (solo lectura)
+
+| Herramienta | Qué hace | Qué devuelve |
+|---|---|---|
+| `listar_lnd` | Lista los documentos publicados | ruta, título y tipo |
+| `leer_lnd` | Lee un documento de la carpeta lnd | el texto completo |
+| `buscar_lnd` | Busca un texto en todos los documentos | ruta, línea y texto |
+@@
+
+@code c-mcp
+lenguaje: json
+titulo: Conectar un cliente MCP (ejemplo genérico)
+
+{
+  "mcpServers": {
+    "lnd": { "url": "http://127.0.0.1:8080/mcp" }
+  }
+}
+@@
+
+@nota n-mcp-seguro
+tipo: aviso
+
+El servidor del visor solo lee: no cambia ni borra nada. Por defecto escucha solo en tu equipo. Si lo abres a tu red, pon una clave en `mcp_token:` de `lndvisor.lnd`. La dirección exacta y el bloque para copiar aparecen en «Conectar un agente», en la barra del visor.
+@@
+
+@heading h-skill
+texto: Qué es una skill
+nivel: 1
+sub: Instrucciones cortas que un agente de IA carga cuando las necesita.
+@@
+
+@nota n-skill
+tipo: definición
+
+Una **skill** es un archivo de instrucciones con un nombre y una descripción de cuándo usarla. El agente lee la descripción y, si la tarea encaja, carga el resto: reglas, plantillas y cómo validar. La skill de `.lnd` le enseña al agente a escribir bloques bien formados, a marcar lo que es Supuesto y a correr el validador antes de entregar.
+@@
+
+@features f-skill
+titulo: Qué trae la skill de .lnd
+item: Las reglas de línea: abrir un bloque, cerrarlo, propiedades y cuerpo.
+item: Qué bloque usar para cada cosa: tarea, decisión, fuente, paso de un proceso, tabla.
+item: Errores frecuentes y cómo evitarlos.
+item: El paso final: validar y abrir el archivo en el visor.
+@@
+
+@heading h-spec
+texto: Qué es la spec
+nivel: 1
+sub: La especificación abierta del formato.
+@@
+
+@nota n-spec
+tipo: definición
+
+La **spec** dice qué es un `.lnd` válido: cómo se abre y se cierra un bloque, qué claves existen y qué hace un visor con lo que no conoce. Desde la versión 1.2 las palabras reservadas existen en español, inglés y chino, cada archivo usa las de un idioma, y hay bloques para memoria reutilizable (`@experiencia`) y decisiones con nivel de confianza (`@decision`).
+@@
+
+@code c-ejemplo
+lenguaje: lnd
+titulo: Un bloque se ve así
+
+.@tarea t-llamar
+titulo: Llamar al proveedor
+estado: pendiente
+responsable: Ana
+.@@
+@@
+
+@cta cta-doc
+texto: ¿Lo vemos con un caso tuyo?
+url: ?demo=contacto&vista=web
+boton: Contacto
+@@

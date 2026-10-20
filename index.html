@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>conocimiento.wiki · la wiki privada de tus agentes y tu equipo</title>
+<meta name="description" content="Una wiki privada en archivos de texto que viven en tu Git. Una fuente, muchas vistas, cada afirmación marcada como verificada o supuesta. Acceso para agentes por MCP, pronto.">
+<link rel="canonical" href="https://conocimiento.wiki/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<!--
+  Lanzamiento público: 19 nov 2026 (https://conocimiento.wiki). Sin backend: el formulario abre el correo a info@conocimiento.wiki (CONFIG.mailto en site.js); la página no envía datos.
+  Precios y cupos: un solo objeto PRECIOS al inicio de site.js; cada cifra en pantalla lleva data-precio="<clave>".
+-->
+<a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
+<header class="top">
+  <div class="w top-in">
+    <a class="logo" href="#" aria-label="conocimiento.wiki"><span class="mk" aria-hidden="true">c</span><span>conocimiento<span class="dot">.wiki</span></span></a>
+    <nav aria-label="Secciones">
+      <a href="#vistas" data-i18n="nav1">Vistas</a>
+      <a href="#verificado" data-i18n="nav2">Verificado</a>
+      <a href="#agentes" data-i18n="nav3">Agentes</a>
+      <a href="#ltd" data-i18n="nav4">Precio de lanzamiento</a>
+    </nav>
+    <button class="lang" id="lang" type="button" aria-label="Cambiar idioma / Change language">EN</button>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero w">
+  <div class="hero-copy">
+    <p class="k" data-i18n="kicker">Lanzamiento público: 19 nov 2026 · lista de espera abierta</p>
+    <h1 data-i18n="h1">La wiki privada que tus agentes leen, citan y mantienen.</h1>
+    <p class="lead" data-i18n="lead">Tu equipo escribe una vez, en archivos de texto que viven en tu propio repositorio Git. La misma página se abre como documento, presentación o tablero, y cada dato dice si está verificado o es un supuesto. Pronto, tus agentes la consultarán por MCP y propondrán cambios como pull requests.</p>
+    <div class="ctas">
+      <a class="btn" href="#espera" data-i18n="cta1">Unirme a la lista</a>
+      <a class="btn ghost" href="#ltd" data-i18n="cta2">Ver precio de lanzamiento</a>
+    </div>
+    <p class="fine" data-i18n="fine">Nada se cobra hoy. Trae tu propia llave de modelo (BYOK). <span class="st hoy">Hoy</span> = ya funciona en la demo · <span class="st pronto">Pronto</span> = en construcción.</p>
+  </div>
+  <figure class="src" aria-label="Ejemplo de página fuente">
+    <figcaption><span data-i18n="srccap">Una página, tal como la guarda tu wiki</span><span class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-v="fuente" data-i18n="t1">Fuente</button><button role="tab" aria-selected="false" data-v="doc" data-i18n="t2">Documento</button><button role="tab" aria-selected="false" data-v="tablero" data-i18n="t3">Tablero</button></span></figcaption>
+    <div class="pane on" data-p="fuente"><pre><b>@afirmacion</b> af-migraciones
+texto: Toda migración pasa por staging
+  con script de reversa en el PR.
+fuente: ADR-015
+confianza: alta
+<b>@@</b>
+
+<b>@afirmacion</b> af-limite
+texto: El proveedor de pagos acepta
+  25 peticiones por segundo.
+fuente: chat del equipo
+confianza: baja
+<i>verificar: si</i>
+<b>@@</b>
+
+<b>@tarea</b> t-42
+titulo: Confirmar el límite con el proveedor
+estado: en_curso
+<b>@@</b></pre></div>
+    <div class="pane" data-p="doc">
+      <div class="claim ok"><span class="tag" data-i18n="ver">Verificado</span><p data-i18n="c1">Toda migración pasa por staging con script de reversa en el PR.</p><small>ADR-015</small></div>
+      <div class="claim sup"><span class="tag" data-i18n="sup">Supuesto</span><p data-i18n="c2">El proveedor de pagos acepta 25 peticiones por segundo.</p><small data-i18n="c2s">chat del equipo · por verificar</small></div>
+    </div>
+    <div class="pane" data-p="tablero">
+      <div class="kb"><div><h4 data-i18n="k1">Pendiente</h4></div><div><h4 data-i18n="k2">En curso</h4><div class="card" data-i18n="c3">Confirmar el límite con el proveedor</div></div><div><h4 data-i18n="k3">Hecho</h4><div class="card done" data-i18n="c4">Regla de migraciones con fuente</div></div></div>
+    </div>
+  </figure>
+</section>
+
+<section id="vistas" class="band w">
+  <div class="num">01</div>
+  <div class="body">
+    <span class="st hoy" data-i18n="hoy">Hoy</span>
+    <h2 data-i18n="s1h">Una fuente, muchas vistas.</h2>
+    <p data-i18n="s1p">Cada página es un archivo de texto con bloques. El mismo archivo se lee como documento, presentación, tablero Kanban, lectura en pantalla grande, Markdown o HTML. Nadie copia contenido entre herramientas.</p>
+    <ul class="views" aria-label="Vistas">
+      <li data-i18n="v1">Documento</li><li data-i18n="v2">Presentación</li><li data-i18n="v3">Tablero</li><li data-i18n="v4">Pantalla grande</li><li>Markdown</li><li>HTML</li>
+    </ul>
+  </div>
+</section>
+
+<section id="verificado" class="band w alt">
+  <div class="num">02</div>
+  <div class="body">
+    <span class="st hoy" data-i18n="hoy">Hoy</span>
+    <h2 data-i18n="s2h">Verificado o supuesto, en cada afirmación.</h2>
+    <p data-i18n="s2p">Cada hecho lleva fuente, fecha y confianza. Lo que salió de un chat queda marcado como supuesto hasta que alguien lo compruebe. Tu agente cita lo verificado y pregunta por lo demás.</p>
+  </div>
+  <div class="side">
+    <div class="meter"><span data-i18n="m1">fuente</span><b>ADR-015</b></div>
+    <div class="meter"><span data-i18n="m2">vigente al</span><b>14 oct 2026</b></div>
+    <div class="meter"><span data-i18n="m3">confianza</span><b data-i18n="m3v">alta</b></div>
+  </div>
+</section>
+
+<section id="agentes" class="band w">
+  <div class="num">03</div>
+  <div class="body">
+    <span class="st pronto" data-i18n="pronto">Pronto</span>
+    <h2 data-i18n="s3h">Tus agentes leerán y escribirán por MCP.</h2>
+    <p data-i18n="s3p">Conectarás cualquier agente compatible con MCP. Buscará, pedirá respuestas citadas y propondrá cambios. Lo que un agente escribe llega como pull request a tu repositorio y una persona lo aprueba. Los secretos nunca llegan a su contexto.</p>
+  </div>
+  <pre class="code" aria-label="Configuración MCP de ejemplo">{
+  "mcpServers": {
+    "mi-wiki": {
+      "url": "https://<tu-equipo>.conocimiento.wiki/mcp",
+      "headers": { "Authorization": "Bearer ${TOKEN}" }
+    }
+  }
+}</pre>
+</section>
+
+<section class="band w alt">
+  <div class="num">04</div>
+  <div class="body">
+    <span class="st hoy" data-i18n="hoy">Hoy</span> <span class="st pronto" data-i18n="pronto2">Pronto: historial y marketplace</span>
+    <h2 data-i18n="s4h">Skills que se ganan la confianza.</h2>
+    <p data-i18n="s4p">Un proceso que funciona se guarda como skill en un archivo de texto. Más adelante, cada vez que un agente lo use reportará si salió bien, y los skills con buen historial se podrán compartir en un marketplace.</p>
+  </div>
+  <div class="side skill">
+    <div class="sk-h">Skill:Desplegar_staging</div>
+    <div class="sk-r"><span data-i18n="sk1">corridas</span><b>7</b></div>
+    <div class="sk-r"><span data-i18n="sk2">fallas reportadas</span><b>1</b></div>
+    <div class="sk-n" data-i18n="sk3">Ejemplo ilustrativo</div>
+  </div>
+</section>
+
+<section id="ltd" class="ltd w">
+  <div class="ltd-head">
+    <p class="k copper" data-i18n="lk">Pago único de lanzamiento · cupos limitados</p>
+    <h2 data-i18n="lh">Precio de por vida para quienes llegan primero.</h2>
+    <p data-i18n="lp">Primera ola de <span data-precio="cupo">150</span> lugares. Las reservas abren desde la lista de espera cuando el acceso por MCP pase sus pruebas; no hay cobro en esta página.</p>
+  </div>
+  <div class="plans">
+    <article class="plan">
+      <h3>Solo</h3>
+      <div class="price"><span class="cur">US$</span><span data-precio="solo">89</span><small data-i18n="once">pago único</small></div>
+      <ul><li><span data-precio="solo_wikis">1</span> <span data-i18n="wiki1">wiki privada</span></li><li><span data-precio="solo_asientos">1</span> <span data-i18n="seat1">asiento</span></li><li><span data-precio="escrituras">500</span> <span data-i18n="cap">cambios de agente por asiento al día</span></li><li data-i18n="byok">BYOK: tu llave de modelo</li></ul>
+    </article>
+    <article class="plan main">
+      <h3 data-i18n="pteam">Equipo</h3>
+      <div class="price"><span class="cur">US$</span><span data-precio="equipo">349</span><small data-i18n="once">pago único</small></div>
+      <ul><li><span data-precio="equipo_wikis">3</span> <span data-i18n="wikis">wikis privadas</span></li><li><span data-precio="equipo_asientos">5</span> <span data-i18n="seats">asientos</span></li><li><span data-precio="escrituras">500</span> <span data-i18n="cap">cambios de agente por asiento al día</span></li><li data-i18n="byok">BYOK: tu llave de modelo</li></ul>
+    </article>
+    <article class="plan">
+      <h3><span data-i18n="pag">Agencia</span> <span class="pill" data-i18n="lista">lista</span></h3>
+      <div class="price"><span class="cur">US$</span><span data-precio="agencia">899</span><small data-i18n="once">pago único</small></div>
+      <ul><li><span data-precio="agencia_wikis">10</span> <span data-i18n="wikis">wikis privadas</span></li><li><span data-precio="agencia_asientos">15</span> <span data-i18n="seats">asientos</span></li><li data-i18n="ag1">Instalación propia desde el primer día</li><li data-i18n="ag2">Alojado cuando llegue el panel multi-cliente; solo <span data-precio="agencia_cupo">20</span> lugares</li></ul>
+    </article>
+  </div>
+  <div class="extras">
+    <div class="ex"><h4 data-i18n="cubreh">Qué cubre el pago único</h4>
+      <p data-i18n="cubre1">Licencia de por vida para instalar el servidor en tu máquina, sin obligaciones AGPL, con las actualizaciones de la versión 1.</p>
+      <p data-i18n="cubre2">Tu wiki alojada con nosotros, con los topes de la derecha. Tus archivos siguen en tu Git.</p></div>
+    <div class="ex"><h4 data-i18n="topesh">Topes del alojado</h4>
+      <p><span data-precio="escrituras">500</span> <span data-i18n="tope1">cambios de agente por asiento al día</span></p>
+      <p><span data-precio="lecturas">5000</span> <span data-i18n="tope2">lecturas por MCP por asiento al día</span></p>
+      <p><span data-precio="gb">2</span> <span data-i18n="tope3">GB de índice por asiento</span></p></div>
+    <div class="ex"><h4 data-i18n="nocubreh">Qué no cubre</h4>
+      <p data-i18n="nocubre1">Tokens de modelo (siempre BYOK), asientos extra, uso por encima de los topes, SSO ni acuerdo de nivel de servicio.</p>
+      <p><span data-i18n="add2">Dominio propio</span> · US$<span data-precio="dominio">29</span> <span data-i18n="once">pago único</span></p></div>
+  </div>
+  <p class="terms" data-i18n="terms">Precios de lanzamiento, públicos y fijos para la primera ola. «De por vida» es la vida del servicio: si el alojado cerrara, te quedan tus archivos en Git y la licencia de instalación propia. Reembolso completo durante 30 días. Las condiciones completas se publican antes de cobrar.</p>
+</section>
+
+<section id="espera" class="wait w">
+  <div>
+    <h2 data-i18n="wh">Entra a la lista de espera.</h2>
+    <p data-i18n="wp">Te escribimos cuando abran los cupos. Un correo, sin spam.</p>
+  </div>
+  <form id="form" novalidate>
+    <label><span data-i18n="f1">Correo</span><input type="email" name="correo" required autocomplete="email" placeholder="tu@empresa.com"></label>
+    <label><span data-i18n="f2">Qué te interesa</span>
+      <select name="interes"><option value="solo">Solo</option><option value="equipo" data-i18n="pteam">Equipo</option><option value="agencia" data-i18n="pag">Agencia</option><option value="propia" data-i18n="f5">Instalación propia</option><option value="creador" data-i18n="f3">Crear skills</option></select></label>
+    <button class="btn" type="submit" data-i18n="f4">Reservar mi lugar</button>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    <p class="fine"><span data-i18n="contacto">Contacto:</span> <a href="mailto:info@conocimiento.wiki">info@conocimiento.wiki</a></p>
+  </form>
+</section>
+</main>
+
+<footer class="w foot">
+  <span><a href="https://conocimiento.wiki/">conocimiento.wiki</a> · <a href="mailto:info@conocimiento.wiki">info@conocimiento.wiki</a></span>
+  <span data-i18n="foot">Lanzamiento público el 19 nov 2026. Ejemplos ilustrativos; ninguna cifra de usuarios.</span>
+  <span class="mt" data-i18n="mt">Original en español. La versión en inglés es traducción automática.</span>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

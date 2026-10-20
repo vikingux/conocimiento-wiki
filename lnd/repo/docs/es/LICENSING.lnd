@@ -1,0 +1,53 @@
+# Licencias
+Qué licencia cubre cada parte de este repositorio, qué te permite hacer y por qué para contribuir basta una firma.
+
+// perfil: lnd-1.1 · ámbito: legal · vistas sugeridas: web
+// idioma: es · traducción: automática (IA) desde el inglés, sin revisión humana
+// no es asesoría legal; el texto que obliga es el archivo LICENSE
+
+---
+
+@table tb-parts
+titulo: Qué licencia lleva cada parte
+
+| Parte | Licencia | Archivo |
+|---|---|---|
+| Renderer, parser, validador | Licencia Apache 2.0 | `LICENSE` |
+| SDK, cliente MCP y CLI futuros | Licencia Apache 2.0 | `LICENSE` |
+| Texto de la especificación (`spec/`) | Creative Commons Atribución 4.0 (CC BY 4.0) | `spec/LICENSE` |
+| Ejemplos (`examples/`) | Licencia Apache 2.0 | `LICENSE` |
+@@
+
+@heading h-why
+texto: Por qué Apache-2.0
+nivel: 1
+
+Apache-2.0 deja que cualquiera use, modifique y distribuya las herramientas, también dentro de productos cerrados, siempre que conserve la licencia y el archivo `NOTICE`. Además trae una **concesión de patentes** explícita: cada contribuidor licencia las patentes que su aporte necesita, y esa licencia termina para quien demande por esas patentes. Para un formato que deben implementar muchas herramientas independientes, esa protección pesa más que un texto de licencia más corto.
+@@
+
+@heading h-spec
+texto: Por qué CC BY 4.0 para la especificación
+nivel: 1
+
+Cualquiera puede copiar, traducir y adaptar la especificación, incluso para escribir una implementación que compita, siempre que cite la fuente. Un formato solo se extiende si quien lo implementa puede citar sus reglas con libertad.
+@@
+
+@heading h-contrib
+texto: Aportes: DCO, sin CLA
+nivel: 1
+
+Los aportes entran con la misma licencia con la que salen (Apache-2.0 para código, CC BY 4.0 para el texto de la spec). La línea `Signed-off-by` del [Developer Certificate of Origin](https://developercertificate.org/) deja constancia de que tienes derecho a entregar el trabajo. Este repositorio no necesita un acuerdo de licencia de contribuidor.
+@@
+
+@nota n-server
+tipo: alcance
+
+Algunos servicios alojados construidos sobre el formato tienen otra licencia y viven en repositorios aparte, que pueden pedir un acuerdo de licencia de contribuidor. Eso no cambia nada aquí: todo lo de este repositorio sigue siendo Apache-2.0 o CC BY 4.0.
+@@
+
+@heading h-mark
+texto: Nombre y marcas
+nivel: 1
+
+Apache-2.0 no da derechos sobre nombres ni logos (sección 6). Puedes decir que una herramienta «lee archivos LANDDY `.lnd`». Están planeadas una política de marca y un sello «LANDDY compatible» ligado a los fixtures de prueba.
+@@

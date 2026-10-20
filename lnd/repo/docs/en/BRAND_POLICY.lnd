@@ -1,0 +1,53 @@
+# Brand policy · LANDDY and `.lnd`
+The `.lnd` format is open: anyone may implement it, for free, without asking. The LANDDY name and logo are not open in the same way. This page says what you can do with each, modeled on common open-source trademark policies.
+
+// profile: lnd-1.1 · scope: marca · suggested_views: web
+// locale: en · translation: borrador redactado con IA; las ediciones es y zh-CN son traducción automática
+
+---
+
+@heading h-free
+text: What is free for everyone
+level: 1
+@@
+
+@features f-free
+item: **Implement the format.** Write a parser, renderer, editor, converter or validator for `.lnd`, open or closed, paid or free. The specification is CC BY 4.0 and the reference tools are Apache-2.0.
+item: **Use the extension and the word.** `.lnd`, "lnd file" and the profile name `lnd-1` are descriptive. Use them in file pickers, docs and code.
+item: **Fork the code.** The Apache-2.0 license applies to the code. This policy covers names and logos only; it never limits what the code license allows.
+item: **Write about it.** Articles, talks, tutorials, comparisons and reviews may name LANDDY and show the logo to refer to the project.
+@@
+
+@heading h-ok
+text: Wording you may use
+level: 1
+@@
+
+@table tb-ok
+title: Wording you may use
+
+| Wording | When |
+|---|---|
+| Compatible with .lnd | Your tool reads or writes `.lnd` files that follow the specification |
+| Implements the .lnd specification, profile lnd-1.1 | You pass `tools/lnd_check.py --estricto` on the examples in `examples/` |
+| Exports to / imports from .lnd | A converter, plugin or integration |
+| Built on the LANDDY reference renderer | You ship the renderer from this repository, unmodified or with your changes listed |
+@@
+
+@heading h-no
+text: What needs written permission
+level: 1
+@@
+
+@features f-no
+item: **LANDDY in your product, company or domain name.** "LANDDY Pro", "landdy-tools" or a domain containing LANDDY suggest that the project makes or backs your product.
+item: **Endorsement.** Do not say or imply that your product is official, certified, approved or recommended by LANDDY. "Compatible with .lnd" is fine; "Official LANDDY editor" is not.
+item: **Changed logos.** Use the logo as provided. Do not recolor it, combine it with your own mark or use a confusingly similar one.
+item: **Modified versions under the same name.** If you distribute a changed renderer or validator, give it a different name. You may say it is based on the LANDDY reference renderer.
+@@
+
+@note n-contact
+type: contact
+
+Ask for permission, report misuse or suggest changes to this policy at [info@conocimiento.wiki](mailto:info@conocimiento.wiki). This policy is not legal advice and does not change any license. It applies to the LANDDY name whether or not it is registered as a trademark in a given country.
+@@

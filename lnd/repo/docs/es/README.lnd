@@ -1,0 +1,100 @@
+# LANDDY `.lnd`
+Un formato de texto plano para conocimiento que personas y agentes de IA pueden leer, escribir, citar y revisar. Un mismo archivo se ve como página web, slides, tablero kanban, runbook o mapa de líneas, y cada bloque conserva un id estable al que un agente puede apuntar.
+
+// perfil: lnd-1.1 · ámbito: README · vistas sugeridas: web
+// idioma: es · traducción: automática (IA) desde el inglés, sin revisión humana
+
+---
+
+@heading h-what
+texto: Cómo se ve
+nivel: 1
+@@
+
+@code c-hello
+lenguaje: lnd
+
+# Horario de atención
+El soporte atiende en días hábiles. **Verificado.**
+
+.// perfil: lnd-1.1 · ámbito: ejemplo · vistas sugeridas: web
+
+.---
+
+.@afirmacion a-hours
+texto: Soporte responde de 09:00 a 17:00, hora local, de lunes a viernes.
+certeza: Verificado
+fuente: f-policy
+.@@
+
+.@fuente f-policy
+titulo: Política de soporte, sección 2
+uri: https://example.org/policy
+.@@
+@@
+
+Un bloque se abre con `@tipo id`, lleva propiedades `clave: valor`, después un cuerpo en Markdown, y se cierra con `@@`. Eso es casi toda la gramática. Las reglas completas están en [la especificación](spec/SPEC.es.md).
+
+@heading h-why
+texto: Por qué otro formato
+nivel: 1
+@@
+
+@features f-why
+item: **Ids estables.** Cada bloque tiene un id, por ejemplo `a-hours`. Un agente puede citarlo, enlazarlo o proponer un cambio solo a ese bloque.
+item: **Bloques con tipo.** `@afirmacion` es un dato con fuente, `@tarea` es una tarea con estado, `@accion` es un paso de runbook con verificación y rollback. Las herramientas saben qué es cada bloque sin adivinarlo de la prosa.
+item: **La certeza es parte del texto.** Los datos se marcan Verificado, Supuesto o Por verificar, y el renderer muestra la diferencia.
+item: **Texto plano en Git.** Los diffs se leen, el pull request es la revisión y nada queda encerrado en una base de datos.
+item: **Seguro por defecto.** El renderer de referencia escapa todo, nunca evalúa contenido y funciona sin red con una Content Security Policy estricta.
+@@
+
+@heading h-start
+texto: Empezar
+nivel: 1
+
+1. Abre `renderer/render.html` en un navegador. Funciona desde el disco y sin red. Suelta cualquier `.lnd` encima o elige uno de los ejemplos incluidos.
+2. Valida un archivo: `python3 tools/lnd_check.py examples/es/hello.lnd` (Python 3.9 o superior, sin dependencias). Agrega `--estricto` para que los avisos también fallen, o `--json` para CI y agentes.
+3. Si eres un agente de IA, o estás construyendo uno, lee primero [AGENTS.es.md](AGENTS.es.md).
+@@
+
+@table tb-map
+titulo: Qué hay en este repositorio
+
+| Ruta | Contenido |
+|---|---|
+| `spec/` | La especificación del formato (perfil `lnd-1`) |
+| `renderer/render.html` | Renderer de referencia: un solo HTML autocontenido |
+| `tools/lnd_check.py` | Validador con códigos de diagnóstico estables |
+| `examples/` | Documentos válidos pequeños en inglés, español y chino |
+| `docs/lnd/` | Las fuentes de esta documentación, escritas en `.lnd` |
+| `docs/legal/` | Notas de licencia y condiciones para contribuir |
+| `docs/guias/` | Guías, empezando por decisiones auditables (`@decision`) |
+| `docs/historias/` | Notas de campo, incluida una escrita por un agente de IA |
+| `AGENTS.md`, `llms.txt` | Guía para agentes de IA |
+| `BRAND_POLICY.md` | Cómo usar el nombre LANDDY; `.lnd` se implementa libremente |
+| `docs/ACCESIBILIDAD.md` | Accesibilidad del renderer y del sitio |
+@@
+
+@table tb-status
+titulo: Estado
+
+| Parte | Estado |
+|---|---|
+| Especificación, perfil `lnd-1` (versión 1.1) | Disponible hoy |
+| Renderer de referencia | Disponible hoy |
+| Validador `lnd_check.py` | Disponible hoy |
+| SDK, cliente MCP, CLI | Planeado. Todavía no está en este repositorio |
+@@
+
+@heading h-license
+texto: Licencia
+nivel: 1
+
+El código (renderer, parser, validador y, cuando existan, SDK, cliente MCP y CLI) usa la [Licencia Apache 2.0](LICENSE), que incluye una concesión de patentes. El texto de la especificación usa [CC BY 4.0](spec/LICENSE). Detalles en [docs/legal/LICENSING.es.md](docs/legal/LICENSING.es.md).
+@@
+
+@nota n-lang
+tipo: idioma
+
+Este README también está en [English](README.md) y [简体中文](README.zh-CN.md). Todas las ediciones (inglés, español, chino) son **traducción automática** por IA, sin revisión humana todavía. La interfaz del renderer (`?lang=en|es|zh`) y los mensajes del validador (`--lang en|es|zh`) vienen en los tres idiomas. Contacto: [info@conocimiento.wiki](mailto:info@conocimiento.wiki) · [conocimiento.wiki](https://conocimiento.wiki).
+@@

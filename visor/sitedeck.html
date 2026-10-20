@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-375DMByV0JLbR237gCKKygKkjaqTt39KP/nly5iDGO8=' 'self'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sitedeck</title>
+<style>
+@font-face{font-family:"Fraunces";src:url("fonts/fraunces.woff2") format("woff2");font-weight:300 700;font-display:swap}
+@font-face{font-family:"Public Sans";src:url("fonts/publicsans.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("fonts/ibmplexmono-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("fonts/ibmplexmono-semibold.woff2") format("woff2");font-weight:600;font-display:swap}
+/* Tema por defecto: los mismos tokens que render-v2 (tokens.css), claro y noche según el sistema */
+:root{color-scheme:light dark;
+  --paper:#F4F0E6;--paper2:#ECE6D8;--card:#FBF9F3;--ink:#1A1F1C;--muted:#5E625C;--linea:rgba(26,31,28,.16);--regla:#1A1F1C;
+  --accent:#0B6E4F;--on-accent:#FFFFFF;--copper:#C45C26;--copper-tx:#9E4419;
+  --sombra:0 1px 0 rgba(26,31,28,.06),0 10px 30px -18px rgba(26,31,28,.45);
+  --display:"Fraunces","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --text:"Public Sans","Segoe UI","Noto Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"DejaVu Sans Mono",monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);--radio:2px;--bw:1px;--dw:500}
+@media (prefers-color-scheme:dark){body[data-tema=familia]{
+  --paper:#14171A;--paper2:#191D21;--card:#1C2024;--ink:#E8E4D8;--muted:#A6ABA2;--linea:#353B41;--regla:#8C9189;
+  --accent:#5FBF94;--on-accent:#0E1714;--copper:#E08A55;--copper-tx:#EE9A66;--sombra:0 1px 0 rgba(0,0,0,.3),0 12px 32px -16px rgba(0,0,0,.8)}}
+/* Temas opcionales (tokens de render-v2) */
+body[data-tema=neobrutalista]{--paper:#FFF4D6;--paper2:#FFE9B3;--card:#FFFFFF;--ink:#111111;--muted:#3D3D3D;--linea:#111111;--regla:#111111;--accent:#1F3BFF;--on-accent:#FFFFFF;--copper:#FF5C39;--copper-tx:#C2361A;--sombra:4px 4px 0 #111111;--radio:0;--bw:2px;--display:var(--text);--dw:800}
+body[data-tema=retro]{--paper:#EFE6D2;--paper2:#E6DAC0;--card:#F7F0DF;--ink:#2B2118;--muted:#6B5B45;--linea:#CDBF9E;--regla:#2B2118;--accent:#9A3412;--on-accent:#FFFFFF;--copper:#4D7C0F;--copper-tx:#3F6510;--sombra:inset 0 0 0 3px #F7F0DF,inset 0 0 0 4px #CDBF9E;--radio:3px}
+body[data-tema=cyberpunk]{color-scheme:dark;--paper:#0B0C10;--paper2:#101219;--card:#12141C;--ink:#E6F1FF;--muted:#9AA6C4;--linea:#2A2F45;--regla:#2A2F45;--accent:#00E5FF;--on-accent:#0B0C10;--copper:#FF2BD6;--copper-tx:#FF6BE3;--sombra:0 0 0 1px #2A2F45;--display:var(--mono);--dw:600}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:var(--paper);color:var(--ink);font:15px/var(--lh,1.5) var(--text);display:grid;grid-template-rows:56px auto minmax(0,1fr) 30px;grid-template-columns:minmax(0,1fr);transition:background-color var(--t,.32s) var(--ease),color var(--t,.32s) var(--ease)}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--mono)}
+/* barra superior: como #top de render-v2 */
+#top{grid-row:1;display:flex;align-items:center;gap:14px;padding:0 10px 0 18px;border-bottom:1px solid var(--regla);background:var(--paper);min-width:0}
+.sello{font:600 11px/1 var(--mono);letter-spacing:.08em;border:1.5px solid var(--ink);padding:5px 6px 4px;transform:rotate(-3deg);text-transform:uppercase;flex:none}
+#titulo{min-width:0;flex:1;display:flex;align-items:baseline;gap:12px;white-space:nowrap;overflow:hidden}
+#titulo b{font:var(--dw) 21px/1 var(--display);letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;font-variation-settings:"opsz" 30}
+#titulo span{font:12px var(--mono);color:var(--muted)}
+.btn{min-height:44px;border:1px solid var(--ink);background:var(--card);padding:0 14px;font:500 13px/1 var(--text);border-radius:var(--radio);display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn kbd,.kb{font:11px/1 var(--mono);opacity:.65;border:1px solid currentColor;border-radius:2px;padding:2px 4px}
+.ib{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid transparent;background:none;border-radius:var(--radio);color:var(--muted);padding:0}
+.ib:hover{color:var(--ink);border-color:var(--linea)}
+.ib svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* línea del lema */
+#lema{grid-row:2;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 18px 2px;min-width:0}
+#lema p{margin:0;font:400 17px/1.3 var(--display);letter-spacing:-.005em;color:var(--ink);font-variation-settings:"opsz" 24}
+#lema small{font:12px var(--mono);color:var(--muted);white-space:nowrap}
+#tabs{display:none}
+/* rejilla */
+#rejilla{grid-row:3;display:grid;gap:14px;padding:12px 18px 16px;min-height:0;grid-auto-rows:minmax(0,1fr)}
+#rejilla[data-preset="1"]{grid-template-columns:minmax(0,1fr)}
+#rejilla[data-preset="2c"],#rejilla[data-preset="2x2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+#rejilla[data-preset="3c"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+#rejilla[data-preset="foco"]{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
+#rejilla[data-preset="foco"] .panel:first-child{grid-row:1 / span var(--n,2)}
+#rejilla:not([data-preset="1"]) .panel.ancho{grid-column:span 2}
+.panel{position:relative;background:var(--card);border:var(--bw) solid var(--linea);border-radius:var(--radio);box-shadow:var(--sombra);display:grid;grid-template-rows:44px 2px minmax(0,1fr);min-width:0;min-height:0;overflow:hidden;animation:entra var(--t-med,.32s) var(--ease) both}
+.panel:nth-child(2){animation-delay:60ms}.panel:nth-child(3){animation-delay:120ms}.panel:nth-child(4){animation-delay:180ms}
+@keyframes entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+body[data-tema=cyberpunk] .panel:focus-within{box-shadow:0 0 0 1px var(--accent),0 0 18px -6px var(--accent)}
+.ph{grid-row:1;display:flex;align-items:center;gap:6px;padding:0 0 0 14px;border-bottom:1px solid var(--linea);min-width:0}
+.ph .tit{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:var(--dw) 15px/1 var(--display);letter-spacing:-.005em}
+.ph .tit span{font:11px var(--mono);color:var(--muted);margin-left:8px;letter-spacing:.02em}
+.ph .acc{display:flex;align-items:center;opacity:0;transition:opacity .16s var(--ease)}
+.panel:hover .acc,.panel:focus-within .acc,.panel.menu-on .acc{opacity:1}
+@media (hover:none){.ph .acc{opacity:1}}
+.reloj{grid-row:2;position:relative}
+.reloj i{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent);opacity:.7}
+.cuerpo{grid-row:3;position:relative;min-height:0;overflow:auto;overscroll-behavior:contain}
+.cuerpo iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:var(--paper)}
+.cuerpo.fade{animation:fade .3s var(--ease)}
+@keyframes fade{from{opacity:.35}to{opacity:1}}
+.menu{position:absolute;right:6px;top:44px;z-index:5;min-width:220px;background:var(--card);border:1px solid var(--ink);border-radius:var(--radio);box-shadow:var(--sombra);padding:6px;display:none}
+.panel.menu-on .menu{display:grid}
+.menu button,.menu label{min-height:44px;display:flex;align-items:center;gap:10px;padding:0 10px;border:0;background:none;text-align:left;font-size:14px;border-radius:var(--radio)}
+.menu button:hover{background:var(--paper2)}
+.menu label{justify-content:space-between;color:var(--muted);font-size:13px}
+.menu select{min-height:36px;border:1px solid var(--linea);background:var(--paper);border-radius:var(--radio);padding:0 6px;color:var(--ink)}
+.menu hr{border:0;border-top:1px solid var(--linea);margin:4px 0}
+/* renderer mínimo */
+.mini{padding:16px 18px 24px;max-width:760px}
+.mini h1{font:var(--dw) 24px/1.15 var(--display);margin:0 0 8px;letter-spacing:-.01em}
+.mini h2{font:var(--dw) 18px/1.2 var(--display);margin:22px 0 6px}
+.mini h3{font:600 14px/1.3 var(--text);margin:12px 0 4px}
+.mini p{margin:4px 0 8px}
+.mini code{font:12.5px var(--mono);background:var(--paper2);padding:0 3px;border-radius:2px}
+.mini table{border-collapse:collapse;font-size:13px;margin:6px 0 12px;width:100%}
+.mini th,.mini td{border-bottom:1px solid var(--linea);padding:5px 6px;text-align:left;vertical-align:top}
+.bloque{border-left:2px solid var(--linea);padding:2px 12px;margin:10px 0}
+.bloque .tipo{font:600 10.5px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+pre.fuente{margin:0;padding:14px 16px;font:12.5px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+.tablero{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(180px,1fr);gap:12px;padding:14px;align-items:start}
+.col h3{font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px;display:flex;justify-content:space-between}
+.tj{background:var(--paper);border:1px solid var(--linea);border-radius:var(--radio);padding:8px 10px;margin-bottom:8px;font-size:13px}
+.tj .meta,.feed .meta{font:11px var(--mono);color:var(--muted);margin-top:3px}
+.feed{list-style:none;margin:0;padding:4px 0}
+.feed li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:2px 8px;padding:9px 14px;border-bottom:1px solid var(--linea)}
+.feed .mk{font-size:15px;line-height:1.4;text-align:center}
+.feed .t{font-size:14px;line-height:1.35}
+.feed .meta{grid-column:2}
+.feed li.nuevo{animation:nuevo 1.2s var(--ease)}
+@keyframes nuevo{from{background:color-mix(in srgb,var(--accent) 16%,transparent)}to{background:transparent}}
+.galeria{height:100%;display:grid;grid-template-rows:minmax(0,1fr) 28px}
+.diapo{display:grid;padding:14px;min-height:0;overflow:hidden}
+.diapo img{max-width:100%;max-height:100%;object-fit:contain;margin:auto}
+.tarjeta{border:1px solid var(--linea);border-radius:var(--radio);padding:40px 22px 22px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--paper);position:relative;overflow:hidden;min-height:0}
+.tarjeta .n{position:absolute;top:14px;left:20px;font:12px var(--mono);color:var(--muted)}
+.tarjeta h2{font:var(--dw) clamp(18px,2vw,28px)/1.15 var(--display);margin:0 0 8px;letter-spacing:-.01em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}
+.tarjeta p{margin:0;color:var(--muted);max-width:60ch}
+.puntos{display:flex;gap:5px;justify-content:center;align-items:center}
+.puntos i{width:5px;height:5px;border-radius:50%;background:var(--linea)}
+.puntos i.on{background:var(--accent)}
+.vacio{padding:18px;color:var(--muted)}
+/* inicio vacío */
+#inicio{grid-row:3;display:none;overflow:auto;padding:8vh 18px 24px}
+body.sin-paneles #inicio{display:block}
+body.sin-paneles #rejilla{display:none}
+#inicio .caja{max-width:640px;margin:0 auto}
+#inicio h2{font:var(--dw) clamp(28px,5vw,40px)/1.1 var(--display);margin:0 0 12px;letter-spacing:-.015em}
+#inicio p{color:var(--muted);margin:0 0 22px;max-width:52ch}
+#inicio .acciones{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+#inicio ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--linea)}
+#inicio li button{width:100%;min-height:48px;display:flex;justify-content:space-between;align-items:center;gap:12px;border:0;border-bottom:1px solid var(--linea);background:none;padding:0 4px;text-align:left;font-size:15px}
+#inicio li button:hover{background:var(--paper2)}
+#inicio li span{font:12px var(--mono);color:var(--muted)}
+/* barra de estado: como #estado de render-v2 */
+#estado{grid-row:4;display:flex;align-items:center;gap:18px;padding:0 14px;border-top:1px solid var(--regla);font:12px/1 var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;background:var(--paper)}
+#estado .sp{flex:1}
+#estado b{font-weight:400;color:var(--ink)}
+#estado .alerta{color:var(--copper-tx)}
+/* ajustes: pantalla con secciones */
+#ajustes{position:fixed;inset:0;z-index:20;background:var(--paper);display:grid;grid-template-rows:56px minmax(0,1fr);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s var(--ease),transform .2s var(--ease),visibility 0s .2s}
+#ajustes.on{opacity:1;visibility:visible;transform:none;transition:opacity .2s var(--ease),transform .2s var(--ease)}
+#ajustes>header{display:flex;align-items:center;gap:14px;padding:0 10px 0 18px;border-bottom:1px solid var(--regla)}
+#ajustes>header h2{font:var(--dw) 21px/1 var(--display);margin:0;flex:1;letter-spacing:-.01em}
+.aj-cuerpo{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:0}
+.aj-tabs{border-right:1px solid var(--linea);padding:14px 10px;display:flex;flex-direction:column;gap:2px;overflow:auto}
+.aj-tabs button{min-height:44px;border:0;background:none;text-align:left;padding:0 12px;border-radius:var(--radio);font-size:14px;color:var(--muted);border-left:2px solid transparent}
+.aj-tabs button[aria-selected=true]{color:var(--ink);border-left-color:var(--accent);background:var(--card)}
+.aj-tabs button:hover{color:var(--ink)}
+.aj-panel{overflow:auto;padding:22px 28px 40px}
+.aj-panel section{display:none;max-width:720px}
+.aj-panel section.on{display:block}
+.aj-panel h3{font:var(--dw) 22px/1.2 var(--display);margin:0 0 4px;letter-spacing:-.01em}
+.aj-panel .intro{color:var(--muted);margin:0 0 18px;max-width:60ch}
+.campo{display:grid;gap:5px;margin:0 0 16px}
+.campo>span{font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.campo input[type=text],.campo input[type=number],.campo textarea,.campo select{min-height:44px;background:var(--card);border:1px solid var(--linea);border-radius:var(--radio);padding:8px 10px;color:var(--ink);font:14px var(--mono);width:100%}
+.campo textarea{min-height:96px;resize:vertical}
+.campo small{color:var(--muted);font-size:12.5px}
+.chk{display:flex;align-items:center;gap:10px;min-height:44px;font-size:14px}
+.chk input{width:20px;height:20px;accent-color:var(--accent)}
+.aviso{color:var(--copper-tx);font-weight:600;font-size:13px;margin:-8px 0 16px}
+.opciones{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:0 0 18px}
+.op{min-height:44px;border:1px solid var(--linea);background:var(--card);border-radius:var(--radio);padding:10px 12px;text-align:left;display:grid;gap:6px}
+.op[aria-pressed=true]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.op b{font-weight:600;font-size:14px}
+.op small{color:var(--muted);font-size:12px}
+.muestra{display:flex;gap:4px}.muestra i{width:18px;height:18px;border-radius:2px;border:1px solid rgba(0,0,0,.15)}
+.esq{display:grid;gap:3px;height:34px}.esq i{background:var(--paper2);border:1px solid var(--linea)}
+.pfila{border:1px solid var(--linea);border-radius:var(--radio);background:var(--card);padding:12px 14px;margin:0 0 12px}
+.pfila>header{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.pfila>header b{flex:1;font:var(--dw) 16px var(--display);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0 12px}
+.pgrid .campo{margin-bottom:10px}
+.pfila.destacada{border-color:var(--accent)}
+.fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 0}
+dl.atajos{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:0}
+dl.atajos dt{font:12px var(--mono)}dl.atajos dd{margin:0;color:var(--muted)}
+/* paleta Ctrl K */
+#paleta{position:fixed;inset:0;z-index:30;background:rgba(20,23,26,.32);display:none;align-items:flex-start;justify-content:center;padding:12vh 14px 14px}
+#paleta.on{display:flex}
+#paleta .caja{width:min(560px,100%);background:var(--card);border:1px solid var(--ink);border-radius:var(--radio);box-shadow:var(--sombra);overflow:hidden}
+#paleta input{width:100%;min-height:52px;border:0;border-bottom:1px solid var(--linea);background:none;padding:0 16px;font:16px var(--text);outline:none;color:var(--ink)}
+#paleta ul{list-style:none;margin:0;padding:6px;max-height:50vh;overflow:auto}
+#paleta li{min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;border-radius:var(--radio);cursor:pointer;font-size:14px}
+#paleta li[aria-selected=true]{background:var(--paper2)}
+#paleta li span{font:11px var(--mono);color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:44px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:9px 14px;border-radius:var(--radio);font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:40;max-width:calc(100vw - 28px)}
+.toast.on{opacity:1}
+body[data-tema=retro]::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(43,33,24,.025) 0 1px,transparent 1px 3px);z-index:50}
+/* tableta: dos columnas */
+@media (max-width:1024px){#rejilla[data-preset]{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(320px,1fr);overflow:auto}#rejilla[data-preset] .panel:first-child{grid-row:auto}#rejilla[data-preset="1"]{grid-template-columns:minmax(0,1fr)}.ocultable{display:none}}
+/* móvil: un panel a la vez, con pestañas y deslizar */
+@media (max-width:640px){
+  body{grid-template-rows:56px auto auto minmax(0,1fr) 30px}
+  #top{padding:0 4px 0 14px;gap:8px}#titulo span{display:none}#titulo b{font-size:19px}
+  #lema{padding:10px 14px 0}#lema p{font-size:15px}#lema small{display:none}
+  #tabs{grid-row:3;display:flex;gap:4px;overflow-x:auto;padding:8px 14px 0;scrollbar-width:none}
+  #tabs::-webkit-scrollbar{display:none}
+  #tabs button{flex:none;min-height:44px;border:1px solid var(--linea);background:var(--card);border-radius:var(--radio);padding:0 12px;font-size:13px;max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #tabs button[aria-selected=true]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+  #rejilla[data-preset],#inicio{grid-row:4}#estado{grid-row:5}
+  #rejilla[data-preset]{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;gap:12px;padding:10px 14px 12px;scrollbar-width:none}
+  #rejilla::-webkit-scrollbar{display:none}
+  #rejilla[data-preset] .panel{flex:0 0 100%;scroll-snap-align:center;animation:none}
+  #estado{gap:12px}.ocultable-m{display:none}
+  .aj-cuerpo{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+  .aj-tabs{flex-direction:row;border-right:0;border-bottom:1px solid var(--linea);padding:6px 10px;scrollbar-width:none}
+  .aj-tabs button{flex:none;border-left:0;border-bottom:2px solid transparent}
+  .aj-tabs button[aria-selected=true]{border-bottom-color:var(--accent)}
+  .aj-panel{padding:18px 14px 40px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+#top .ib[aria-pressed=true]{color:var(--accent);border-color:var(--linea)}
+#estado .pausa{color:var(--copper-tx)}
+.panel.pausado .reloj i{background:var(--muted)}
+.ph .pz{font:11px var(--mono);color:var(--copper-tx);margin-left:6px}
+.feed .est{font:11px var(--mono);color:var(--ink);margin-right:6px}
+/* apariencia */
+.opciones.temas{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+.op.sw{padding:8px;gap:6px}.op.sw .prev{display:flex;align-items:center;gap:5px;height:44px;padding:0 10px;border-radius:var(--radio);border:1px solid rgba(127,127,127,.35)}
+.op.sw .prev span{font:600 18px/1 var(--display);flex:1}.op.sw .prev i{width:12px;height:12px;border-radius:50%}
+.acentos{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}
+.acc-lista{display:flex;flex-wrap:wrap;gap:6px}
+.acc-sw{min-width:44px;min-height:44px;border:1px solid var(--linea);background:var(--card);border-radius:var(--radio);display:grid;place-items:center;padding:0 8px;font-size:13px}
+.acc-sw i{width:22px;height:22px;border-radius:50%;display:block}.acc-sw[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+label.color{display:inline-flex;align-items:center;gap:8px;min-height:44px;border:1px solid var(--linea);background:var(--card);border-radius:var(--radio);padding:0 10px 0 4px;font-size:13px;cursor:pointer}
+label.color input{width:44px;height:36px;border:0;padding:0;background:none;cursor:pointer}
+label.color:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+details.avanzado{border-top:1px solid var(--linea);margin:6px 0 14px;padding-top:4px}
+details.avanzado summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+details.avanzado[open] summary{margin-bottom:8px}
+.campo input[type=range]{min-height:44px;width:100%;accent-color:var(--accent)}
+.campo output{font:inherit;color:var(--ink)}
+.nota{display:block;color:var(--muted);font-size:12.5px;margin:-6px 0 12px}
+.cuerpo>:not(iframe){zoom:var(--escala,1)}
+body.denso #rejilla{gap:8px;padding:8px 10px 10px}body.denso .feed li{padding:5px 10px}body.denso .mini{padding:10px 12px 16px}body.denso .tablero{gap:8px;padding:8px}body.denso .tj{padding:5px 8px;margin-bottom:5px}
+body.quieto *,body.quieto *::before,body.quieto *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+</style>
+</head>
+<body data-tema="familia">
+<a class="sr" href="#rejilla" data-i="saltar">Ir a los paneles</a>
+<header id="top">
+  <span class="sello" aria-hidden="true">deck</span>
+  <div id="titulo"><b id="nombre-deck">Sitedeck</b><span>Sitedeck</span></div>
+  <button class="btn ocultable" id="abrir-lnd" type="button" data-i="abrir_lnd">Abrir .lnd</button>
+  <button class="btn ocultable" id="btn-paleta" type="button" aria-haspopup="dialog"><span data-i="buscar">Buscar</span> <kbd>Ctrl K</kbd></button>
+  <button class="ib" id="btn-pausa" type="button" aria-pressed="false" data-i-al="pausa_al" data-i-ti="pausa_al"><svg viewBox="0 0 24 24" class="i-pausa"><path d="M9 5v14M15 5v14"/></svg></button>
+  <button class="ib" id="btn-ajustes" type="button" data-i-al="ajustes_al" data-i-ti="ajustes_al" aria-haspopup="dialog" aria-controls="ajustes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+</header>
+<div id="lema"><p data-i="lema">Agentic y human, somos libres como un OS.</p><small id="lema-info"></small></div>
+<nav id="tabs" role="tablist" data-i-al="paneles"></nav>
+<main id="rejilla" data-preset="foco" data-i-al="paneles"></main>
+<section id="inicio" data-i-al="empezar">
+  <div class="caja">
+    <h2 data-i="inicio_h">Abre un .lnd y míralo vivo.</h2>
+    <p data-i="inicio_p">Un deck reúne varios documentos en paneles que se actualizan solos. Empieza con un archivo de tu disco o con el deck de ejemplo.</p>
+    <div class="acciones"><button class="btn pri" type="button" id="inicio-abrir" data-i="inicio_abrir">Abrir un .lnd</button><button class="btn" type="button" id="inicio-ejemplo" data-i="inicio_ejemplo">Usar el deck de ejemplo</button></div>
+    <ul id="inicio-lista"></ul>
+  </div>
+</section>
+<footer id="estado"><span id="est-srv"></span><span id="est-pausa" class="pausa"></span><span class="sp"></span><span id="est-paneles" class="ocultable-m"></span><span class="ocultable-m" data-i="atajo_aj">Ctrl+, ajustes · P pausa</span></footer>
+<input type="file" id="file-lnd" accept=".lnd,.md,.txt" class="sr" tabindex="-1" aria-hidden="true">
+<input type="file" id="file-deck" accept=".lnd" class="sr" tabindex="-1" aria-hidden="true">
+<input type="file" id="file-tema" accept=".json,application/json" class="sr" tabindex="-1" aria-hidden="true">
+
+<div id="ajustes" role="dialog" aria-modal="true" aria-labelledby="aj-titulo" aria-hidden="true" inert>
+  <header><span class="sello" aria-hidden="true">deck</span><h2 id="aj-titulo" data-i="ajustes">Ajustes</h2><button class="btn" type="button" id="cerrar-ajustes"><span data-i="listo">Listo</span> <kbd>Esc</kbd></button></header>
+  <div class="aj-cuerpo">
+    <nav class="aj-tabs" role="tablist" data-i-al="secciones">
+      <button type="button" role="tab" data-tab="deck" aria-selected="true" data-i="t_deck">Deck</button>
+      <button type="button" role="tab" data-tab="paneles" aria-selected="false" data-i="t_paneles">Paneles y tiempos</button>
+      <button type="button" role="tab" data-tab="apariencia" aria-selected="false" data-i="t_apariencia">Apariencia</button>
+      <button type="button" role="tab" data-tab="servidor" aria-selected="false" data-i="t_servidor">Servidor y MCP</button>
+      <button type="button" role="tab" data-tab="archivos" aria-selected="false" data-i="t_archivos">Archivos y Git</button>
+      <button type="button" role="tab" data-tab="entorno" aria-selected="false" data-i="t_entorno">Entorno</button>
+      <button type="button" role="tab" data-tab="atajos" aria-selected="false" data-i="t_atajos">Atajos</button>
+    </nav>
+    <form class="aj-panel" id="form-config" autocomplete="off">
+      <section data-sec="deck" class="on" role="tabpanel">
+        <h3 data-i="t_deck">Deck</h3><p class="intro" data-i="deck_intro"></p>
+        <label class="campo"><span data-i="nombre">Nombre</span><input type="text" name="nombre"></label>
+        <label class="campo"><span data-i="idioma">Idioma</span><select name="idioma"><option value="es">Español</option><option value="en">English</option><option value="zh">中文</option></select></label>
+        <label class="campo"><span data-i="conjunto">Conjunto de demos</span><select name="conjunto"><option value="publico" data-i="publico">Público</option></select><small data-i="conjunto_n"></small></label>
+        <div class="fila-btn"><button class="btn pri" type="button" id="exportar" data-i="exportar">Exportar deck.lnd</button><button class="btn" type="button" id="importar" data-i="importar">Importar deck.lnd</button><button class="btn" type="button" id="restablecer" data-i="restablecer">Volver al ejemplo</button><button class="btn" type="button" id="vaciar" data-i="vaciar">Empezar vacío</button></div>
+      </section>
+      <section data-sec="paneles" role="tabpanel">
+        <h3 data-i="t_paneles">Paneles y tiempos</h3><p class="intro" data-i="paneles_intro"></p>
+        <label class="chk"><input type="checkbox" name="pausa_global"> <span data-i="pausa_todo">Pausar todo (refresco y rotación)</span></label>
+        <div id="lista-paneles"></div>
+        <div class="fila-btn"><button class="btn" type="button" data-agregar="render" data-i="add_render">+ Render</button><button class="btn" type="button" data-agregar="feed" data-i="add_feed">+ Feed</button><button class="btn" type="button" data-agregar="galeria" data-i="add_galeria">+ Galería</button><button class="btn" type="button" data-agregar="archivo" data-i="add_archivo">+ Archivo del disco</button></div>
+      </section>
+      <section data-sec="apariencia" role="tabpanel">
+        <h3 data-i="t_apariencia">Apariencia</h3><p class="intro" data-i="apariencia_intro"></p>
+        <div class="campo"><span data-i="tema">Tema</span></div><div class="opciones temas" id="op-temas"></div>
+        <div id="ap-ctrl">
+          <label class="chk"><input type="checkbox" name="ap_auto"> <span data-i="ap_auto">Claro u oscuro automático (sigue al sistema)</span></label>
+          <div class="campo"><span data-i="ap_acento">Color de acento</span></div>
+          <div class="acentos"><label class="color"><input type="color" name="ap_color" data-i-al="ap_acento"><span data-i="ap_elegir">Elegir</span></label><div id="ap-acentos" class="acc-lista" role="group" data-i-al="ap_acentos"></div></div>
+          <p class="aviso" id="ap-aviso" role="status" hidden></p>
+          <details class="avanzado"><summary data-i="ap_avanzado">Avanzado</summary>
+            <div class="pgrid">
+              <label class="campo"><span data-i="ap_letra">Letra</span><select name="ap_letra"><option value="" data-i="ap_del_tema">Del tema</option><option value="publicsans">Public Sans</option><option value="fraunces">Fraunces</option><option value="plexmono">IBM Plex Mono</option><option value="sistema" data-i="ap_letra_sis">Del sistema</option><option value="serif" data-i="ap_letra_serif">Serif del sistema</option></select></label>
+              <label class="campo"><span><span data-i="ap_tamano">Tamaño en los paneles</span> · <output id="ap-escala-v">100 %</output></span><input type="range" name="ap_escala" min="85" max="140" step="5"></label>
+              <label class="campo"><span><span data-i="ap_interlineado">Interlineado</span> · <output id="ap-lh-v">1.50</output></span><input type="range" name="ap_interlineado" min="1.2" max="2" step="0.05"></label>
+              <label class="campo"><span><span data-i="ap_tono">Tono del fondo</span> · <output id="ap-tono-v">0</output></span><input type="range" name="ap_tono" min="-10" max="10" step="1"><small data-i="ap_tono_n">− frío · + cálido</small></label>
+              <label class="campo"><span data-i="ap_densidad">Densidad</span><select name="ap_densidad"><option value="comoda" data-i="ap_comoda">Cómoda</option><option value="compacta" data-i="ap_compacta">Compacta</option></select></label>
+              <label class="campo"><span data-i="ap_esquinas">Esquinas</span><select name="ap_esquinas"><option value="" data-i="ap_del_tema">Del tema</option><option value="rectas" data-i="ap_rectas">Rectas</option><option value="suaves" data-i="ap_suaves">Suaves</option><option value="redondas" data-i="ap_redondas">Redondas</option></select></label>
+            </div>
+            <label class="chk"><input type="checkbox" name="ap_mov"> <span data-i="ap_mov">Animaciones</span></label><small class="nota" data-i="ap_mov_n">Si el sistema pide reducir el movimiento, quedan apagadas.</small>
+          </details>
+          <div class="fila-btn"><button class="btn" type="button" id="ap-exportar" data-i="ap_exportar">Exportar tema</button><button class="btn" type="button" id="ap-importar" data-i="ap_importar">Importar tema</button><button class="btn" type="button" id="ap-reset" data-i="ap_reset">Restablecer apariencia</button></div>
+        </div>
+        <div class="campo"><span data-i="rejilla">Rejilla en escritorio</span><small data-i="rejilla_n"></small></div><div class="opciones" id="op-rejillas"></div>
+        <label class="chk"><input type="checkbox" name="embed"> <span data-i="embed">Ocultar la barra de render-v2 en los paneles (?embed=1)</span></label>
+      </section>
+      <section data-sec="servidor" role="tabpanel">
+        <h3 data-i="t_servidor">Servidor y MCP</h3><p class="intro" data-i="servidor_intro"></p>
+        <label class="campo"><span data-i="puerto">Puerto</span><input type="number" name="puerto" min="1024" max="65535"></label>
+        <label class="campo"><span data-i="interfaz">Interfaz</span><input type="text" name="interfaz"></label>
+        <p class="aviso" id="aviso-red" hidden data-i="aviso_red"></p>
+        <label class="campo"><span data-i="mcp">Endpoint MCP</span><input type="text" name="mcp"></label>
+        <div class="campo"><span data-i="mcp_h">Herramientas MCP</span>
+          <label class="chk"><input type="checkbox" name="mcp_leer"> <span data-i="h_leer">leer</span></label>
+          <label class="chk"><input type="checkbox" name="mcp_buscar"> <span data-i="h_buscar">buscar</span></label>
+          <label class="chk"><input type="checkbox" name="mcp_proponer"> <span data-i="h_proponer">proponer</span></label></div>
+        <label class="campo"><span data-i="ucan">Permiso UCAN</span><input type="text" name="ucan" data-i-ph="ucan_ph"><small data-i="ucan_n"></small></label>
+      </section>
+      <section data-sec="archivos" role="tabpanel">
+        <h3 data-i="t_archivos">Archivos y Git</h3><p class="intro" data-i="archivos_intro"></p>
+        <label class="campo"><span>WebDAV</span><input type="text" name="webdav"></label>
+        <label class="campo"><span data-i="volumenes">Volúmenes</span><textarea name="volumenes"></textarea><small data-i="volumenes_n"></small></label>
+        <label class="campo"><span data-i="git">URL de Git</span><input type="text" name="git"></label>
+      </section>
+      <section data-sec="entorno" role="tabpanel">
+        <h3 data-i="t_entorno">Entorno</h3><p class="intro" data-i="entorno_intro"></p>
+        <label class="campo"><span data-i="variables">Variables</span><textarea name="env"></textarea><small data-i="env_n"></small></label>
+      </section>
+      <section data-sec="atajos" role="tabpanel">
+        <h3 data-i="t_atajos">Atajos</h3><p class="intro" data-i="atajos_intro"></p>
+        <dl class="atajos"><dt>Ctrl+,</dt><dd data-i="k_aj"></dd><dt>Ctrl K</dt><dd data-i="k_pal"></dd><dt>P</dt><dd data-i="k_pausa"></dd><dt>Esc</dt><dd data-i="k_esc"></dd><dt>1 … 9</dt><dd data-i="k_num"></dd></dl>
+      </section>
+    </form>
+  </div>
+</div>
+<div id="paleta" role="dialog" aria-modal="true" data-i-al="buscar" inert><div class="caja"><input id="pal-q" type="text" data-i-ph="pal_ph" data-i-al="buscar" role="combobox" aria-expanded="true" aria-controls="pal-lista" autocomplete="off"><ul id="pal-lista" role="listbox"></ul></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>const TXT={
+es:{saltar:"Ir a los paneles",abrir_lnd:"Abrir .lnd",buscar:"Buscar",pausa_al:"Pausar todo (P)",reanudar_al:"Reanudar (P)",ajustes_al:"Ajustes (Ctrl+,)",lema:"Agentic y human, somos libres como un OS.",paneles:"Paneles del deck",empezar:"Empezar",
+ inicio_h:"Abre un .lnd y míralo vivo.",inicio_p:"Un deck reúne varios documentos en paneles que se actualizan solos. Empieza con un archivo de tu disco o con el deck de ejemplo.",inicio_abrir:"Abrir un .lnd",inicio_ejemplo:"Usar el deck de ejemplo",
+ atajo_aj:"Ctrl+, ajustes · P pausa",ajustes:"Ajustes",listo:"Listo",secciones:"Secciones",t_deck:"Deck",t_paneles:"Paneles y tiempos",t_apariencia:"Apariencia",t_servidor:"Servidor y MCP",t_archivos:"Archivos y Git",t_entorno:"Entorno",t_atajos:"Atajos",
+ deck_intro:"El nombre, el idioma y de dónde salen los demos. Todo queda en este navegador hasta que lo exportas como deck.lnd.",nombre:"Nombre",idioma:"Idioma",conjunto:"Conjunto de demos",publico:"Público",interno:"Interno",conjunto_n:"Cambiarlo recarga la página. Un deck importado nunca cambia este valor.",
+ exportar:"Exportar deck.lnd",importar:"Importar deck.lnd",restablecer:"Volver al ejemplo",vaciar:"Empezar vacío",
+ paneles_intro:"Cada panel muestra un documento. El refresco vuelve a leerlo; la rotación cambia de vista o de diapositiva. 0 = apagado.",pausa_todo:"Pausar todo (refresco y rotación)",add_render:"+ Render",add_feed:"+ Feed",add_galeria:"+ Galería",add_archivo:"+ Archivo del disco",
+ apariencia_intro:"El tema pasa también a cada panel de render-v2. «Familia» es el de render-v2 y sigue el modo claro u oscuro del sistema.",tema:"Tema",rejilla:"Rejilla en escritorio",rejilla_n:"En tableta se ven dos columnas y en el teléfono un panel a la vez.",embed:"Ocultar la barra de render-v2 en los paneles (?embed=1)",
+ servidor_intro:"Configuración para el mini-servidor del USB. El prototipo no abre puertos: la guarda y la exporta.",puerto:"Puerto",interfaz:"Interfaz",aviso_red:"Escucha fuera de localhost: cualquiera en la red puede leer el deck.",mcp:"Endpoint MCP",mcp_h:"Herramientas MCP",h_leer:"leer",h_buscar:"buscar",h_proponer:"proponer (rama y PR; pide permiso UCAN)",ucan:"Permiso UCAN para proponer",ucan_ph:"vacío = solo lectura",ucan_n:"Se exporta como referencia secret://, nunca el valor.",
+ archivos_intro:"Qué carpetas del USB sirve el deck y a dónde van las propuestas.",volumenes:"Volúmenes",volumenes_n:"Uno por línea: nombre · ruta · permiso (lectura o propuesta).",git:"URL de Git",
+ entorno_intro:"Variables para el servidor, una por línea con la forma CLAVE=valor.",variables:"Variables",env_n:"Los secretos van como secret://. Al exportar, un valor que no lo sea sale como secret://pendiente.",
+ atajos_intro:"Para moverse sin el ratón.",k_aj:"Abrir o cerrar los ajustes",k_pal:"Buscar un documento, un tema o una acción",k_pausa:"Pausar o reanudar todo lo que se mueve",k_esc:"Cerrar lo que esté abierto",k_num:"Ir al panel N",pal_ph:"Documento, tema o acción…",
+ tipo:"Tipo",fuente:"Fuente",vista:"Vista",refresco:"Refresco (s)",rotar_cada:"Rotar cada (s)",rotar:"Vistas que rotan",ancho:"Ancho doble",quitar:"Quitar",recargar:"Recargar",pausar_panel:"Pausar este panel",reanudar_panel:"Reanudar este panel",opciones:"Opciones del panel",mas_ajustes:"Más ajustes…",imagenes:"Elegir imágenes…",
+ T_render:"Render",T_lnd:"Archivo",T_feed:"Feed",T_galeria:"Galería",P_1:"Uno",P_2c:"2 columnas",P_3c:"3 columnas",P_2x2:"2 × 2",P_foco:"Foco",
+ TE_familia:"Familia",TE_familia_d:"El de render-v2",TE_neobrutalista:"Neobrutalista",TE_neobrutalista_d:"Bordes gruesos, sombra dura",TE_retro:"Retro",TE_retro_d:"Papel y serif",TE_cyberpunk:"Cyberpunk",TE_cyberpunk_d:"Noche y neón",
+ TE_papel:"Papel",TE_papel_d:"Claro · neutro",TE_sepia:"Sepia",TE_sepia_d:"Claro · cálido",TE_pizarra:"Pizarra",TE_pizarra_d:"Oscuro · gris azulado",TE_medianoche:"Medianoche",TE_medianoche_d:"Oscuro · azul profundo",TE_bosque:"Bosque",TE_bosque_d:"Oscuro · verde",TE_oceano:"Océano",TE_oceano_d:"Claro · azul",TE_crepusculo:"Crepúsculo",TE_crepusculo_d:"Oscuro · violeta",TE_rosa:"Rosa",TE_rosa_d:"Claro · rosado",TE_arena:"Arena",TE_arena_d:"Claro · terracota",TE_mono:"Mono",TE_mono_d:"Claro · blanco y negro",TE_contraste:"Alto contraste",TE_contraste_d:"Negro, blanco y amarillo",ap_auto:"Claro u oscuro automático (sigue al sistema)",ap_acento:"Color de acento",ap_elegir:"Elegir",ap_acentos:"Acentos rápidos",ap_acento_tema:"Del tema",ap_avanzado:"Avanzado",ap_letra:"Letra",ap_del_tema:"Del tema",ap_letra_sis:"Del sistema",ap_letra_serif:"Serif del sistema",ap_tamano:"Tamaño en los paneles",ap_interlineado:"Interlineado",ap_tono:"Tono del fondo",ap_tono_n:"− frío · + cálido",ap_densidad:"Densidad",ap_comoda:"Cómoda",ap_compacta:"Compacta",ap_esquinas:"Esquinas",ap_rectas:"Rectas",ap_suaves:"Suaves",ap_redondas:"Redondas",ap_mov:"Animaciones",ap_mov_n:"Si el sistema pide reducir el movimiento, quedan apagadas.",ap_exportar:"Exportar tema",ap_importar:"Importar tema",ap_reset:"Restablecer apariencia",t_ap_reset:"Apariencia restablecida",t_ap_import:"Tema importado",t_ap_err:"Ese archivo no es un tema de Sitedeck",AC_verde:"Verde",AC_azul:"Azul",AC_violeta:"Violeta",AC_granate:"Granate",AC_ambar:"Ámbar",AC_turquesa:"Turquesa",ap_aviso:r=>`Contraste bajo (${r}:1): puede costar leerlo. AA pide 4.5:1 para texto y 3:1 para el acento.`,
+ n_paneles:n=>`${n} paneles`,solo_lectura:"solo lectura",lee_propone:"lee y propone",en_pausa:"en pausa",pausado:"pausa",actualiza:"se actualiza solo",
+ sin_feed:"Sin tareas, decisiones ni afirmaciones.",sin_tareas:"Este documento no tiene bloques @tarea.",releer:n=>`Vuelve a abrir ${n}: el navegador no guarda el acceso al disco entre sesiones.`,no_leer:"No se pudo leer la fuente: ",
+ t_relee:"Se relee del disco cada 15 s",t_norelee:"Este navegador no relee el archivo: ábrelo de nuevo para ver cambios",t_export:"deck.lnd exportado",t_import:n=>`Deck «${n}» importado`,t_import_err:"No se pudo importar: ",t_interno_ign:"El deck pedía el conjunto interno: se ignoró",t_rest:"Deck de ejemplo restaurado",t_recarga:"Recargando…",t_sin_sidecar:"Sin sidecar de demos: uso la muestra incluida",t_pausa:"En pausa: nada se mueve hasta que reanudes (P)",t_reanuda:"Reanudado",
+ a_ajustes:"Abrir ajustes",a_pausa:"Pausar o reanudar",a_add:"Agregar panel",a_tema:"Tema",a_rejilla:"Rejilla",a_doc:"Abrir en un panel",a_idioma:"Idioma",panel_n:n=>`Panel ${n}`},
+en:{saltar:"Skip to panes",abrir_lnd:"Open .lnd",buscar:"Search",pausa_al:"Pause all (P)",reanudar_al:"Resume (P)",ajustes_al:"Settings (Ctrl+,)",lema:"Agentic and human, we are free like an OS.",paneles:"Deck panes",empezar:"Start",
+ inicio_h:"Open a .lnd and watch it live.",inicio_p:"A deck puts several documents in panes that update on their own. Start with a file from your disk or with the sample deck.",inicio_abrir:"Open a .lnd",inicio_ejemplo:"Use the sample deck",
+ atajo_aj:"Ctrl+, settings · P pause",ajustes:"Settings",listo:"Done",secciones:"Sections",t_deck:"Deck",t_paneles:"Panes and timers",t_apariencia:"Appearance",t_servidor:"Server and MCP",t_archivos:"Files and Git",t_entorno:"Environment",t_atajos:"Shortcuts",
+ deck_intro:"Name, language and where the demos come from. Everything stays in this browser until you export it as deck.lnd.",nombre:"Name",idioma:"Language",conjunto:"Demo set",publico:"Public",interno:"Internal",conjunto_n:"Changing it reloads the page. An imported deck never changes this value.",
+ exportar:"Export deck.lnd",importar:"Import deck.lnd",restablecer:"Back to the sample",vaciar:"Start empty",
+ paneles_intro:"Each pane shows one document. Refresh reads it again; rotation switches view or slide. 0 = off.",pausa_todo:"Pause everything (refresh and rotation)",add_render:"+ Render",add_feed:"+ Feed",add_galeria:"+ Gallery",add_archivo:"+ File from disk",
+ apariencia_intro:"The theme is also passed to every render-v2 pane. «Family» is render-v2's own and follows the system light or dark mode.",tema:"Theme",rejilla:"Desktop grid",rejilla_n:"Tablets show two columns and phones one pane at a time.",embed:"Hide the render-v2 bar in panes (?embed=1)",
+ servidor_intro:"Settings for the mini-server on the USB stick. The prototype opens no ports: it stores and exports them.",puerto:"Port",interfaz:"Interface",aviso_red:"Listening outside localhost: anyone on the network can read the deck.",mcp:"MCP endpoint",mcp_h:"MCP tools",h_leer:"read",h_buscar:"search",h_proponer:"propose (branch and PR; needs a UCAN grant)",ucan:"UCAN grant to propose",ucan_ph:"empty = read-only",ucan_n:"Exported as a secret:// reference, never the value.",
+ archivos_intro:"Which USB folders the deck serves and where proposals go.",volumenes:"Volumes",volumenes_n:"One per line: name · path · permission (read or propose).",git:"Git URL",
+ entorno_intro:"Server variables, one per line as KEY=value.",variables:"Variables",env_n:"Secrets go as secret://. On export, any other value becomes secret://pendiente.",
+ atajos_intro:"To get around without a mouse.",k_aj:"Open or close settings",k_pal:"Find a document, theme or action",k_pausa:"Pause or resume everything that moves",k_esc:"Close whatever is open",k_num:"Go to pane N",pal_ph:"Document, theme or action…",
+ tipo:"Type",fuente:"Source",vista:"View",refresco:"Refresh (s)",rotar_cada:"Rotate every (s)",rotar:"Rotating views",ancho:"Double width",quitar:"Remove",recargar:"Reload",pausar_panel:"Pause this pane",reanudar_panel:"Resume this pane",opciones:"Pane options",mas_ajustes:"More settings…",imagenes:"Choose images…",
+ T_render:"Render",T_lnd:"File",T_feed:"Feed",T_galeria:"Gallery",P_1:"One",P_2c:"2 columns",P_3c:"3 columns",P_2x2:"2 × 2",P_foco:"Focus",
+ TE_familia:"Family",TE_familia_d:"render-v2's own",TE_neobrutalista:"Neobrutalist",TE_neobrutalista_d:"Thick borders, hard shadow",TE_retro:"Retro",TE_retro_d:"Paper and serif",TE_cyberpunk:"Cyberpunk",TE_cyberpunk_d:"Night and neon",
+ TE_papel:"Paper",TE_papel_d:"Light · neutral",TE_sepia:"Sepia",TE_sepia_d:"Light · warm",TE_pizarra:"Slate",TE_pizarra_d:"Dark · blue grey",TE_medianoche:"Midnight",TE_medianoche_d:"Dark · deep blue",TE_bosque:"Forest",TE_bosque_d:"Dark · green",TE_oceano:"Ocean",TE_oceano_d:"Light · blue",TE_crepusculo:"Dusk",TE_crepusculo_d:"Dark · violet",TE_rosa:"Rose",TE_rosa_d:"Light · pink",TE_arena:"Sand",TE_arena_d:"Light · terracotta",TE_mono:"Mono",TE_mono_d:"Light · black and white",TE_contraste:"High contrast",TE_contraste_d:"Black, white and yellow",ap_auto:"Automatic light or dark (follows the system)",ap_acento:"Accent colour",ap_elegir:"Pick",ap_acentos:"Quick accents",ap_acento_tema:"Theme's",ap_avanzado:"Advanced",ap_letra:"Typeface",ap_del_tema:"Theme's",ap_letra_sis:"System",ap_letra_serif:"System serif",ap_tamano:"Size in panes",ap_interlineado:"Line spacing",ap_tono:"Background tone",ap_tono_n:"− cool · + warm",ap_densidad:"Density",ap_comoda:"Cozy",ap_compacta:"Compact",ap_esquinas:"Corners",ap_rectas:"Square",ap_suaves:"Soft",ap_redondas:"Round",ap_mov:"Animations",ap_mov_n:"If the system asks for reduced motion, they stay off.",ap_exportar:"Export theme",ap_importar:"Import theme",ap_reset:"Reset appearance",t_ap_reset:"Appearance reset",t_ap_import:"Theme imported",t_ap_err:"That file is not a Sitedeck theme",AC_verde:"Green",AC_azul:"Blue",AC_violeta:"Violet",AC_granate:"Garnet",AC_ambar:"Amber",AC_turquesa:"Teal",ap_aviso:r=>`Low contrast (${r}:1): it may be hard to read. AA asks for 4.5:1 for text and 3:1 for the accent.`,
+ n_paneles:n=>`${n} panes`,solo_lectura:"read-only",lee_propone:"reads and proposes",en_pausa:"paused",pausado:"paused",actualiza:"updates on its own",
+ sin_feed:"No tasks, decisions or claims.",sin_tareas:"This document has no @tarea blocks.",releer:n=>`Open ${n} again: the browser does not keep disk access between sessions.`,no_leer:"Could not read the source: ",
+ t_relee:"Re-read from disk every 15 s",t_norelee:"This browser does not re-read the file: open it again to see changes",t_export:"deck.lnd exported",t_import:n=>`Deck «${n}» imported`,t_import_err:"Could not import: ",t_interno_ign:"The deck asked for the internal set: ignored",t_rest:"Sample deck restored",t_recarga:"Reloading…",t_sin_sidecar:"No demo sidecar: using the built-in sample",t_pausa:"Paused: nothing moves until you resume (P)",t_reanuda:"Resumed",
+ a_ajustes:"Open settings",a_pausa:"Pause or resume",a_add:"Add pane",a_tema:"Theme",a_rejilla:"Grid",a_doc:"Open in a pane",a_idioma:"Language",panel_n:n=>`Pane ${n}`},
+zh:{saltar:"跳到面板",abrir_lnd:"打开 .lnd",buscar:"搜索",pausa_al:"全部暂停（P）",reanudar_al:"继续（P）",ajustes_al:"设置（Ctrl+,）",lema:"智能体与人，像操作系统一样自由。",paneles:"面板",empezar:"开始",
+ inicio_h:"打开一个 .lnd，看它实时更新。",inicio_p:"一个 deck 把多个文档放进会自动更新的面板。可以从本地文件开始，也可以用示例 deck。",inicio_abrir:"打开 .lnd",inicio_ejemplo:"使用示例 deck",
+ atajo_aj:"Ctrl+, 设置 · P 暂停",ajustes:"设置",listo:"完成",secciones:"分区",t_deck:"Deck",t_paneles:"面板与计时",t_apariencia:"外观",t_servidor:"服务器与 MCP",t_archivos:"文件与 Git",t_entorno:"环境变量",t_atajos:"快捷键",
+ deck_intro:"名称、语言和示例来源。导出为 deck.lnd 之前，一切只保存在本浏览器中。",nombre:"名称",idioma:"语言",conjunto:"示例集",publico:"公开",interno:"内部",conjunto_n:"更改后页面会重新加载。导入的 deck 不会更改此项。",
+ exportar:"导出 deck.lnd",importar:"导入 deck.lnd",restablecer:"恢复示例",vaciar:"清空",
+ paneles_intro:"每个面板显示一个文档。刷新会重新读取；轮换会切换视图或幻灯片。0 = 关闭。",pausa_todo:"全部暂停（刷新与轮换）",add_render:"+ 渲染",add_feed:"+ 动态",add_galeria:"+ 图库",add_archivo:"+ 本地文件",
+ apariencia_intro:"主题也会传给每个 render-v2 面板。「家族」是 render-v2 的默认主题，跟随系统的浅色或深色模式。",tema:"主题",rejilla:"桌面布局",rejilla_n:"平板显示两列，手机一次显示一个面板。",embed:"在面板中隐藏 render-v2 工具栏（?embed=1）",
+ servidor_intro:"U 盘上迷你服务器的配置。原型不会打开端口，只保存并导出配置。",puerto:"端口",interfaz:"监听地址",aviso_red:"正在监听 localhost 以外的地址：网络中任何人都能读取此 deck。",mcp:"MCP 端点",mcp_h:"MCP 工具",h_leer:"读取",h_buscar:"搜索",h_proponer:"提议（分支与 PR；需要 UCAN 授权）",ucan:"提议所需的 UCAN 授权",ucan_ph:"留空 = 只读",ucan_n:"导出为 secret:// 引用，从不导出实际值。",
+ archivos_intro:"deck 提供哪些 U 盘文件夹，以及提议提交到哪里。",volumenes:"卷",volumenes_n:"每行一个：名称 · 路径 · 权限（读取或提议）。",git:"Git 地址",
+ entorno_intro:"服务器变量，每行一个，格式为 KEY=value。",variables:"变量",env_n:"密钥写成 secret://。导出时，其他值会变成 secret://pendiente。",
+ atajos_intro:"不用鼠标也能操作。",k_aj:"打开或关闭设置",k_pal:"查找文档、主题或操作",k_pausa:"暂停或继续所有动态内容",k_esc:"关闭当前打开的内容",k_num:"跳到第 N 个面板",pal_ph:"文档、主题或操作…",
+ tipo:"类型",fuente:"来源",vista:"视图",refresco:"刷新（秒）",rotar_cada:"轮换间隔（秒）",rotar:"轮换的视图",ancho:"双倍宽度",quitar:"移除",recargar:"重新加载",pausar_panel:"暂停此面板",reanudar_panel:"继续此面板",opciones:"面板选项",mas_ajustes:"更多设置…",imagenes:"选择图片…",
+ T_render:"渲染",T_lnd:"文件",T_feed:"动态",T_galeria:"图库",P_1:"单个",P_2c:"两列",P_3c:"三列",P_2x2:"2 × 2",P_foco:"焦点",
+ TE_familia:"家族",TE_familia_d:"render-v2 默认",TE_neobrutalista:"新粗野",TE_neobrutalista_d:"粗边框、硬阴影",TE_retro:"复古",TE_retro_d:"纸张与衬线",TE_cyberpunk:"赛博朋克",TE_cyberpunk_d:"夜色与霓虹",
+ TE_papel:"纸张",TE_papel_d:"浅色 · 中性",TE_sepia:"棕褐",TE_sepia_d:"浅色 · 暖调",TE_pizarra:"石板",TE_pizarra_d:"深色 · 蓝灰",TE_medianoche:"午夜",TE_medianoche_d:"深色 · 深蓝",TE_bosque:"森林",TE_bosque_d:"深色 · 绿",TE_oceano:"海洋",TE_oceano_d:"浅色 · 蓝",TE_crepusculo:"暮光",TE_crepusculo_d:"深色 · 紫",TE_rosa:"玫瑰",TE_rosa_d:"浅色 · 粉",TE_arena:"沙丘",TE_arena_d:"浅色 · 陶土",TE_mono:"单色",TE_mono_d:"浅色 · 黑白",TE_contraste:"高对比度",TE_contraste_d:"黑、白与黄",ap_auto:"自动浅色或深色（跟随系统）",ap_acento:"强调色",ap_elegir:"选择",ap_acentos:"快速强调色",ap_acento_tema:"跟随主题",ap_avanzado:"高级",ap_letra:"字体",ap_del_tema:"跟随主题",ap_letra_sis:"系统字体",ap_letra_serif:"系统衬线",ap_tamano:"面板中的字号",ap_interlineado:"行距",ap_tono:"背景色调",ap_tono_n:"− 冷 · + 暖",ap_densidad:"密度",ap_comoda:"舒适",ap_compacta:"紧凑",ap_esquinas:"圆角",ap_rectas:"直角",ap_suaves:"柔和",ap_redondas:"圆润",ap_mov:"动画",ap_mov_n:"系统要求减少动态效果时，动画保持关闭。",ap_exportar:"导出主题",ap_importar:"导入主题",ap_reset:"恢复默认外观",t_ap_reset:"外观已恢复默认",t_ap_import:"主题已导入",t_ap_err:"该文件不是 Sitedeck 主题",AC_verde:"绿",AC_azul:"蓝",AC_violeta:"紫",AC_granate:"石榴红",AC_ambar:"琥珀",AC_turquesa:"青",ap_aviso:r=>`对比度偏低（${r}:1），可能不易阅读。AA 要求文字 4.5:1、强调色 3:1。`,
+ n_paneles:n=>`${n} 个面板`,solo_lectura:"只读",lee_propone:"读取并提议",en_pausa:"已暂停",pausado:"暂停",actualiza:"自动更新",
+ sin_feed:"没有任务、决策或断言。",sin_tareas:"此文档没有 @tarea 块。",releer:n=>`请重新打开 ${n}：浏览器不会跨会话保留磁盘访问权限。`,no_leer:"无法读取来源：",
+ t_relee:"每 15 秒从磁盘重新读取",t_norelee:"此浏览器不会重新读取文件：请重新打开以查看更改",t_export:"已导出 deck.lnd",t_import:n=>`已导入 deck「${n}」`,t_import_err:"无法导入：",t_interno_ign:"该 deck 要求内部示例集：已忽略",t_rest:"已恢复示例 deck",t_recarga:"正在重新加载…",t_sin_sidecar:"找不到示例 sidecar：使用内置示例",t_pausa:"已暂停：继续前不会有任何变化（P）",t_reanuda:"已继续",
+ a_ajustes:"打开设置",a_pausa:"暂停或继续",a_add:"添加面板",a_tema:"主题",a_rejilla:"布局",a_doc:"在面板中打开",a_idioma:"语言",panel_n:n=>`面板 ${n}`}
+};
+
+/* LANDDY .lnd 1.2 · normalizador de palabras reservadas (port de lnd_check_v12.convertir).
+   Lee keywords.json (inyectado al construir en LND_KW). lndConvertir(src,"es") deja el documento en la forma
+   que entiende el motor (bloques 1.1, claves es); no toca contenido, ids ni @(id); mismo número de líneas. */
+const LND_KW={"version":"1.2","descripcion":"Palabras reservadas de LANDDY .lnd. Id canónico = columna en. Lo leen lnd_check, lnd_keys y render-v2. No traducir ids de bloque ni @(id).","idiomas":{"es":{"estado":"estable","nombre":"español"},"en":{"estado":"estable","nombre":"English"},"zh":{"estado":"provisional","nombre":"简体中文 (zh-CN)","nota":"Traducción automática sin revisión nativa. zh-CN provisional: las correcciones nunca romperán archivos existentes; el término viejo pasa a aliases_legacy.zh (LND-KEY-003, info) y `lnd_keys.py --migrar` lo reescribe."}},"reglas":{"aliases":"otras grafías aceptadas sin aviso (es: nombres de la tabla §7.3 cuando el 1.1 usaba la forma inglesa)","aliases_legacy":"términos renombrados: se aceptan con info LND-KEY-003; `lnd_keys.py --migrar` los actualiza","puntuacion_zh":"en zh se aceptan «：» por «:» y «＠» por «@»; el formateador las conserva en zh"},"puntuacion_zh":{"：":":","＠":"@"},"bloques":{"note":{"en":"note","es":"nota","zh":"备注","aliases":{},"aliases_legacy":{"zh":["注释"]},"revision_zh":"2026-10-20"},"claim":{"en":"claim","es":"afirmacion","zh":"断言","aliases":{},"aliases_legacy":{"zh":[]}},"task":{"en":"task","es":"tarea","zh":"任务","aliases":{},"aliases_legacy":{"zh":[]}},"source":{"en":"source","es":"fuente","zh":"来源","aliases":{},"aliases_legacy":{"zh":[]}},"action":{"en":"action","es":"accion","zh":"操作","aliases":{},"aliases_legacy":{"zh":[]}},"decision":{"en":"decision","es":"decision","zh":"决策","aliases":{},"aliases_legacy":{"zh":[]}},"board":{"en":"board","es":"tablero","zh":"看板","aliases":{},"aliases_legacy":{"zh":[]}},"files":{"en":"files","es":"archivos","zh":"文件列表","aliases":{},"aliases_legacy":{"zh":[]}},"moved":{"en":"moved","es":"movido","zh":"已移动","aliases":{},"aliases_legacy":{"zh":[]}},"experience":{"en":"experience","es":"experiencia","zh":"经验","aliases":{},"aliases_legacy":{"zh":[]}},"heading":{"en":"heading","es":"heading","zh":"章节","aliases":{"es":["encabezado"]},"aliases_legacy":{"zh":[]}},"table":{"en":"table","es":"table","zh":"表格","aliases":{"es":["tabla"]},"aliases_legacy":{"zh":[]}},"code":{"en":"code","es":"code","zh":"代码","aliases":{"es":["codigo"]},"aliases_legacy":{"zh":[]}},"features":{"en":"features","es":"features","zh":"功能","aliases":{"es":["caracteristicas"]},"aliases_legacy":{"zh":["特性"]},"revision_zh":"2026-10-20"},"stat":{"en":"stat","es":"stat","zh":"指标","aliases":{"es":["dato"]},"aliases_legacy":{"zh":["统计"]},"revision_zh":"2026-10-20"},"image":{"en":"image","es":"image","zh":"图片","aliases":{"es":["imagen"]},"aliases_legacy":{"zh":[]}},"iframe":{"en":"iframe","es":"iframe","zh":"嵌入","aliases":{"es":["incrustado"]},"aliases_legacy":{"zh":[]}},"stream":{"en":"stream","es":"stream","zh":"直播流","aliases":{},"aliases_legacy":{"zh":[]}},"playlist":{"en":"playlist","es":"playlist","zh":"播放列表","aliases":{"es":["lista_reproduccion"]},"aliases_legacy":{"zh":[]}},"repo":{"en":"repo","es":"repo","zh":"仓库","aliases":{},"aliases_legacy":{"zh":[]}},"issue":{"en":"issue","es":"issue","zh":"议题","aliases":{"es":["incidencia"]},"aliases_legacy":{"zh":[]}},"ascii":{"en":"ascii","es":"ascii","zh":"字符画","aliases":{},"aliases_legacy":{"zh":["字符图"]},"revision_zh":"2026-10-20"},"wireframe":{"en":"wireframe","es":"wireframe","zh":"线框图","aliases":{"es":["wiref"]},"aliases_legacy":{"zh":["线框"]},"revision_zh":"2026-10-20"},"mermaid":{"en":"mermaid","es":"mermaid","zh":"mermaid","aliases":{},"aliases_legacy":{"zh":[]}}},"campos":{"id":{"en":"id","es":"id","zh":"id","aliases":{},"aliases_legacy":{"zh":[]}},"profile":{"en":"profile","es":"perfil","zh":"规范版本","aliases":{},"aliases_legacy":{"zh":["规范"]},"revision_zh":"2026-10-20"},"keys":{"en":"keys","es":"claves","zh":"键名语言","aliases":{},"aliases_legacy":{"zh":["键语言"]},"revision_zh":"2026-10-20"},"view":{"en":"view","es":"vista","zh":"视图","aliases":{},"aliases_legacy":{"zh":[]}},"title":{"en":"title","es":"titulo","zh":"标题","aliases":{},"aliases_legacy":{"zh":[]}},"text":{"en":"text","es":"texto","zh":"文本","aliases":{},"aliases_legacy":{"zh":[]}},"item":{"en":"item","es":"item","zh":"条目","aliases":{},"aliases_legacy":{"zh":[]}},"level":{"en":"level","es":"nivel","zh":"层级","aliases":{},"aliases_legacy":{"zh":[]}},"sub":{"en":"sub","es":"sub","zh":"副项","aliases":{},"aliases_legacy":{"zh":[]}},"type":{"en":"type","es":"tipo","zh":"类型","aliases":{},"aliases_legacy":{"zh":[]}},"source":{"en":"source","es":"fuente","zh":"来源","aliases":{},"aliases_legacy":{"zh":[]}},"status":{"en":"status","es":"estado","zh":"状态","aliases":{},"aliases_legacy":{"zh":[]}},"certainty":{"en":"certainty","es":"certeza","zh":"确定性","aliases":{},"aliases_legacy":{"zh":[]}},"icon":{"en":"icon","es":"icono","zh":"图标","aliases":{},"aliases_legacy":{"zh":[]}},"criterion":{"en":"criterion","es":"criterio","zh":"标准","aliases":{},"aliases_legacy":{"zh":["准则"]},"revision_zh":"2026-10-20"},"weight":{"en":"weight","es":"peso","zh":"权重","aliases":{},"aliases_legacy":{"zh":[]}},"date":{"en":"date","es":"fecha","zh":"日期","aliases":{},"aliases_legacy":{"zh":[]}},"depends_on":{"en":"depends_on","es":"depende","zh":"依赖","aliases":{},"aliases_legacy":{"zh":[]}},"value":{"en":"value","es":"valor","zh":"值","aliases":{},"aliases_legacy":{"zh":[]}},"owner":{"en":"owner","es":"responsable","zh":"负责人","aliases":{},"aliases_legacy":{"zh":[]}},"priority":{"en":"priority","es":"prioridad","zh":"优先级","aliases":{},"aliases_legacy":{"zh":[]}},"code_lang":{"en":"code_lang","es":"lenguaje","zh":"编程语言","aliases":{},"aliases_legacy":{"zh":[]}},"locale":{"en":"locale","es":"idioma","zh":"语种","aliases":{},"aliases_legacy":{"zh":[]}},"phase":{"en":"phase","es":"fase","zh":"阶段","aliases":{},"aliases_legacy":{"zh":[]}},"label":{"en":"label","es":"etiqueta","zh":"标签","aliases":{},"aliases_legacy":{"zh":[]}},"verification":{"en":"verification","es":"verificacion","zh":"验证","aliases":{},"aliases_legacy":{"zh":[]}},"url":{"en":"url","es":"url","zh":"网址","aliases":{},"aliases_legacy":{"zh":[]}},"uri":{"en":"uri","es":"uri","zh":"uri","aliases":{},"aliases_legacy":{"zh":[]}},"order":{"en":"order","es":"orden","zh":"顺序","aliases":{},"aliases_legacy":{"zh":[]}},"duration":{"en":"duration","es":"duracion","zh":"时长","aliases":{},"aliases_legacy":{"zh":[]}},"column":{"en":"column","es":"columna","zh":"列","aliases":{},"aliases_legacy":{"zh":[]}},"rollback":{"en":"rollback","es":"rollback","zh":"回滚","aliases":{},"aliases_legacy":{"zh":[]}},"question":{"en":"question","es":"pregunta","zh":"问题","aliases":{},"aliases_legacy":{"zh":[]}},"options":{"en":"options","es":"opciones","zh":"选项","aliases":{},"aliases_legacy":{"zh":[]}},"chosen":{"en":"chosen","es":"elegida","zh":"选定","aliases":{},"aliases_legacy":{"zh":[]}},"score":{"en":"score","es":"puntaje","zh":"得分","aliases":{},"aliases_legacy":{"zh":[]}},"reopen_if":{"en":"reopen_if","es":"reabrir_si","zh":"重开条件","aliases":{},"aliases_legacy":{"zh":[]}},"file":{"en":"file","es":"archivo","zh":"文件","aliases":{},"aliases_legacy":{"zh":[]}},"pos":{"en":"pos","es":"pos","zh":"位置","aliases":{},"aliases_legacy":{"zh":[]}},"name":{"en":"name","es":"nombre","zh":"名称","aliases":{},"aliases_legacy":{"zh":[]}},"license":{"en":"license","es":"licencia","zh":"许可证","aliases":{},"aliases_legacy":{"zh":[]}},"done":{"en":"done","es":"hecho","zh":"完成","aliases":{},"aliases_legacy":{"zh":[]}},"generated_by":{"en":"generated_by","es":"generado_por","zh":"生成者","aliases":{},"aliases_legacy":{"zh":[]}},"cache":{"en":"cache","es":"cache","zh":"缓存","aliases":{},"aliases_legacy":{"zh":[]}},"alt":{"en":"alt","es":"alt","zh":"替代文本","aliases":{},"aliases_legacy":{"zh":[]}},"hash":{"en":"hash","es":"hash","zh":"哈希","aliases":{},"aliases_legacy":{"zh":[]}},"rel":{"en":"rel","es":"rel","zh":"关系","aliases":{},"aliases_legacy":{"zh":[]}},"src":{"en":"src","es":"src","zh":"src","aliases":{},"aliases_legacy":{"zh":[]}},"moved_to":{"en":"moved_to","es":"movido_a","zh":"移至","aliases":{},"aliases_legacy":{"zh":[]}},"lesson":{"en":"lesson","es":"leccion","zh":"教训","aliases":{},"aliases_legacy":{"zh":["经验教训"]},"revision_zh":"2026-10-20"},"applies_to":{"en":"applies_to","es":"aplica_a","zh":"适用于","aliases":{},"aliases_legacy":{"zh":[]}},"origin":{"en":"origin","es":"origen","zh":"出处","aliases":{},"aliases_legacy":{"zh":[]}},"uses":{"en":"uses","es":"usos","zh":"使用次数","aliases":{},"aliases_legacy":{"zh":[]}},"replaces":{"en":"replaces","es":"reemplaza","zh":"取代","aliases":{},"aliases_legacy":{"zh":[]}},"confidence":{"en":"confidence","es":"confianza","zh":"置信度","aliases":{},"aliases_legacy":{"zh":[]}},"candidates":{"en":"candidates","es":"candidatas","zh":"候选集","aliases":{},"aliases_legacy":{"zh":[]}},"new_path":{"en":"new_path","es":"ruta_nueva","zh":"新路径","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"version":{"en":"version","es":"version","zh":"版本","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"}},"cabecera":{"profile":{"en":"profile","es":"perfil","zh":"规范版本","aliases":{},"aliases_legacy":{"zh":["规范"]},"revision_zh":"2026-10-20"},"keys":{"en":"keys","es":"claves","zh":"键名语言","aliases":{},"aliases_legacy":{"zh":["键语言"]},"revision_zh":"2026-10-20"},"scope":{"en":"scope","es":"ámbito","zh":"范围","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"suggested_views":{"en":"suggested_views","es":"vistas sugeridas","zh":"建议视图","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"theme":{"en":"theme","es":"tema","zh":"主题","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"locale":{"en":"locale","es":"idioma","zh":"语种","aliases":{},"aliases_legacy":{"zh":[]}},"related":{"en":"related","es":"relacionado","zh":"相关","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"version":{"en":"version","es":"versión","zh":"版本","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"translation":{"en":"translation","es":"traducción","zh":"翻译","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"id":{"en":"id","es":"id","zh":"id","aliases":{},"aliases_legacy":{"zh":[]}}},"valores":{"status":{"open":{"en":"open","es":"abierta","zh":"待定","aliases":{},"aliases_legacy":{"zh":["未决"]},"revision_zh":"2026-10-20"},"decided":{"en":"decided","es":"decidida","zh":"已定","aliases":{},"aliases_legacy":{"zh":["已决"]},"revision_zh":"2026-10-20"},"closed":{"en":"closed","es":"cerrada","zh":"已关闭","aliases":{},"aliases_legacy":{"zh":[]}},"abstained":{"en":"abstained","es":"abstenida","zh":"弃权","aliases":{},"aliases_legacy":{"zh":[]}},"pending":{"en":"pending","es":"pendiente","zh":"待办","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"in_progress":{"en":"in_progress","es":"en_curso","zh":"进行中","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"done":{"en":"done","es":"hecho","zh":"完成","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"},"review":{"en":"review","es":"revision","zh":"审核","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"}},"certainty":{"Verified":{"en":"Verified","es":"Verificado","zh":"已验证","aliases":{},"aliases_legacy":{"zh":[]}},"Assumed":{"en":"Assumed","es":"Supuesto","zh":"假设","aliases":{},"aliases_legacy":{"zh":[]}},"Closed":{"en":"Closed","es":"Cerrada","zh":"已结案","aliases":{},"aliases_legacy":{"zh":["已关闭"]},"revision_zh":"2026-10-20"}},"priority":{"high":{"en":"high","es":"alta","zh":"高","aliases":{},"aliases_legacy":{"zh":[]}},"medium":{"en":"medium","es":"media","zh":"中","aliases":{},"aliases_legacy":{"zh":[]}},"low":{"en":"low","es":"baja","zh":"低","aliases":{},"aliases_legacy":{"zh":[]}}},"type@stream":{"other":{"en":"other","es":"otro","zh":"其他","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"}},"rel":{"next":{"en":"next","es":"siguiente","zh":"下一个","aliases":{},"aliases_legacy":{"zh":[]},"extension":"propuesta fuera de §7.3 (falta aprobar)"}}},"vistas":{"web":{"en":"web","es":"web","zh":"网页","aliases":{},"aliases_legacy":{"zh":[]},"rotulo":{"es":"Web","en":"Web","zh":"网页"}},"slides":{"en":"slides","es":"slides","zh":"幻灯片","aliases":{},"aliases_legacy":{"zh":[]},"rotulo":{"es":"Slides","en":"Slides","zh":"幻灯片"}},"board":{"en":"board","es":"tablero","zh":"看板","aliases":{},"aliases_legacy":{"zh":[]},"rotulo":{"es":"Tablero","en":"Board","zh":"看板"}},"tv":{"en":"tv","es":"tv","zh":"电视","aliases":{},"aliases_legacy":{"zh":[]},"rotulo":{"es":"TV","en":"TV","zh":"电视"}},"map":{"en":"map","es":"carta","zh":"路线图","aliases":{},"aliases_legacy":{"zh":[]},"rotulo":{"es":"Carta","en":"Map","zh":"路线图"}},"mission":{"en":"mission","es":"misión","zh":"使命","aliases":{},"aliases_legacy":{"zh":[]},"rotulo":{"es":"Misión","en":"Mission","zh":"使命"}},"source":{"en":"source","es":"fuente","zh":"源码","aliases":{},"aliases_legacy":{"zh":[]},"rotulo":{"es":"Fuente","en":"Source","zh":"源码"}}}};
+const lndKW=(()=>{const K=LND_KW,L=["es","en","zh"],ent={},sal={},cats={b:K.bloques,f:K.campos,h:K.cabecera,v:K.vistas};
+  for(const k in K.valores)cats["v:"+k]=K.valores[k];
+  for(const c in cats){ent[c]=new Map();sal[c]={};for(const canon in cats[c]){const e=cats[c][canon];sal[c][canon]=e;
+    for(const lg of L){for(const w of [e[lg],...((e.aliases||{})[lg]||[]),...((e.aliases_legacy||{})[lg]||[])]){if(!ent[c].has(w))ent[c].set(w,canon);}}}}
+  const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),zh=c=>[...ent[c].keys()].filter(w=>!/^[A-Za-z_]/.test(w)).sort((a,b)=>b.length-a.length),alt=ws=>ws.map(esc).join("|")||"(?!)";
+  return {canon:(c,w)=>ent[c].get(w)||null,pal:(c,canon,lg)=>(sal[c][canon]||{})[lg]||canon,
+    OPEN:new RegExp("^[@＠]([A-Za-z_][\\p{L}\\p{N}_-]*|"+alt(zh("b"))+")(?:\\s+(\\S+))?\\s*$","u"),
+    KV:new RegExp("^([a-z_][\\p{L}\\p{N}_-]*|"+alt(zh("f"))+")[:：][ \\t]?(.*)$","u"),
+    ML:new RegExp("^([a-z_][\\p{L}\\p{N}_-]*|"+alt(zh("f"))+")(?:::|：：)\\s*$","u"),
+    HSEG:new RegExp("^(\\s*)("+alt([...ent.h.keys()].sort((a,b)=>b.length-a.length))+")([:：])([\\s\\S]*)$","u"),
+    amb:(tipo,campo)=>campo==="type"&&tipo==="stream"?"v:type@stream":campo==="status"&&tipo==="experience"?"v:certainty":campo==="confidence"?"v:priority":(["status","certainty","priority","rel"].includes(campo)?"v:"+campo:null)};})();
+const LND_CTRL=/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u2069\uFEFF]/g;
+function lndConvertir(src,destino){
+  const K=lndKW,zh=destino==="zh",out=[],asc=s=>zh?s:s.replace(/：/g,":").replace(/＠/g,"@");let cur=null,modo=null,ml=false;
+  for(let line of String(src).split("\n")){
+    const l0=line.replace(/\r$/,"").replace(LND_CTRL,""),t=l0.trim();
+    if(ml){if(t==="::"||t==="：："){ml=false;if(t==="：：")line=asc(line);}out.push(line);continue;}
+    if(l0==="//"||l0.startsWith("// ")){
+      if(!cur){line=line.slice(0,3)+line.slice(3).split(/(\s+·\s+)/).map(s=>{const m=K.HSEG.exec(s);if(!m||!K.canon("h",m[2]))return s;const c=K.canon("h",m[2]);let v=m[4];
+        if(c==="suggested_views")v=v.replace(/[^,\s][^,]*?(?=\s*(,|$))/g,w=>{const cv=K.canon("v",w.toLowerCase());return cv?K.pal("v",cv,destino):w;});
+        if(c==="keys")v=v.replace(/^(\s*)(es|en|zh)\b/,(_,a)=>a+destino);
+        return m[1]+K.pal("h",c,destino)+(zh?m[3]:":")+v;}).join("");}
+      out.push(line);continue;}
+    if(t==="@@"||t==="＠＠"){cur=modo=null;out.push(asc(line));continue;}
+    if(t==="---"){cur=modo=null;out.push(line);continue;}
+    let m=K.OPEN.exec(l0);
+    if(m){const c=K.canon("b",m[1].toLowerCase());cur=c||m[1].toLowerCase();modo="props";
+      line=c?(zh?line[0]:"@")+K.pal("b",c,destino)+line.slice(1+m[1].length):asc(line[0])+line.slice(1);out.push(line);continue;}
+    if(cur&&modo==="props"){
+      if(t===""){modo="body";out.push(line);continue;}
+      m=K.ML.exec(l0);
+      if(m){const c=K.canon("f",m[1]);ml=true;if(c)line=K.pal("f",c,destino)+(zh?line.slice(m[1].length):line.slice(m[1].length).replace("：：","::"));out.push(line);continue;}
+      m=K.KV.exec(l0);
+      if(m){const raw=m[1],c=K.canon("f",raw),sep=line[raw.length];let resto=line.slice(raw.length+1);const a=K.amb(cur,c||raw);
+        if(a){const mv=a==="v:rel"?/^(\s*)(\S+)([\s\S]*)$/.exec(resto):/^(\s*)([\s\S]*?)(\s*)$/.exec(resto);if(mv&&K.canon(a,mv[2]))resto=mv[1]+K.pal(a,K.canon(a,mv[2]),destino)+mv[3];}
+        out.push((c?K.pal("f",c,destino):raw)+(zh?sep:":")+resto);continue;}
+      modo="body";}
+    out.push(line);}
+  return out.join("\n");}
+const lndNorm=src=>lndConvertir(src,"es");
+/* etiquetas derivadas de claves en el idioma de la interfaz (?lang o navegador): @fuente → @source → @来源 */
+function lndUI(){const q=(new URLSearchParams(location.search).get("lang")||"").slice(0,2).toLowerCase();if(["es","en","zh"].includes(q))return q;
+  const n=String((navigator.languages&&navigator.languages[0])||navigator.language||"es").toLowerCase();return n.startsWith("zh")?"zh":n.startsWith("en")?"en":"es";}
+function lndTipoUI(t){const c=lndKW.canon("b",String(t||""));return "@"+(c?lndKW.pal("b",c,lndUI()):t);}
+function lndT7(s){return window.__t7?window.__t7(s):s;}
+
+"use strict";
+const R2="./";                       // docs/render-v2.html, docs/render-v2-demos.js
+const LS="sitedeck.entrega.v1";
+const VISTAS_R2=["web","carta","mision","slides","tablero","tv","fuente","md"];
+const VISTAS_MINI=["web","tablero","fuente"];
+const TIPOS=["render","lnd","feed","galeria"];
+/* Temas de un clic: «familia» y los 3 clásicos viven en CSS; los demás son paletas AA (texto ≥4.5:1 sobre papel, papel2 y tarjeta). par = pareja clara/oscura para el modo automático. */
+const PALS={"papel":{"paper":"#FAFAF7","paper2":"#EFEFEA","card":"#FFFFFF","ink":"#1B1B1B","muted":"#595955","linea":"#D9D9D2","regla":"#1B1B1B","accent":"#1F5FAD","on":"#FFFFFF","copper":"#B5501E","ctx":"#9A3F12","osc":0,"par":"pizarra"},"sepia":{"paper":"#F3E9D7","paper2":"#EADCC3","card":"#F9F2E5","ink":"#2E2216","muted":"#5F4B35","linea":"#D5C3A3","regla":"#2E2216","accent":"#80430F","on":"#FFFFFF","copper":"#A0522D","ctx":"#853B18","osc":0,"par":"crepusculo"},"pizarra":{"paper":"#1E242B","paper2":"#232A32","card":"#262E37","ink":"#E6EAEE","muted":"#A9B3BD","linea":"#3A444F","regla":"#8994A0","accent":"#7FB3E8","on":"#0F1720","copper":"#E59A6B","ctx":"#F0A97C","osc":1,"par":"papel"},"medianoche":{"paper":"#0E1324","paper2":"#131A30","card":"#161E36","ink":"#E4E8F5","muted":"#A3ACC7","linea":"#2C3656","regla":"#6E7899","accent":"#8FA8FF","on":"#0E1324","copper":"#FFB86B","ctx":"#FFC285","osc":1,"par":"oceano"},"bosque":{"paper":"#13201A","paper2":"#182820","card":"#1B2C23","ink":"#E3EDE6","muted":"#A3B8AA","linea":"#2F4638","regla":"#7E9787","accent":"#6FCF97","on":"#0C1A12","copper":"#E0B25A","ctx":"#E8C070","osc":1,"par":"arena"},"oceano":{"paper":"#EEF5F8","paper2":"#E1EDF2","card":"#F8FCFD","ink":"#10232C","muted":"#445C67","linea":"#C3D6DE","regla":"#10232C","accent":"#0A5F7E","on":"#FFFFFF","copper":"#B4532A","ctx":"#923D16","osc":0,"par":"medianoche"},"crepusculo":{"paper":"#1C1726","paper2":"#221C2E","card":"#261F33","ink":"#ECE6F5","muted":"#B2A8C4","linea":"#3D3350","regla":"#8A7FA0","accent":"#C4A3FF","on":"#1C1726","copper":"#F2A07B","ctx":"#F5B08F","osc":1,"par":"rosa"},"rosa":{"paper":"#FBF1F3","paper2":"#F3E2E6","card":"#FFF8F9","ink":"#2A1A1F","muted":"#674B53","linea":"#E5CBD2","regla":"#2A1A1F","accent":"#A3264F","on":"#FFFFFF","copper":"#9A4A12","ctx":"#863D0C","osc":0,"par":"crepusculo"},"arena":{"paper":"#F5EFE3","paper2":"#ECE3D2","card":"#FBF8F1","ink":"#2B261C","muted":"#5C5443","linea":"#D9CDB4","regla":"#2B261C","accent":"#8A4618","on":"#FFFFFF","copper":"#3F6F5A","ctx":"#2F5A47","osc":0,"par":"bosque"},"mono":{"paper":"#FFFFFF","paper2":"#F0F0F0","card":"#FAFAFA","ink":"#111111","muted":"#545454","linea":"#D0D0D0","regla":"#111111","accent":"#111111","on":"#FFFFFF","copper":"#444444","ctx":"#444444","osc":0,"par":"pizarra"},"contraste":{"paper":"#000000","paper2":"#0D0D0D","card":"#0A0A0A","ink":"#FFFFFF","muted":"#D6D6D6","linea":"#FFFFFF","regla":"#FFFFFF","accent":"#FFD400","on":"#000000","copper":"#FFD400","ctx":"#FFD400","osc":1,"par":"contraste"}};
+const TEMAS={familia:["#F4F0E6","#1A1F1C","#0B6E4F","#C45C26"],papel:["#FAFAF7","#1B1B1B","#1F5FAD","#B5501E"],sepia:["#F3E9D7","#2E2216","#80430F","#A0522D"],pizarra:["#1E242B","#E6EAEE","#7FB3E8","#E59A6B"],medianoche:["#0E1324","#E4E8F5","#8FA8FF","#FFB86B"],bosque:["#13201A","#E3EDE6","#6FCF97","#E0B25A"],oceano:["#EEF5F8","#10232C","#0A5F7E","#B4532A"],crepusculo:["#1C1726","#ECE6F5","#C4A3FF","#F2A07B"],rosa:["#FBF1F3","#2A1A1F","#A3264F","#9A4A12"],arena:["#F5EFE3","#2B261C","#8A4618","#3F6F5A"],mono:["#FFFFFF","#111111","#111111","#444444"],contraste:["#000000","#FFFFFF","#FFD400","#FFD400"],neobrutalista:["#FFF4D6","#111111","#1F3BFF","#FF5C39"],retro:["#EFE6D2","#2B2118","#9A3412","#4D7C0F"],cyberpunk:["#0B0C10","#E6F1FF","#00E5FF","#FF2BD6"]};
+const PRESETS={"1":[1,1],"2c":[2,1],"3c":[3,1],"2x2":[2,2],foco:[2,2]};
+/* Glifos solo visuales, siempre con el texto del estado al lado. Los de @decision no repiten ✅ ni 🚫. */
+const GLIFO={pendiente:"⏳",en_curso:"🔄",revision:"👀",bloqueada:"🚫",hecho:"✅",abierta:"◇",decidida:"◆",abstenida:"◌"};
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const MUESTRA="# Muestra\nEste panel usa la muestra incluida porque no se encontró el sidecar de render-v2.\n\n---\n\n@heading h-1\ntexto: Feed de ejemplo\nnivel: 1\n@@\n\n@tarea t-1\ntitulo: Revisar el deck\nestado: en_curso\n@@\n\n@tarea t-2\ntitulo: Exportar deck.lnd\nestado: pendiente\nsupuesto: si\n@@\n";
+const REDUCIR=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const idiomaNav=()=>{const l=(navigator.language||"es").slice(0,2).toLowerCase();return TXT[l]?l:"es";};
+const DEF=()=>{const L=idiomaNav(),LD=L==="zh"?"zh-cn":L;return {nombre:"Cuaderno de ejemplo",tema:"familia",preset:"foco",idioma:L,
+  config:{conjunto:"publico",embed:true,puerto:4747,interfaz:"127.0.0.1",mcp:"http://127.0.0.1:4747/mcp",mcp_leer:true,mcp_buscar:true,mcp_proponer:false,ucan:"",
+    webdav:"http://127.0.0.1:4747/dav/",volumenes:"cuaderno · ./notebook-ejemplo · lectura\npublico · ./lnd-publico · lectura",git:"",env:"LANDDY_PERFIL=lnd-1.1"},
+  paneles:[
+    {tipo:"render",fuente:"demo:notebook-"+L,vista:"tablero",refresco:0,rotar:"",rotar_cada:0,ancho:false},
+    {tipo:"render",fuente:"demo:pub-repo-docs-"+LD+"-readme",vista:"web",refresco:0,rotar:"web · carta",rotar_cada:30,ancho:false},
+    {tipo:"feed",fuente:"demo:notebook-"+L,vista:"feed",refresco:30,rotar:"",rotar_cada:0,ancho:false}]};};
+let D=cargar();D.config.conjunto="publico";
+let PAUSA=REDUCIR;            // WCAG 2.2.2: con movimiento reducido, todo arranca en pausa
+const ARCH=new Map(), VIVOS=new Map();
+let seq=0, activo=0, abridor=null;
+const t=(k,...a)=>{const v=(TXT[D.idioma]||TXT.es)[k];return typeof v==="function"?v(...a):(v??TXT.es[k]??k);};
+
+function cargar(){try{const j=JSON.parse(localStorage.getItem(LS)||"null");if(j&&Array.isArray(j.paneles)){const d=DEF();return Object.assign(d,j,{config:Object.assign(d.config,j.config||{})});}}catch(e){}return DEF();}
+function guardar(){const c=structuredClone(D);c.paneles.forEach(p=>{delete p._id;if(p.fuente.startsWith("archivo:"))p.fuente="archivo:"+(p.nombreArchivo||"");});try{localStorage.setItem(LS,JSON.stringify(c));}catch(e){}}
+function toast(x){const e=$("#toast");e.textContent=x;e.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("on"),2400);}
+
+/* ---------- textos ---------- */
+function traducir(){
+  document.documentElement.lang=D.idioma==="zh"?"zh-CN":D.idioma;
+  $$("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+  $$("[data-i-al]").forEach(e=>e.setAttribute("aria-label",t(e.dataset.iAl)));
+  $$("[data-i-ti]").forEach(e=>e.title=t(e.dataset.iTi));
+  $$("[data-i-ph]").forEach(e=>e.placeholder=t(e.dataset.iPh));
+  document.title="Sitedeck · "+D.nombre;
+}
+/* ---------- parser .lnd mínimo: claves es/en/zh (y aliases_legacy) se normalizan a es con keywords.json embebido; mezclar idiomas es válido ---------- */
+function parse(src){
+  const L=lndNorm(String(src)).replace(/\r/g,"").split("\n");const doc={titulo:"",intro:[],bloques:[]};let cur=null,multi=null;
+  for(const l of L){
+    if(cur){
+      if(multi){if(l==="::"){multi=null;}else cur.props[multi].push(l);continue;}
+      if(l==="@@"||l==="---"){doc.bloques.push(cur);cur=null;continue;}
+      const kv=cur.enProps&&/^([a-z_][\w-]*):(:?)\s?(.*)$/.exec(l);
+      if(kv){const k=kv[1];if(kv[2]===":"&&kv[3]===""){multi=k;cur.props[k]=cur.props[k]||[];}else (cur.props[k]=cur.props[k]||[]).push(kv[3]);continue;}
+      cur.enProps=false;cur.cuerpo.push(l);continue;
+    }
+    const m=/^@([a-z_][\w-]*)(?:\s+(\S+))?\s*$/.exec(l);
+    if(m){cur={tipo:m[1],id:m[2]||"",props:{},cuerpo:[],enProps:true};continue;}
+    if(l.startsWith("# ")&&!doc.titulo){doc.titulo=l.slice(2);continue;}
+    if(l.trim()&&!l.startsWith("// ")&&l.trim()!=="---")doc.intro.push(l);
+  }
+  if(cur)doc.bloques.push(cur);
+  return doc;
+}
+const p1=(b,k)=>(b.props[k]||[])[0]||"";
+function inline(t){
+  return String(t).split(/`([^`]*)`/).map((s,i)=>i%2?`<code>${esc(s)}</code>`:esc(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,(m,a,u)=>/^(\?|#|\.{0,2}\/)/.test(u)?`<a href="${u}">${a}</a>`:`${a} <span class="seg">(${u})</span>`).replace(/\.(@@|@|---|::|\/\/)/g,"$1")).join("");
+}
+function md(lines){
+  const out=[];let tabla=[];
+  const flush=()=>{if(!tabla.length)return;const f=tabla.map(l=>l.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim())).filter(f=>!f.every(c=>/^:?-+:?$/.test(c)));
+    out.push(`<table><thead><tr>${f[0].map(c=>`<th>${inline(c)}</th>`).join("")}</tr></thead><tbody>${f.slice(1).map(r=>`<tr>${r.map(c=>`<td>${inline(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>`);tabla=[];};
+  let par=[];const fp=()=>{if(par.length){out.push(`<p>${par.map(inline).join("<br>")}</p>`);par=[];}};
+  for(const l of lines){if(l.trim().startsWith("|")){fp();tabla.push(l);continue;}flush();if(!l.trim()){fp();continue;}par.push(l.replace(/^- /,"• "));}
+  fp();flush();return out.join("");
+}
+/* ---------- fuentes ---------- */
+const demos=()=>window.LND_DEMOS||null;
+const listaDemos=()=>{const d=demos();return d?Object.keys(d):[];};
+const tituloDemo=id=>{const d=demos();const m=d&&d[id]&&/^# (.+)$/m.exec(d[id]);return m?m[1]:id;};
+async function leerFuente(p){
+  if(p.fuente.startsWith("demo:")){const d=demos(),id=p.fuente.slice(5);return d&&d[id]?d[id]:MUESTRA;}
+  const a=ARCH.get(p._id);if(!a||!(a.handle||a.file))return null;
+  return a.handle?(await a.handle.getFile()).text():a.file.text();
+}
+const nombre=p=>p.fuente.startsWith("demo:")?tituloDemo(p.fuente.slice(5)):(p.nombreArchivo||"archivo");
+const vistasDe=p=>p.tipo==="render"?VISTAS_R2:p.tipo==="lnd"?VISTAS_MINI:[p.tipo];
+const rotacion=p=>String(p.rotar||"").split("·").map(s=>s.trim()).filter(v=>vistasDe(p).includes(v));
+const vistaActual=p=>{const r=rotacion(p),v=VIVOS.get(p._id);return r.length&&+p.rotar_cada>0&&v?r[v.idx%r.length]:p.vista;};
+function urlRender(p,vista){
+  const q=new URLSearchParams({demo:p.fuente.slice(5),vista,tema:temaR2(),lang:D.idioma});const pl=palR2();if(pl)q.set("pal",pl);
+  if(D.config.embed||Q_EMBED)q.set("embed","1");
+  return R2+"render-v2.html?"+q;
+}
+
+/* ---------- glifos y vistas mínimas ---------- */
+function glifo(b){if(p1(b,"supuesto")==="si"||/supuest/i.test(p1(b,"certeza")))return["🧪","supuesto"];const e=p1(b,"estado");return[GLIFO[e]||"·",e];}
+function feed(doc,prev){
+  const xs=doc.bloques.filter(b=>["tarea","decision","afirmacion","experiencia"].includes(b.tipo));
+  if(!xs.length)return{html:`<p class="vacio">${esc(t("sin_feed"))}</p>`,ids:new Set()};
+  const ids=new Set(xs.map(b=>b.id+"|"+p1(b,"estado")));
+  return{ids,html:`<ul class="feed">${xs.map(b=>{const[g,e]=glifo(b);const k=b.id+"|"+p1(b,"estado");
+    return `<li class="${prev&&!prev.has(k)?"nuevo":""}"><span class="mk" aria-hidden="true">${g}</span><span class="t">${inline(p1(b,"titulo")||p1(b,"texto")||p1(b,"pregunta")||b.id)}</span><span class="meta">${e?`<span class="est">${esc(e)}</span>`:""}${esc([b.tipo,b.id,p1(b,"fase")].filter(Boolean).join(" · "))}</span></li>`;}).join("")}</ul>`};
+}
+function tablero(doc){
+  const ts=doc.bloques.filter(b=>b.tipo==="tarea");if(!ts.length)return `<p class="vacio">${esc(t("sin_tareas"))}</p>`;
+  const tb=doc.bloques.find(b=>b.tipo==="tablero");const cols=(tb?.props.columna||["pendiente · Pendiente","en_curso · En curso","hecho · Hecho"]).map(c=>c.split(" · "));
+  const ids=cols.map(c=>c[0]);ts.forEach(x=>{const e=p1(x,"estado")||"pendiente";if(!ids.includes(e)){ids.push(e);cols.push([e,e]);}});
+  return `<div class="tablero">${cols.map(([id,et])=>{const xs=ts.filter(x=>(p1(x,"estado")||"pendiente")===id);
+    return `<section class="col"><h3><span>${esc(et||id)}</span><span>${xs.length}</span></h3>${xs.map(x=>`<div class="tj">${inline(p1(x,"titulo")||x.id)}<div class="meta">${esc([x.id,p1(x,"fase"),p1(x,"prioridad")].filter(Boolean).join(" · "))}</div></div>`).join("")}</section>`;}).join("")}</div>`;
+}
+function web(doc){
+  let h=`<div class="mini"><h1>${inline(doc.titulo||"—")}</h1>${md(doc.intro)}`;
+  for(const b of doc.bloques){const tt=p1(b,"texto")||p1(b,"titulo")||p1(b,"pregunta");
+    if(b.tipo==="heading"){h+=(p1(b,"nivel")==="1"?`<h2>${inline(tt)}</h2>`:`<h3>${inline(tt)}</h3>`)+md(b.cuerpo);continue;}
+    if(["code","mermaid","ascii"].includes(b.tipo)){h+=`<div class="bloque"><div class="tipo">${esc(b.tipo)}</div><pre class="fuente">${esc(b.cuerpo.join("\n"))}</pre></div>`;continue;}
+    const it=(b.props.item||[]).map(i=>`<li>${inline(i)}</li>`).join("");
+    h+=`<div class="bloque"><div class="tipo">${esc(b.tipo)}${b.id?" · "+esc(b.id):""}</div>${tt?`<h3>${inline(tt)}</h3>`:""}${it?`<ul>${it}</ul>`:""}${md(b.cuerpo)}</div>`;}
+  return h+"</div>";
+}
+async function galeria(p,v,C){
+  const a=ARCH.get(p._id);let ds;
+  if(a&&a.imagenes&&a.imagenes.length)ds=a.imagenes.map((u,i)=>`<img src="${u}" alt="${i+1} / ${a.imagenes.length}">`);
+  else{const doc=parse(await leerFuente(p)||MUESTRA);const hs=doc.bloques.filter(b=>["heading","hero","stat","quote","producto"].includes(b.tipo)&&(p1(b,"texto")||p1(b,"titulo")));
+    ds=(hs.length?hs:[{props:{texto:[doc.titulo]},cuerpo:doc.intro}]).map((b,i,r)=>`<div class="tarjeta"><span class="n">${String(i+1).padStart(2,"0")} / ${String(r.length).padStart(2,"0")}</span><h2>${inline(p1(b,"texto")||p1(b,"titulo"))}</h2><p>${inline(p1(b,"sub")||(b.cuerpo||[]).find(l=>l.trim()&&!l.startsWith("|"))||"")}</p></div>`);}
+  const k=v.idx%ds.length;
+  C.innerHTML=`<div class="galeria"><div class="diapo">${ds[k]}</div><div class="puntos" aria-hidden="true">${ds.slice(0,24).map((_,i)=>`<i class="${i===k%24?"on":""}"></i>`).join("")}</div></div>`;
+}
+
+/* ---------- paneles ---------- */
+const IC={rec:'<svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>',mas:'<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></svg>',
+  pausa:'<svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg>',play:'<svg viewBox="0 0 24 24"><path d="M7 5l12 7-12 7z"/></svg>'};
+function pintar(){
+  VIVOS.forEach(v=>v.timers.forEach(clearInterval));VIVOS.clear();
+  const R=$("#rejilla");R.dataset.preset=D.preset;R.innerHTML="";R.style.setProperty("--n",String(Math.max(1,D.paneles.length-1)));
+  aplicarTema();$("#nombre-deck").textContent=D.nombre;
+  document.body.classList.toggle("sin-paneles",!D.paneles.length);
+  D.paneles.forEach((p,i)=>{p._id=p._id||"p"+(++seq);R.appendChild(crearPanel(p,i));});
+  activo=Math.min(activo,Math.max(0,D.paneles.length-1));
+  pintarTabs();pintarInicio();estado();traducir();guardar();
+}
+function crearPanel(p,i){
+  const el=document.createElement("section");el.className="panel"+(p.ancho?" ancho":"")+(p.pausa?" pausado":"");el.id="panel-"+i;
+  el.setAttribute("role","group");el.setAttribute("aria-label",t("panel_n",i+1)+": "+nombre(p));
+  const vs=vistasDe(p);
+  el.innerHTML=`<div class="ph"><span class="tit">${esc(nombre(p))}<span class="vista-actual"></span>${p.pausa?`<span class="pz">${esc(t("pausado"))}</span>`:""}</span>
+    <span class="acc"><button class="ib" type="button" data-a="pausa" aria-pressed="${!!p.pausa}" aria-label="${esc(t(p.pausa?"reanudar_panel":"pausar_panel"))}" title="${esc(t(p.pausa?"reanudar_panel":"pausar_panel"))}">${p.pausa?IC.play:IC.pausa}</button>
+    <button class="ib" type="button" data-a="recargar" aria-label="${esc(t("recargar"))}" title="${esc(t("recargar"))}">${IC.rec}</button></span>
+    <button class="ib" type="button" data-a="menu" aria-haspopup="true" aria-expanded="false" aria-label="${esc(t("opciones"))}" title="${esc(t("opciones"))}">${IC.mas}</button></div>
+    <div class="reloj" aria-hidden="true"><i></i></div><div class="cuerpo" tabindex="0" aria-label="${esc(nombre(p))}"></div>
+    <div class="menu" role="menu">${vs.length>1?`<label>${esc(t("vista"))}<select data-k="vista">${vs.map(v=>`<option${v===p.vista?" selected":""}>${v}</option>`).join("")}</select></label><hr>`:""}
+      ${p.tipo==="galeria"?`<button type="button" role="menuitem" data-a="imagenes">${esc(t("imagenes"))}</button>`:""}
+      <button type="button" role="menuitem" data-a="ancho">${esc(t("ancho"))}${p.ancho?" ✓":""}</button>
+      <button type="button" role="menuitem" data-a="mas">${esc(t("mas_ajustes"))}</button>
+      <button type="button" role="menuitem" data-a="quitar">${esc(t("quitar"))}</button></div>`;
+  el.addEventListener("click",e=>{const a=e.target.closest("[data-a]");if(a)accion(p,el,a.dataset.a,a);});
+  const sv=$("select[data-k=vista]",el);if(sv)sv.onchange=()=>{p.vista=sv.value;const v=VIVOS.get(p._id);v.idx=0;cargarPanel(p,true);guardar();};
+  VIVOS.set(p._id,{el,timers:[],idx:0,ids:null});
+  queueMicrotask(()=>{cargarPanel(p);programar(p);});
+  return el;
+}
+function cerrarMenus(ex){$$(".panel.menu-on").forEach(x=>{if(x!==ex){x.classList.remove("menu-on");$("[data-a=menu]",x).setAttribute("aria-expanded","false");}});}
+document.addEventListener("click",e=>{if(!e.target.closest(".panel"))cerrarMenus();});
+function accion(p,el,a,b){
+  if(a==="menu"){const on=!el.classList.contains("menu-on");cerrarMenus(el);el.classList.toggle("menu-on",on);b.setAttribute("aria-expanded",String(on));if(on){const f=$(".menu select,.menu button",el);f&&f.focus();}return;}
+  cerrarMenus();
+  if(a==="recargar")cargarPanel(p,true);
+  else if(a==="pausa"){p.pausa=!p.pausa;guardar();pintar();}
+  else if(a==="ancho"){p.ancho=!p.ancho;pintar();}
+  else if(a==="quitar"){ARCH.delete(p._id);D.paneles=D.paneles.filter(x=>x!==p);pintar();}
+  else if(a==="mas")abrirAjustes("paneles",b,p._id);
+  else if(a==="imagenes"){const inp=document.createElement("input");inp.type="file";inp.accept="image/*";inp.multiple=true;
+    inp.onchange=()=>{const prev=ARCH.get(p._id)||{};(prev.imagenes||[]).forEach(URL.revokeObjectURL);ARCH.set(p._id,Object.assign(prev,{imagenes:[...inp.files].map(f=>URL.createObjectURL(f))}));cargarPanel(p);};inp.click();}
+}
+async function cargarPanel(p,manual){
+  const v=VIVOS.get(p._id);if(!v)return;const C=$(".cuerpo",v.el),vista=vistaActual(p);
+  $(".vista-actual",v.el).textContent=["render","lnd"].includes(p.tipo)?vista:"";
+  if(!REDUCIR){C.classList.remove("fade");void C.offsetWidth;C.classList.add("fade");}
+  try{
+    if(p.tipo==="render"){
+      if(!p.fuente.startsWith("demo:")){p.tipo="lnd";p.vista="web";return cargarPanel(p);}
+      let f=$("iframe",C);const u=urlRender(p,vista);
+      if(!f){f=document.createElement("iframe");f.title="render-v2 · "+nombre(p);
+        f.setAttribute("sandbox","allow-scripts allow-same-origin");   // render-v2 es código propio y de confianza (ver SITEDECK.lnd)
+        f.setAttribute("referrerpolicy","no-referrer");C.innerHTML="";C.appendChild(f);f.src=u;}
+      else if(f.dataset.u!==u||manual)f.src=u;
+      f.dataset.u=u;return;
+    }
+    if(p.tipo==="galeria")return galeria(p,v,C);
+    const src=await leerFuente(p);
+    if(src==null){C.innerHTML=`<p class="vacio">${esc(t("releer",p.nombreArchivo||""))}</p>`;return;}
+    const doc=parse(src);
+    if(p.tipo==="feed"){const r=feed(doc,v.ids);v.ids=r.ids;C.innerHTML=r.html;return;}
+    C.innerHTML=vista==="tablero"?tablero(doc):vista==="fuente"?`<pre class="fuente">${esc(src)}</pre>`:web(doc);
+  }catch(e){C.innerHTML=`<p class="vacio">${esc(t("no_leer")+e.message)}</p>`;}
+}
+/* Temporizadores: se detienen con la pausa global, la del panel y cuando la pestaña se oculta */
+function programar(p){
+  const v=VIVOS.get(p._id);if(!v)return;v.timers.forEach(clearInterval);v.timers=[];
+  const bar=$(".reloj i",v.el);bar.style.width="0";
+  if(PAUSA||p.pausa||document.hidden)return;
+  const ref=+p.refresco||0,rot=+p.rotar_cada||0;
+  if(ref>0)v.timers.push(setInterval(()=>cargarPanel(p),ref*1000));
+  if(rot>0&&(p.tipo==="galeria"||rotacion(p).length))v.timers.push(setInterval(()=>{v.idx++;cargarPanel(p);},rot*1000));
+  const ciclo=rot||ref;
+  if(ciclo>0){const t0=Date.now();v.timers.push(setInterval(()=>{bar.style.width=(((Date.now()-t0)/1000%ciclo)/ciclo*100).toFixed(1)+"%";},500));}
+}
+const reprogramar=()=>D.paneles.forEach(programar);
+function pausar(on,aviso){PAUSA=on;reprogramar();estado();const b=$("#btn-pausa");b.setAttribute("aria-pressed",String(on));b.setAttribute("aria-label",t(on?"reanudar_al":"pausa_al"));b.title=t(on?"reanudar_al":"pausa_al");
+  b.innerHTML=on?IC.play:IC.pausa;const c=$("#form-config").elements.pausa_global;if(c)c.checked=on;if(aviso)toast(t(on?"t_pausa":"t_reanuda"));}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)VIVOS.forEach(v=>{v.timers.forEach(clearInterval);v.timers=[];});else reprogramar();});
+$("#btn-pausa").onclick=()=>pausar(!PAUSA,true);
+
+/* ---------- móvil: pestañas y deslizar ---------- */
+function pintarTabs(){
+  const T=$("#tabs");T.innerHTML=D.paneles.map((p,i)=>`<button type="button" role="tab" aria-controls="panel-${i}" aria-selected="${i===activo}" data-i-tab="${i}">${i+1} · ${esc(nombre(p))}</button>`).join("");
+  $$("button",T).forEach(b=>b.onclick=()=>irA(+b.dataset.iTab));
+}
+function irA(i){const el=$("#panel-"+i);if(!el)return;activo=i;el.scrollIntoView({behavior:REDUCIR?"auto":"smooth",inline:"start",block:"nearest"});marcarTab();}
+function marcarTab(){$$("#tabs button").forEach((b,i)=>b.setAttribute("aria-selected",String(i===activo)));const b=$(`#tabs button[data-i-tab="${activo}"]`);b&&b.scrollIntoView({block:"nearest",inline:"nearest"});}
+$("#rejilla").addEventListener("scroll",()=>{const R=$("#rejilla");if(getComputedStyle(R).display!=="flex")return;const i=Math.round(R.scrollLeft/(R.clientWidth||1));if(i!==activo){activo=i;marcarTab();}},{passive:true});
+
+/* ---------- inicio y estado ---------- */
+function pintarInicio(){
+  const ids=["notebook-es","notebook-en","notebook-zh","pub-repo-docs-es-readme","pub-repo-docs-es-spec","pub-repo-docs-es-guia-decision","pub-sitio-es-about-paquidermus"].filter(x=>listaDemos().includes(x));
+  $("#inicio-lista").innerHTML=ids.map(id=>`<li><button type="button" data-demo="${esc(id)}">${esc(tituloDemo(id))}<span>${esc(id)}</span></button></li>`).join("");
+  $$("#inicio-lista button").forEach(b=>b.onclick=()=>agregar({tipo:"render",fuente:"demo:"+b.dataset.demo,vista:"web"}));
+}
+function estado(){
+  const c=D.config,loc=local(c.interfaz),w=c.mcp_proponer&&c.ucan.trim();
+  $("#est-srv").innerHTML=`<b class="${loc?"":"alerta"}">${esc(c.interfaz)}:${esc(c.puerto)}</b> · ${esc(t(w?"lee_propone":"solo_lectura"))}`;
+  $("#est-pausa").textContent=PAUSA?"⏸ "+t("en_pausa"):"";
+  $("#est-paneles").textContent=t("n_paneles",D.paneles.length);
+  $("#lema-info").textContent=PAUSA?t("en_pausa"):t("n_paneles",D.paneles.length)+" · "+t("actualiza");
+}
+const local=h=>/^(127\.0\.0\.1|localhost|::1)$/.test(String(h).trim());
+
+/* ---------- agregar ---------- */
+function agregar(p){D.paneles.push(Object.assign({refresco:0,rotar:"",rotar_cada:0,ancho:false},p));activo=D.paneles.length-1;pintar();if(document.querySelector("#ajustes.on"))pintarAjustes();irA(activo);}
+const demoO=(id,alt)=>"demo:"+(listaDemos().includes(id)?id:(listaDemos()[0]||alt||"muestra"));
+const NUEVO={render:()=>({tipo:"render",fuente:demoO("notebook-es"),vista:"web"}),feed:()=>({tipo:"feed",fuente:demoO("notebook-"+D.idioma),vista:"feed",refresco:30}),
+  galeria:()=>({tipo:"galeria",fuente:demoO("pub-sitio-es-inicio"),vista:"galeria",rotar_cada:8})};
+async function abrirDisco(){
+  if(window.showOpenFilePicker){try{const[h]=await showOpenFilePicker({types:[{description:"LANDDY",accept:{"text/plain":[".lnd",".md",".txt"]}}]});conArchivo({handle:h},h.name);}catch(e){}}
+  else $("#file-lnd").click();
+}
+$("#file-lnd").onchange=e=>{const f=e.target.files[0];if(f)conArchivo({file:f},f.name);e.target.value="";};
+function conArchivo(acc,n){const p={tipo:"lnd",fuente:"archivo:"+n,nombreArchivo:n,vista:"web",refresco:acc.handle?15:0};p._id="p"+(++seq);ARCH.set(p._id,acc);agregar(p);toast(t(acc.handle?"t_relee":"t_norelee"));}
+$("#abrir-lnd").onclick=abrirDisco;$("#inicio-abrir").onclick=abrirDisco;
+$("#inicio-ejemplo").onclick=()=>{const d=DEF();D.paneles=d.paneles;pintar();};
+
+/* ---------- ajustes ---------- */
+const F=$("#form-config"),AJ=$("#ajustes");
+function abrirAjustes(tab,desde,pid){
+  abridor=desde||document.activeElement;cerrarPaleta(true);
+  AJ.inert=false;AJ.setAttribute("aria-hidden","false");AJ.classList.add("on");
+  llenar();pintarAjustes(pid);tabAj(tab||"deck");
+  setTimeout(()=>{const x=pid&&$(`.pfila[data-pid="${pid}"] select`,AJ);(x||$(".aj-tabs [aria-selected=true]",AJ)).focus();},30);
+}
+function cerrarAjustes(){if(!AJ.classList.contains("on"))return;AJ.classList.remove("on");AJ.setAttribute("aria-hidden","true");AJ.inert=true;
+  const a=abridor&&document.contains(abridor)?abridor:$("#btn-ajustes");a.focus();abridor=null;}
+function tabAj(k){$$(".aj-tabs button",AJ).forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===k)));$$(".aj-panel section",AJ).forEach(s=>s.classList.toggle("on",s.dataset.sec===k));}
+$$(".aj-tabs button",AJ).forEach(b=>b.onclick=()=>tabAj(b.dataset.tab));
+$(".aj-tabs",AJ).addEventListener("keydown",e=>{if(!["ArrowDown","ArrowUp","ArrowLeft","ArrowRight"].includes(e.key))return;const bs=$$(".aj-tabs button",AJ);let i=bs.indexOf(document.activeElement);if(i<0)return;e.preventDefault();i=(i+(e.key==="ArrowDown"||e.key==="ArrowRight"?1:-1)+bs.length)%bs.length;bs[i].focus();tabAj(bs[i].dataset.tab);});
+$("#btn-ajustes").onclick=e=>abrirAjustes("deck",e.currentTarget);
+$("#cerrar-ajustes").onclick=cerrarAjustes;
+function llenar(){F.elements.nombre.value=D.nombre;F.elements.idioma.value=D.idioma;F.elements.pausa_global.checked=PAUSA;
+  for(const[k,v]of Object.entries(D.config)){const el=F.elements[k];if(!el)continue;if(el.type==="checkbox")el.checked=!!v;else el.value=v;}avisoRed();}
+function avisoRed(){$("#aviso-red").hidden=local(F.elements.interfaz.value);}
+F.addEventListener("input",e=>{const n=e.target.name;if(!n||e.target.closest(".pfila"))return;
+  if(n==="nombre"){D.nombre=e.target.value||"deck";$("#nombre-deck").textContent=D.nombre;}
+  else if(n==="pausa_global"){pausar(e.target.checked);}
+  else if(n==="idioma"){D.idioma=TXT[e.target.value]?e.target.value:"es";pintar();pintarAjustes();}
+  else if(n==="embed"){D.config.embed=e.target.checked;D.paneles.forEach(p=>p.tipo==="render"&&cargarPanel(p,true));}
+  else if(n in D.config&&n!=="conjunto"){D.config[n]=e.target.type==="checkbox"?e.target.checked:e.target.type==="number"?+e.target.value:e.target.value;}
+  avisoRed();estado();guardar();});
+F.elements.conjunto.addEventListener("change",e=>{D.config.conjunto="publico";guardar();toast(t("t_recarga"));setTimeout(()=>location.reload(),500);});
+F.addEventListener("submit",e=>e.preventDefault());
+function pintarAjustes(pid){
+  $("#op-temas").innerHTML=Object.entries(TEMAS).map(([k,c])=>`<button type="button" class="op sw" data-tema="${k}" aria-pressed="${D.tema===k}"><span class="prev" aria-hidden="true" style="background:${c[0]};color:${c[1]}"><span>Aa</span><i style="background:${c[2]}"></i><i style="background:${c[3]}"></i></span><b>${esc(t("TE_"+k))}</b><small>${esc(t("TE_"+k+"_d"))}</small></button>`).join("");
+  $$("#op-temas .op").forEach(b=>b.onclick=()=>{D.tema=b.dataset.tema;QT=null;pintar();pintarAjustes();recargarRender();});
+  pintarApariencia();
+  $("#op-rejillas").innerHTML=Object.entries(PRESETS).map(([k,[c,r]])=>`<button type="button" class="op" data-preset="${k}" aria-pressed="${D.preset===k}"><span class="esq" aria-hidden="true" style="grid-template-columns:${k==="foco"?"1.6fr 1fr":`repeat(${c},1fr)`};grid-template-rows:repeat(${r},1fr)">${k==="foco"?'<i style="grid-row:span 2"></i><i></i><i></i>':"<i></i>".repeat(c*r)}</span><b>${esc(t("P_"+k))}</b></button>`).join("");
+  $$("#op-rejillas .op").forEach(b=>b.onclick=()=>{D.preset=b.dataset.preset;pintar();pintarAjustes();});
+  const L=$("#lista-paneles");
+  L.innerHTML=D.paneles.map((p,i)=>{const vs=vistasDe(p);const fuentes=p.fuente.startsWith("archivo:")?`<option value="${esc(p.fuente)}" selected>${esc(p.nombreArchivo)}</option>`:"";
+    return `<div class="pfila${p._id===pid?" destacada":""}" data-pid="${p._id}"><header><b>${i+1} · ${esc(nombre(p))}</b><button class="btn" type="button" data-q="quitar">${esc(t("quitar"))}</button></header><div class="pgrid">
+      <label class="campo"><span>${esc(t("tipo"))}</span><select data-k="tipo">${TIPOS.map(k=>`<option value="${k}"${k===p.tipo?" selected":""}>${esc(t("T_"+k))}</option>`).join("")}</select></label>
+      <label class="campo"><span>${esc(t("fuente"))}</span><select data-k="fuente">${fuentes}${listaDemos().map(id=>`<option value="demo:${esc(id)}"${p.fuente==="demo:"+id?" selected":""}>${esc(id)}</option>`).join("")||'<option value="demo:muestra">muestra</option>'}</select></label>
+      <label class="campo"><span>${esc(t("vista"))}</span><select data-k="vista">${vs.map(v=>`<option${v===p.vista?" selected":""}>${v}</option>`).join("")}</select></label>
+      <label class="campo"><span>${esc(t("refresco"))}</span><input type="number" min="0" step="5" data-k="refresco" value="${+p.refresco||0}"></label>
+      <label class="campo"><span>${esc(t("rotar_cada"))}</span><input type="number" min="0" step="5" data-k="rotar_cada" value="${+p.rotar_cada||0}"></label>
+      <label class="campo"><span>${esc(t("rotar"))}</span><input type="text" data-k="rotar" value="${esc(p.rotar||"")}" placeholder="web · slides"></label></div>
+      <label class="chk"><input type="checkbox" data-k="ancho"${p.ancho?" checked":""}> ${esc(t("ancho"))}</label>
+      <label class="chk"><input type="checkbox" data-k="pausa"${p.pausa?" checked":""}> ${esc(t("pausar_panel"))}</label></div>`;}).join("");
+  $$(".pfila",L).forEach(f=>{const p=D.paneles.find(x=>x._id===f.dataset.pid);if(!p)return;
+    $("[data-q=quitar]",f).onclick=()=>{D.paneles=D.paneles.filter(x=>x!==p);ARCH.delete(p._id);pintar();pintarAjustes();};
+    $$("[data-k]",f).forEach(c=>c.addEventListener("change",()=>{const k=c.dataset.k;p[k]=c.type==="checkbox"?c.checked:c.type==="number"?Math.max(0,+c.value||0):c.value;
+      if(k==="tipo")p.vista=vistasDe(p)[0];if(k==="fuente"&&p.fuente.startsWith("demo:"))ARCH.delete(p._id);pintar();pintarAjustes(p._id);}));});
+}
+$$("[data-agregar]").forEach(b=>b.onclick=()=>b.dataset.agregar==="archivo"?abrirDisco():agregar(NUEVO[b.dataset.agregar]()));
+
+/* ---------- deck.lnd ---------- */
+const lim=s=>String(s??"").replace(/\n/g," ").trim();
+function aLnd(){
+  const c=D.config,L=[`# Deck · ${lim(D.nombre)}`,`Exportado de Sitedeck el ${new Date().toISOString().slice(0,10)}. Cada @panel es un panel, en orden de lectura.`,"","// perfil: lnd-1.1 · claves: es · ámbito: sitedeck · vistas sugeridas: web, fuente","","---","",
+    "@sitedeck deck",`titulo: ${lim(D.nombre)}`,`tema: ${D.tema}`,`rejilla: ${D.preset}`,`idioma: ${D.idioma}`,"@@",""];
+  D.paneles.forEach((p,i)=>{L.push(`@panel p-${i+1}`,`tipo: ${p.tipo}`,`fuente: ${p.fuente.startsWith("archivo:")?"archivo:"+lim(p.nombreArchivo):lim(p.fuente)}`,`vista: ${p.vista}`);
+    if(+p.refresco)L.push(`refresco: ${+p.refresco}`);if(lim(p.rotar))L.push(`rotar: ${lim(p.rotar)}`);if(+p.rotar_cada)L.push(`rotar_cada: ${+p.rotar_cada}`);if(p.pausa)L.push("pausa: si");L.push(`ancho: ${p.ancho?2:1}`,"@@","");});
+  L.push("@config servidor",`puerto: ${+c.puerto}`,`interfaz: ${lim(c.interfaz)}`,`mcp: ${lim(c.mcp)}`,...["leer","buscar","proponer"].filter(k=>c["mcp_"+k]).map(k=>`mcp_herramienta: ${k}`),
+    `ucan: ${c.ucan.trim()?"secret://ucan/proponer":"ninguno"}`,`webdav: ${lim(c.webdav)}`,...String(c.volumenes).split("\n").map(lim).filter(Boolean).map(v=>`volumen: ${v}`),`git: ${lim(c.git)}`,
+    ...String(c.env).split("\n").map(lim).filter(l=>/^[A-Za-z_]\w*=/.test(l)).map(l=>{const[k,...r]=l.split("=");const v=r.join("=");return `env: ${k}=${/^secret:\/\//.test(v)||/^(LANDDY_PERFIL|LANG|TZ)$/.test(k)?v:"secret://pendiente"}`;}),
+    `render_embed: ${c.embed?"si":"no"}`,"@@","");
+  return L.join("\n");
+}
+/* Importar: el conjunto interno nunca se toma de un archivo; se conserva el del navegador */
+function deLnd(src){
+  const doc=parse(src),sd=doc.bloques.find(b=>b.tipo==="sitedeck"),cf=doc.bloques.find(b=>b.tipo==="config"),ps=doc.bloques.filter(b=>b.tipo==="panel");
+  if(!sd&&!ps.length)throw new Error("@sitedeck / @panel");
+  const N=DEF();N.paneles=[];N.idioma=D.idioma;N.config.conjunto=D.config.conjunto;
+  if(sd){N.nombre=p1(sd,"titulo")||N.nombre;if(TEMAS[p1(sd,"tema")])N.tema=p1(sd,"tema");if(PRESETS[p1(sd,"rejilla")])N.preset=p1(sd,"rejilla");if(TXT[p1(sd,"idioma")])N.idioma=p1(sd,"idioma");}
+  ps.forEach(b=>{const f=p1(b,"fuente")||"demo:muestra",ar=f.startsWith("archivo:");
+    N.paneles.push({tipo:TIPOS.includes(p1(b,"tipo"))?p1(b,"tipo"):"render",fuente:ar?"archivo:"+f.slice(8):(f.startsWith("demo:")?f:"demo:muestra"),nombreArchivo:ar?f.slice(8):"",vista:p1(b,"vista")||"web",
+      refresco:+p1(b,"refresco")||0,rotar:p1(b,"rotar"),rotar_cada:+p1(b,"rotar_cada")||0,ancho:p1(b,"ancho")==="2",pausa:p1(b,"pausa")==="si"});});
+  if(cf){const c=N.config;c.puerto=+p1(cf,"puerto")||c.puerto;c.interfaz=p1(cf,"interfaz")||c.interfaz;c.mcp=p1(cf,"mcp")||c.mcp;
+    const h=cf.props.mcp_herramienta||[];c.mcp_leer=h.includes("leer");c.mcp_buscar=h.includes("buscar");c.mcp_proponer=h.includes("proponer");c.ucan="";
+    c.webdav=p1(cf,"webdav");c.volumenes=(cf.props.volumen||[]).join("\n");c.git=p1(cf,"git");c.env=(cf.props.env||[]).join("\n");c.embed=p1(cf,"render_embed")==="si";
+    N._pedia_interno=p1(cf,"conjunto")==="interno";}
+  return N;
+}
+$("#exportar").onclick=()=>{const b=new Blob([aLnd()],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="deck.lnd";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("t_export"));};
+$("#importar").onclick=()=>$("#file-deck").click();
+$("#file-deck").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;
+  try{const N=deLnd(await f.text());const pidio=N._pedia_interno;delete N._pedia_interno;D=N;ARCH.clear();pintar();llenar();pintarAjustes();toast(pidio?t("t_interno_ign"):t("t_import",D.nombre));}catch(err){toast(t("t_import_err")+err.message);}};
+$("#restablecer").onclick=()=>{const c=D.config.conjunto,i=D.idioma;D=DEF();D.config.conjunto=c;D.idioma=i;ARCH.clear();pintar();llenar();pintarAjustes();toast(t("t_rest"));};
+$("#vaciar").onclick=()=>{D.paneles=[];ARCH.clear();pintar();pintarAjustes();};
+
+/* ---------- paleta Ctrl K ---------- */
+const PAL=$("#paleta");let palItems=[],palSel=0;
+function acciones(){
+  const A=[{t:t("a_ajustes"),k:"Ctrl+,",f:()=>abrirAjustes("deck",$("#btn-ajustes"))},{t:t("a_pausa"),k:"P",f:()=>pausar(!PAUSA,true)},{t:t("abrir_lnd"),k:"",f:abrirDisco},
+    ...["render","feed","galeria"].map(x=>({t:t("a_add")+": "+t("T_"+x),k:"",f:()=>agregar(NUEVO[x]())})),
+    ...Object.keys(TEMAS).map(x=>({t:t("a_tema")+": "+t("TE_"+x),k:"",f:()=>{D.tema=x;pintar();}})),
+    ...Object.keys(PRESETS).map(x=>({t:t("a_rejilla")+": "+t("P_"+x),k:"",f:()=>{D.preset=x;pintar();}})),
+    ...Object.keys(TXT).map(x=>({t:t("a_idioma")+": "+{es:"Español",en:"English",zh:"中文"}[x],k:x,f:()=>{D.idioma=x;pintar();}})),
+    ...listaDemos().map(id=>({t:t("a_doc")+": "+tituloDemo(id),k:id,f:()=>agregar({tipo:"render",fuente:"demo:"+id,vista:"web"})}))];
+  return A;
+}
+function abrirPaleta(desde){abridor=desde||document.activeElement;PAL.inert=false;PAL.classList.add("on");const q=$("#pal-q");q.value="";filtrar();q.focus();}
+function cerrarPaleta(silencio){if(!PAL.classList.contains("on"))return;PAL.classList.remove("on");PAL.inert=true;if(!silencio){const a=abridor&&document.contains(abridor)?abridor:$("#btn-paleta");a.focus();abridor=null;}}
+function filtrar(){const q=$("#pal-q").value.toLowerCase().normalize("NFD").replace(/\p{M}/gu,"");
+  palItems=acciones().filter(a=>(a.t+" "+a.k).toLowerCase().normalize("NFD").replace(/\p{M}/gu,"").includes(q)).slice(0,40);palSel=0;pintarPal();}
+function pintarPal(){$("#pal-lista").innerHTML=palItems.map((a,i)=>`<li role="option" id="po-${i}" aria-selected="${i===palSel}" data-n="${i}">${esc(a.t)}<span>${esc(a.k)}</span></li>`).join("");
+  $("#pal-q").setAttribute("aria-activedescendant","po-"+palSel);$$("#pal-lista li").forEach(li=>li.onclick=()=>ejecutar(+li.dataset.n));const s=$("#po-"+palSel);s&&s.scrollIntoView({block:"nearest"});}
+function ejecutar(i){const a=palItems[i];if(!a)return;cerrarPaleta(true);a.f();}
+$("#pal-q").addEventListener("input",filtrar);
+$("#pal-q").addEventListener("keydown",e=>{if(e.key==="ArrowDown"){palSel=Math.min(palItems.length-1,palSel+1);pintarPal();e.preventDefault();}else if(e.key==="ArrowUp"){palSel=Math.max(0,palSel-1);pintarPal();e.preventDefault();}else if(e.key==="Enter"){ejecutar(palSel);e.preventDefault();}});
+PAL.addEventListener("click",e=>{if(e.target===PAL)cerrarPaleta();});
+$("#btn-paleta").onclick=e=>abrirPaleta(e.currentTarget);
+
+/* ---------- teclado ---------- */
+document.addEventListener("keydown",e=>{
+  const enCampo=/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
+  if((e.ctrlKey||e.metaKey)&&e.key===","){e.preventDefault();AJ.classList.contains("on")?cerrarAjustes():abrirAjustes("deck",document.activeElement);return;}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();PAL.classList.contains("on")?cerrarPaleta():abrirPaleta(document.activeElement);return;}
+  if(e.key==="Escape"){if(PAL.classList.contains("on"))cerrarPaleta();else if(AJ.classList.contains("on"))cerrarAjustes();else cerrarMenus();return;}
+  if(enCampo||e.ctrlKey||e.metaKey||e.altKey||AJ.classList.contains("on")||PAL.classList.contains("on"))return;
+  if(e.key==="p"||e.key==="P"){pausar(!PAUSA,true);e.preventDefault();}
+  else if(/^[1-9]$/.test(e.key)&&+e.key<=D.paneles.length){irA(+e.key-1);$(".cuerpo",$("#panel-"+(+e.key-1))).focus({preventScroll:true});}
+});
+
+/* ---------- apariencia: temas, acento y «Avanzado» (propiedades CSS; se guarda en localStorage aparte del deck) ---------- */
+const LS_AP=LS+".apariencia",AP0={auto:false,acento:"",tono:0,letra:"",escala:100,interlineado:1.5,densidad:"comoda",esquinas:"",movimiento:true};
+const ACENTOS={claro:{verde:"#0B6E4F",azul:"#1F5FAD",violeta:"#6B3FA0",granate:"#A3264F",ambar:"#8A5200",turquesa:"#0A5F7E"},oscuro:{verde:"#5FBF94",azul:"#7FB3E8",violeta:"#C4A3FF",granate:"#FF8FAB",ambar:"#E8B04A",turquesa:"#5CC8D8"}};
+const LETRAS={"":null,publicsans:'"Public Sans","Segoe UI",system-ui,sans-serif',fraunces:'"Fraunces",Georgia,serif',plexmono:'"IBM Plex Mono",ui-monospace,monospace',sistema:'system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif',serif:'Georgia,"Iowan Old Style","Times New Roman",serif'};
+const ESQ={"":null,rectas:"0px",suaves:"6px",redondas:"12px"};
+const Q0=new URLSearchParams(location.search),Q_EMBED=Q0.get("embed")==="1";
+let QT=TEMAS[Q0.get("tema")]?Q0.get("tema"):null;                 // ?tema= y ?acento= (también con ?embed=1) no se guardan
+const QA=/^[0-9a-fA-F]{6}$/.test(Q0.get("acento")||"")?"#"+Q0.get("acento"):"";
+let AP=leerAP();
+function leerAP(){try{return limpiarAP(JSON.parse(localStorage.getItem(LS_AP)||"null"));}catch(e){return Object.assign({},AP0);}}
+function limpiarAP(j){const a=Object.assign({},AP0);if(!j||typeof j!=="object")return a;
+  a.auto=!!j.auto;a.acento=/^#[0-9a-fA-F]{6}$/.test(j.acento||"")?String(j.acento).toUpperCase():"";a.tono=Math.max(-10,Math.min(10,Math.round(+j.tono||0)));
+  a.letra=j.letra in LETRAS?j.letra:"";a.escala=Math.max(85,Math.min(140,Math.round(+j.escala||100)));a.interlineado=Math.max(1.2,Math.min(2,+(+j.interlineado||1.5).toFixed(2)));
+  a.densidad=j.densidad==="compacta"?"compacta":"comoda";a.esquinas=j.esquinas in ESQ?j.esquinas:"";a.movimiento=j.movimiento!==false;return a;}
+function guardarAP(){try{localStorage.setItem(LS_AP,JSON.stringify(AP));}catch(e){}}
+const mqOsc=matchMedia("(prefers-color-scheme: dark)");
+function temaEf(){let k=QT||D.tema;if(!TEMAS[k])k="familia";const p=PALS[k];if(AP.auto&&p&&p.par&&!!p.osc!==mqOsc.matches)k=p.par;return k;}
+const hexRGB=h=>{h=String(h).trim();const m=/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(h);if(m){let x=m[1];if(x.length===3)x=[...x].map(c=>c+c).join("");return[0,2,4].map(i=>parseInt(x.slice(i,i+2),16));}
+  const r=/rgba?\(([^)]+)\)/.exec(h);return r?r[1].split(/[ ,\/]+/).filter(Boolean).slice(0,3).map(Number):null;};
+const aHex=c=>"#"+c.map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,"0")).join("").toUpperCase();
+const lum=c=>{const[r,g,b]=c.map(v=>{v/=255;return v<=.03928?v/12.92:((v+.055)/1.055)**2.4;});return .2126*r+.7152*g+.0722*b;};
+const contraste=(a,b)=>{const x=hexRGB(a),y=hexRGB(b);if(!x||!y)return 21;const p=lum(x),q=lum(y);return(Math.max(p,q)+.05)/(Math.min(p,q)+.05);};
+const mezcla=(a,b,f)=>{const x=hexRGB(a),y=hexRGB(b);return x&&y?aHex(x.map((v,i)=>v+(y[i]-v)*f)):a;};
+const VARS=["--paper","--paper2","--card","--ink","--muted","--linea","--regla","--accent","--on-accent","--copper","--copper-tx","--text","--radio","--lh","--escala"];
+function aplicarTema(){
+  const B=document.body,k=temaEf(),P=PALS[k];B.dataset.tema=k;VARS.forEach(v=>B.style.removeProperty(v));B.style.removeProperty("color-scheme");
+  if(P){const M={paper:"--paper",paper2:"--paper2",card:"--card",ink:"--ink",muted:"--muted",linea:"--linea",regla:"--regla",accent:"--accent",on:"--on-accent",copper:"--copper",ctx:"--copper-tx"};
+    for(const x in M)B.style.setProperty(M[x],P[x]);B.style.colorScheme=P.osc?"dark":"light";}
+  const cs=getComputedStyle(B),v=n=>cs.getPropertyValue(n).trim();
+  if(AP.tono){const osc=lum(hexRGB(v("--paper"))||[255,255,255])<.2,tint=AP.tono>0?(osc?"#3A2A14":"#F2D7A6"):(osc?"#142A3A":"#B9D3F0"),f=Math.abs(AP.tono)*.03;
+    ["--paper","--paper2","--card"].forEach(n=>{const c=v(n);if(hexRGB(c))B.style.setProperty(n,mezcla(c,tint,f));});}
+  const ac=QA||AP.acento;
+  if(ac){B.style.setProperty("--accent",ac);B.style.setProperty("--on-accent",contraste(ac,"#FFFFFF")>=contraste(ac,"#111111")?"#FFFFFF":"#111111");}
+  if(LETRAS[AP.letra])B.style.setProperty("--text",LETRAS[AP.letra]);
+  if(ESQ[AP.esquinas])B.style.setProperty("--radio",ESQ[AP.esquinas]);
+  if(AP.interlineado!==1.5)B.style.setProperty("--lh",String(AP.interlineado));
+  if(AP.escala!==100)B.style.setProperty("--escala",String(AP.escala/100));
+  B.classList.toggle("denso",AP.densidad==="compacta");B.classList.toggle("quieto",!AP.movimiento||REDUCIR);
+  avisoContraste();
+}
+/* contraste efectivo: texto 4.5:1 (tinta, tenue, cobre) y acento 3:1 contra el papel; el botón principal, 4.5:1 */
+function medirContraste(){const cs=getComputedStyle(document.body),v=n=>cs.getPropertyValue(n).trim(),pa=v("--paper"),ca=v("--card");
+  return{tinta:Math.min(contraste(v("--ink"),pa),contraste(v("--ink"),ca)),tenue:Math.min(contraste(v("--muted"),pa),contraste(v("--muted"),ca),contraste(v("--muted"),v("--paper2"))),
+    cobre:Math.min(contraste(v("--copper-tx"),pa),contraste(v("--copper-tx"),ca)),acento:Math.min(contraste(v("--accent"),pa),contraste(v("--accent"),ca)),boton:contraste(v("--on-accent"),v("--accent"))};}
+function avisoContraste(){const e=$("#ap-aviso");if(!e)return;const c=medirContraste(),min={tinta:4.5,tenue:4.5,cobre:4.5,acento:3,boton:4.5};
+  const mal=Object.keys(min).filter(k=>c[k]<min[k]);e.hidden=!mal.length;if(mal.length)e.textContent=t("ap_aviso",Math.min(...mal.map(k=>c[k])).toFixed(1));}
+const temaR2=()=>{const k=temaEf(),P=PALS[k];return P?(P.osc?"noche":"familia"):k;};
+const palR2=()=>{const k=temaEf(),P=PALS[k],ac=QA||AP.acento;if(!P&&!ac&&!AP.tono)return "";
+  const cs=getComputedStyle(document.body),h=n=>{const c=cs.getPropertyValue(n).trim();return /^#[0-9a-fA-F]{6}$/.test(c)?c.slice(1):null;};
+  const xs=[h("--paper"),h("--ink"),h("--accent"),h("--card"),h("--muted"),h("--linea")],n=xs.indexOf(null),ys=n<0?xs:xs.slice(0,n);return ys.length>=3?ys.join("."):"";};
+function recargarRender(){D.paneles.forEach(p=>p.tipo==="render"&&cargarPanel(p));}
+mqOsc.addEventListener("change",()=>{aplicarTema();recargarRender();});
+function cambiarAP(f){f();AP=limpiarAP(AP);guardarAP();aplicarTema();pintarApariencia();recargarRender();}
+function pintarApariencia(){
+  const W=$("#ap-ctrl");if(!W)return;const osc=lum(hexRGB(getComputedStyle(document.body).getPropertyValue("--paper").trim())||[255,255,255])<.2,A=ACENTOS[osc?"oscuro":"claro"],ac=AP.acento;
+  $("#ap-acentos").innerHTML=`<button type="button" class="acc-sw tema" data-ac="" aria-pressed="${!ac}">${esc(t("ap_acento_tema"))}</button>`+Object.entries(A).map(([n,c])=>`<button type="button" class="acc-sw" data-ac="${c}" aria-pressed="${ac===c}" aria-label="${esc(t("AC_"+n))} ${c}" title="${esc(t("AC_"+n))}"><i style="background:${c}"></i></button>`).join("");
+  $$("#ap-acentos button").forEach(b=>b.onclick=()=>cambiarAP(()=>{AP.acento=b.dataset.ac;}));
+  const pon=(n,v)=>{const el=$(`[name="${n}"]`,W);if(!el)return;if(el.type==="checkbox")el.checked=!!v;else el.value=v;};
+  pon("ap_color",ac||aHex(hexRGB(getComputedStyle(document.body).getPropertyValue("--accent").trim())||[11,110,79]));pon("ap_auto",AP.auto);pon("ap_tono",AP.tono);pon("ap_letra",AP.letra);pon("ap_escala",AP.escala);
+  pon("ap_interlineado",AP.interlineado);pon("ap_densidad",AP.densidad);pon("ap_esquinas",AP.esquinas);pon("ap_mov",AP.movimiento&&!REDUCIR);
+  const mv=$('[name="ap_mov"]',W);if(mv)mv.disabled=REDUCIR;
+  $("#ap-escala-v").textContent=AP.escala+" %";$("#ap-lh-v").textContent=AP.interlineado.toFixed(2);$("#ap-tono-v").textContent=AP.tono?(AP.tono>0?"+":"")+AP.tono:"0";
+  avisoContraste();}
+(function(){const W=$("#ap-ctrl");if(!W)return;
+  W.addEventListener("input",e=>{const n=e.target.name,x=e.target;if(!n||!n.startsWith("ap_"))return;e.stopPropagation();
+    cambiarAP(()=>{if(n==="ap_color")AP.acento=x.value.toUpperCase();else if(n==="ap_auto")AP.auto=x.checked;else if(n==="ap_tono")AP.tono=+x.value;else if(n==="ap_letra")AP.letra=x.value;
+      else if(n==="ap_escala")AP.escala=+x.value;else if(n==="ap_interlineado")AP.interlineado=+x.value;else if(n==="ap_densidad")AP.densidad=x.value;else if(n==="ap_esquinas")AP.esquinas=x.value;else if(n==="ap_mov")AP.movimiento=x.checked;});},true);
+  $("#ap-reset").onclick=()=>{AP=Object.assign({},AP0);QT=null;D.tema="familia";guardarAP();pintar();pintarAjustes();recargarRender();toast(t("t_ap_reset"));};
+  $("#ap-exportar").onclick=()=>{const j=JSON.stringify(Object.assign({sitedeck_tema:1,tema:D.tema},AP),null,1),b=new Blob([j],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="sitedeck-tema.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+  $("#ap-importar").onclick=()=>$("#file-tema").click();
+  $("#file-tema").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{const j=JSON.parse((await f.text()).slice(0,20000));if(!j||j.sitedeck_tema!==1)throw 0;
+    AP=limpiarAP(j);if(TEMAS[j.tema])D.tema=j.tema;QT=null;guardarAP();pintar();pintarAjustes();recargarRender();toast(t("t_ap_import"));}catch(err){toast(t("t_ap_err"));}};})();
+window.sitedeck={aLnd,deLnd,parse,apariencia:()=>AP,contraste:medirContraste,temaEf,temas:()=>Object.keys(TEMAS),estado:()=>D,pintar:()=>pintar(),pausado:()=>PAUSA,timers:()=>[...VIVOS.values()].reduce((n,v)=>n+v.timers.length,0)};
+
+/* ---------- arranque: sidecar local de demos (el público salvo que se elija «interno» a mano) ---------- */
+(function(){const s=document.createElement("script");s.src=R2+"render-v2-demos.js";
+  const fin=()=>{pintar();pausar(PAUSA);};s.onload=fin;
+  s.onerror=()=>{toast(t("t_sin_sidecar"));D.paneles.forEach(p=>{if(p.tipo==="render")p.tipo="lnd";});fin();};document.head.appendChild(s);})();
+</script>
+</body>
+</html>

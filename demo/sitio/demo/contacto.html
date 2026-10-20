@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-cJclBpE+ZKuR2381JR0dxD0C039iXlKQaL2OpmC1Khw='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Contacto · conocimiento.wiki</title>
+<style>
+@font-face{font-family:"Fraunces";src:url(../fonts/fraunces.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Public Sans";src:url(../fonts/publicsans.woff2) format("woff2");font-display:swap}
+:root{--paper:#F7FBFA;--paper2:#E6F3F1;--card:#FFFFFF;--ink:#1F2E33;--muted:#4A5F65;--linea:#C5E2DE;--accent:#1A6B64;--on:#FFFFFF;--amarillo:#FFDB4B}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "Public Sans",system-ui,sans-serif}
+main{max-width:620px;margin:0 auto;padding:32px 20px 48px}
+a{color:var(--accent)}
+.volver{display:inline-flex;align-items:center;min-height:44px}
+h1{font:500 34px/1.15 "Fraunces",Georgia,serif;margin:12px 0 6px;letter-spacing:-.01em}
+h1::after{content:"";display:block;width:56px;height:4px;background:var(--amarillo);margin-top:12px;border-radius:2px}
+p.intro{color:var(--muted);margin:0 0 24px}
+form{background:var(--card);border:1px solid var(--linea);border-radius:10px;padding:22px}
+.campo{margin:0 0 16px}
+label{display:block;font-weight:600;margin:0 0 6px}
+.opc{font-weight:400;color:var(--muted)}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--muted);border-radius:6px;padding:10px 12px;min-height:44px}
+textarea{min-height:140px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button{font:600 16px "Public Sans",system-ui,sans-serif;background:var(--accent);color:var(--on);border:0;border-radius:6px;padding:0 20px;min-height:44px;cursor:pointer}
+.nota{font-size:14px;color:var(--muted);margin:14px 0 0}
+#resultado{margin-top:18px;padding:14px;border-left:4px solid var(--amarillo);background:var(--paper2)}
+</style>
+</head>
+<body>
+<main>
+<a class="volver" href="../index.html">← Volver al sitio</a>
+<h1>Contacto</h1>
+<p class="intro">Escríbenos para una demo, para los beneficios de escuelas y ONG o para reservar un paquete. Este formulario no envía nada a ningún servidor: arma un correo para <strong>info@conocimiento.wiki</strong> en tu programa de correo y tú decides si lo envías.</p>
+<form id="form">
+  <div class="campo"><label for="nombre">Nombre</label><input id="nombre" name="nombre" autocomplete="name" required></div>
+  <div class="campo"><label for="correo">Correo</label><input id="correo" name="correo" type="email" autocomplete="email" required></div>
+  <div class="campo"><label for="institucion">Institución o empresa <span class="opc">(opcional)</span></label><input id="institucion" name="institucion" autocomplete="organization"></div>
+  <div class="campo"><label for="motivo">Motivo</label><select id="motivo" name="motivo" required>
+    <option>Quiero una demo</option><option>Paquetes de lanzamiento</option><option>Escuelas y ONG</option><option>Otro</option></select></div>
+  <div class="campo"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" required></textarea></div>
+  <button type="submit">Preparar el correo</button>
+  <p class="nota">Si no se abre tu programa de correo, escribe a info@conocimiento.wiki.</p>
+</form>
+<div id="resultado" tabindex="-1" role="status" hidden>Listo. Si tu programa de correo no se abrió, usa este enlace: <a id="enlace" href="mailto:info@conocimiento.wiki">abrir el correo preparado</a>.</div>
+</main>
+<script>(function(){const f=document.getElementById("form"),out=document.getElementById("resultado"),a=document.getElementById("enlace");
+f.addEventListener("submit",e=>{e.preventDefault();
+  if(!f.checkValidity()){f.reportValidity();return;}
+  const v=n=>f.elements[n].value.trim();
+  const asunto="["+v("motivo")+"] "+v("nombre");
+  const cuerpo="Nombre: "+v("nombre")+"\nCorreo: "+v("correo")+"\nInstitución: "+(v("institucion")||"—")+"\nMotivo: "+v("motivo")+"\n\n"+v("mensaje")+"\n";
+  const url="mailto:info@conocimiento.wiki?subject="+encodeURIComponent(asunto)+"&body="+encodeURIComponent(cuerpo);
+  a.href=url;out.hidden=false;out.focus();window.location.href=url;});})();</script>
+</body>
+</html>

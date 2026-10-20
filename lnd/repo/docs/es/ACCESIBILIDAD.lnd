@@ -1,0 +1,59 @@
+# Accesibilidad · renderer y sitio
+Objetivo: WCAG 2.2 nivel AA para el renderer de referencia (`renderer/render.html`) y para el sitio estático. Esta página dice qué está hecho, cómo se probó y qué falta.
+
+// perfil: lnd-1.1 · ámbito: accesibilidad · vistas sugeridas: web
+// idioma: es · traducción: automática (IA) desde el inglés, sin revisión humana
+
+---
+
+@heading h-built
+texto: Lo que ya trae
+nivel: 1
+@@
+
+@features f-built
+item: **Regiones y salto al contenido.** Cabecera, región principal y pie en cada página; el enlace «Saltar al contenido» es lo primero que alcanzas con Tab.
+item: **Teclado.** Todas las vistas y la paleta de comandos funcionan con teclado. El foco siempre se ve.
+item: **Anuncios.** Los botones de modo exponen si están pulsados; los cambios de vista se anuncian en una región viva educada; la paleta y los paneles son diálogos.
+item: **Contraste.** El texto cumple 4,5:1 en los temas claro, oscuro y noche. Un solo juego de tokens de diseño mueve el renderer y el sitio, así que las comprobaciones valen en todas partes.
+item: **Imágenes.** Cada foto tiene descripción; las decorativas llevan `alt` vacío. `@image` exige `alt` y el validador lo marca (`LND-MED-001`).
+item: **Idiomas.** Cada página declara su idioma; la interfaz del renderer está en inglés, español y chino (`?lang=en|es|zh`, o el idioma del navegador).
+@@
+
+@heading h-panel
+texto: Panel de accesibilidad del renderer
+nivel: 1
+sub: Se abre con la tecla A o desde la paleta (Ctrl K). Los ajustes se guardan en este navegador (localStorage) y nunca salen de él.
+@@
+
+@table tb-panel
+titulo: Panel de accesibilidad del renderer
+
+| Ajuste | Efecto |
+|---|---|
+| Tamaño del texto | 100 %, 125 % o 150 % |
+| Alto contraste | Negro sobre blanco, o blanco sobre negro en el tema oscuro |
+| Reducir movimiento | Apaga todas las animaciones, sin importar el ajuste del sistema |
+| Letra legible | Sans-serif del sistema con más espacio entre letras y líneas; sin descargar fuentes |
+| Subrayar enlaces | Todos los enlaces subrayados |
+@@
+
+@heading h-site
+texto: El sitio sin JavaScript
+nivel: 1
+
+El sitio sigue `prefers-color-scheme`, `prefers-contrast` y `prefers-reduced-motion` solo con CSS. Las áreas táctiles miden al menos 24 × 24 px; la navegación principal y los botones, 44 px de alto.
+@@
+
+@heading h-test
+texto: Cómo se probó
+nivel: 1
+
+axe-core 4.11, corrido en local sin red, sobre las páginas principales del sitio y las vistas del renderer (Web, Carta, Tablero, Fuente), en claro y oscuro. Resultado de este build (2026-10-19): 196 nodos con fallos antes de los cambios (194 de contraste, 2 SVG sin texto alternativo) y 0 después, en 22 pasadas de página y tema. Las pruebas automáticas encuentran solo una parte de los problemas; falta una revisión con lector de pantalla (NVDA, VoiceOver).
+@@
+
+@nota n-gaps
+tipo: límites
+
+**Límites conocidos.** La vista Carta es un dibujo: tiene alternativa en texto (la lista de bloques y la vista Fuente), pero recorrer el mapa mismo pide puntero o flechas. Avisa de problemas en [info@conocimiento.wiki](mailto:info@conocimiento.wiki).
+@@

@@ -1,0 +1,72 @@
+# Lanzamiento
+Qué se abre y en qué orden. Las fechas son estimadas y se mueven si se mueve el trabajo.
+
+// perfil: lnd-1.1 · ámbito: sitio público · vistas sugeridas: web, tablero
+// fuente: plan de publicación · lanzamiento público decidido: 2026-11-19
+
+---
+
+@pagina p-lanzamiento
+slug: lanzamiento
+titulo: Lanzamiento · LANDDY
+descripcion: Lista de espera, repositorio abierto, pago único y planes mensuales, en ese orden.
+@@
+
+@hero hero-lanzamiento
+titulo: Primero el formato abierto. Después la wiki privada. Al final, los planes mensuales.
+subtitulo: Cada paso sale cuando el anterior funciona. El lanzamiento público del formato es el 19 de noviembre de 2026; lo que viene después lleva fecha Supuesto.
+cta_texto: Leer qué incluye el producto
+cta_url: producto.html
+@@
+
+@image im-rutas
+src: assets/img/mapa-rutas-1600.webp
+alt: Mapa antiguo dibujado a mano con caminos y ríos en rojo, azul y verde que se cruzan
+credito: Europeana (dominio público)
+titulo: Cada fase es una estación: se llega a la siguiente cuando la anterior funciona.
+formato: banda
+@@
+
+@fase fa-1
+titulo: Lista de espera
+cuando: Octubre de 2026
+estado: Hoy
+
+Este sitio, con las marcas Hoy y Pronto en cada función. El formulario de la lista se conecta antes de anunciarla.
+@@
+
+@fase fa-2
+titulo: Repositorio abierto del formato
+cuando: 2026-11-19 · lanzamiento público (decidido)
+estado: Pronto
+
+Especificación, visor, validador, ejemplos y guía para agentes, en español, inglés y chino (traducción automática). Sale con la primera entrega del CLI `cw`: `validate`, `lint --leaks` y `publish --public`. Código Apache-2.0, especificación CC BY 4.0.
+@@
+
+@fase fa-3
+titulo: Plantillas y sello «LANDDY compatible»
+cuando: Diciembre de 2026 (Supuesto)
+estado: Pronto
+
+Plantillas de wiki para agentes (decisiones, procesos, skills) y una página de fixtures para que otras herramientas prueben que leen bien el formato.
+@@
+
+@fase fa-4
+titulo: Pago único de lanzamiento
+cuando: Después del lanzamiento del formato (Supuesto)
+estado: Pronto
+
+Abre 48 horas antes para la lista de espera. 150 lugares en la primera ola.
+@@
+
+@fase fa-5
+titulo: Planes mensuales y sitio en inglés
+cuando: 2027 (Supuesto)
+estado: Pronto
+@@
+
+@nota n-lista
+tipo: lista de espera
+
+**Formulario pendiente.** El sitio no guarda datos todavía. Cuando se conecte el servicio de la lista, este bloque se reemplaza por el formulario y se dice qué se guarda y por cuánto tiempo.
+@@

@@ -1,0 +1,46 @@
+# Escuelas y ONG
+Beneficios especiales en el plan Equipo para escuelas, colegios, universidades y organizaciones sin fines de lucro.
+
+// perfil: lnd-1.1 · claves: es · ámbito: sitio público · vistas sugeridas: web
+
+---
+
+@hero hero-edu
+titulo: Beneficios especiales — escríbenos
+subtitulo: Si enseñas o sirves a tu comunidad, cuéntanos tu caso y te proponemos condiciones para el plan Equipo.
+fuente::
+.@tarea t-feria
+titulo: Feria de ciencias
+estado: pendiente
+responsable: 3.º B
+.@@
+::
+@@
+
+@features f-usos
+titulo: Ideas de uso
+item: **Escuelas**: planificaciones, reglamentos y actas en un solo lugar, con la fuente de cada norma.
+item: **Docentes**: guías de clase que se ven como página o como presentación desde el mismo archivo.
+item: **ONG**: proyectos, donantes, informes y decisiones con su porqué, fáciles de auditar.
+item: **Voluntariado**: un tablero de tareas que cualquiera abre sin instalar nada.
+@@
+
+@table tb-equipo
+titulo: Punto de partida: plan Equipo
+
+| Plan | Precio de lanzamiento | Incluye |
+|---|---|---|
+| Equipo | US$349, pago único | 3 wikis, 5 asientos |
+@@
+
+@nota n-cond
+tipo: condiciones
+
+Los beneficios para escuelas y ONG se acuerdan caso por caso. No publicamos un porcentaje fijo: **escríbenos** y te respondemos con una propuesta.
+@@
+
+@cta cta-edu
+texto: Cuéntanos qué institución eres y cuántas personas usarían la wiki.
+url: ?demo=contacto&vista=web
+boton: Escribir
+@@

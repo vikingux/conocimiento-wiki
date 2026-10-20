@@ -1,0 +1,47 @@
+# Contributing
+Thanks for helping. Most contributions are small: a fixture that breaks the parser, a clearer sentence in the spec, a translation fix, a renderer bug.
+
+// profile: lnd-1.1 · scope: contributing · suggested_views: web
+// locale: en · translation: borrador redactado con IA; las ediciones es y zh-CN son traducción automática
+
+---
+
+@heading h-how
+text: How to propose a change
+level: 1
+
+1. Open an issue first for anything that changes the grammar or adds a block type. Describe the document you could not write without the change.
+2. Fork, branch, and keep the pull request focused on one thing.
+3. Run the validator over the examples and over any file you touched: `python3 tools/lnd_check.py --estricto examples/*/*.lnd docs/lnd/*/*.lnd`.
+4. If you changed the renderer, open `renderer/render.html` with each example and check Web, Slides and Source views. The browser console must stay free of errors.
+5. Sign off every commit (see below).
+@@
+
+@heading h-docs
+text: Docs are written in `.lnd`
+level: 1
+
+The Markdown files in this repository are generated from `docs/lnd/`. Edit the `.lnd` source, not the `.md` output. Each document exists in English, Spanish and Simplified Chinese with the same block ids, in the same order. A change to one language should be mirrored in the others, or flagged in the pull request so a translator can pick it up.
+@@
+
+@heading h-sign
+text: Sign-off (DCO)
+level: 1
+
+This project uses the [Developer Certificate of Origin](https://developercertificate.org/). Add a `Signed-off-by` line to each commit with `git commit -s`. By signing off you state that you have the right to submit the work under the Apache License 2.0 (code) or CC BY 4.0 (specification text). There is no separate contributor license agreement for this repository. Why, in [docs/legal/LICENSING.md](docs/legal/LICENSING.md).
+@@
+
+@features f-good
+title: What makes a good contribution
+item: **Fixtures.** A minimal `.lnd` that shows a parser disagreement, with the expected result.
+item: **Spec clarity.** Rules stated once, with an example, and marked Normative, Implemented or Proposed.
+item: **Translations.** Native speakers reviewing the Chinese and Spanish files are especially welcome.
+item: **Security reports.** Do not open a public issue for a vulnerability. Use the private security advisory feature of the repository host.
+item: **Chinese reserved words.** The zh-CN keywords are provisional (machine-translated). Native speakers: open an issue titled «zh keyword: X → Y» with the reason. Accepted fixes never break existing files: the old word stays accepted (`aliases_legacy`) and `tools/lnd_keys.py --migrar` updates files.
+@@
+
+@note n-conduct
+type: conducta
+
+Be kind, assume good faith, and keep discussions about the work. Maintainers may close threads that turn personal.
+@@

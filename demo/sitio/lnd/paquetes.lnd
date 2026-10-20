@@ -1,0 +1,76 @@
+# Paquetes de lanzamiento
+Pago único, de por vida, con topes de uso claros. Precios públicos de lanzamiento.
+
+// perfil: lnd-1.1 · claves: es · ámbito: sitio público · vistas sugeridas: web, slides
+
+---
+
+@hero hero-paquetes
+titulo: Paga una vez. Tus archivos siguen siendo tuyos.
+subtitulo: Los `.lnd` viven en tu carpeta o tu repositorio. Si te vas, ya los tienes.
+fuente::
+.@paquete solo
+precio: US$89
+incluye: 1 wiki, 1 asiento
+.@@
+::
+@@
+
+@heading h-hoy
+texto: Gratis y abierto hoy
+nivel: 1
+@@
+
+@features f-hoy
+item: **Formato `.lnd`**: especificación abierta.
+item: **Visor**: un HTML que abre cualquier `.lnd` sin red, como el que estás usando.
+item: **Validador**: revisa que un archivo esté bien formado.
+@@
+
+@heading h-planes
+texto: Planes de pago único
+nivel: 1
+sub: Para la wiki privada con agentes. Primera ola de 150 lugares.
+@@
+
+@table tb-planes
+titulo: Precio de lanzamiento, de por vida
+vista: precios
+certeza: Verificado
+
+| Plan | Precio | Incluye | Lugares |
+|---|---|---|---|
+| Solo | US$89 | 1 wiki, 1 asiento | 80 |
+| Equipo | US$349 | 3 wikis, 5 asientos | 50 |
+| Agencia | US$899 | 10 wikis, 15 asientos; instalación propia desde el primer día | 20, por lista |
+@@
+
+@table tb-topes
+titulo: Topes de uso y términos
+
+| Concepto | Valor |
+|---|---|
+| Cambios de agente | 500 por asiento al día |
+| Lecturas MCP | 5.000 por asiento al día |
+| Índice | 2 GB por asiento |
+| No cubre | Tokens de modelo (siempre con tu propia key), asientos extra (US$5 por asiento al mes), uso sobre los topes, SSO, marca blanca, SLA |
+| «De por vida» | Vida del servicio. Reembolso en 30 días |
+@@
+
+@nota n-pronto
+tipo: estado
+
+La wiki privada con agentes está **en camino**: el formato, el visor y el validador funcionan hoy; la wiki privada abre primero para la lista de espera.
+@@
+
+@cta cta-escuelas
+texto: ¿Escuela u ONG? El plan Equipo tiene beneficios especiales.
+url: ?demo=escuelas-ong&vista=web
+boton: Ver beneficios
+@@
+
+@cta cta-paquetes
+texto: Reserva tu lugar o pregunta lo que necesites.
+url: ?demo=contacto&vista=web
+boton: Contacto
+@@

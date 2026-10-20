@@ -1,0 +1,29 @@
+# Contacto
+Escríbenos para una demo, para los beneficios de escuelas y ONG o para reservar un paquete.
+
+// perfil: lnd-1.1 · claves: es · ámbito: sitio público · vistas sugeridas: web
+
+---
+
+@heading h-contacto
+texto: Formulario de contacto
+nivel: 1
+sub: Sin servidor: el formulario arma un correo en tu programa de correo y tú decides si lo envías.
+@@
+
+@cta cta-form
+texto: Abre el formulario simple (nombre, correo, motivo y mensaje).
+url: ../demo/contacto.html
+boton: Abrir el formulario
+@@
+
+@features f-correo
+titulo: O escribe directo
+item: Correo: info@conocimiento.wiki
+@@
+
+@nota n-privacidad
+tipo: privacidad
+
+Este sitio no guarda lo que escribes ni usa cookies de seguimiento. El mensaje sale de tu propio programa de correo.
+@@

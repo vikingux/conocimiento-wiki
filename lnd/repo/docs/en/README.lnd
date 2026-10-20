@@ -1,0 +1,100 @@
+# LANDDY `.lnd`
+A plain-text format for knowledge that both people and AI agents can read, write, cite and review. One file renders as a web page, slides, a kanban board, a runbook or a transit-style map, and every block keeps a stable id an agent can point to.
+
+// profile: lnd-1.1 · scope: README · suggested_views: web
+// locale: en · translation: borrador redactado con IA; las ediciones es y zh-CN son traducción automática
+
+---
+
+@heading h-what
+text: What it looks like
+level: 1
+@@
+
+@code c-hello
+code_lang: lnd
+
+# Office hours
+Support is open on weekdays. **Verified.**
+
+.// profile: lnd-1.1 · scope: example · suggested_views: web
+
+.---
+
+.@claim a-hours
+text: Support answers from 09:00 to 17:00 local time, Monday to Friday.
+certainty: Verified
+source: f-policy
+.@@
+
+.@source f-policy
+title: Support policy, section 2
+uri: https://example.org/policy
+.@@
+@@
+
+A block opens with `@type id`, takes `key: value` properties, then a Markdown body, and closes with `@@`. That is most of the grammar. The full rules are in [the specification](spec/SPEC.md).
+
+@heading h-why
+text: Why another format
+level: 1
+@@
+
+@features f-why
+item: **Stable ids.** Every block has an id such as `a-hours`. An agent can cite it, link it, or propose a change to that block alone.
+item: **Typed blocks.** `@afirmacion` is a claim with a source, `@tarea` is a task with a status, `@accion` is a runbook step with verification and rollback. Tools know what each block is without guessing from prose.
+item: **Certainty is part of the text.** Claims are marked Verified, Assumption or To verify, and the renderer shows the difference.
+item: **Plain text in Git.** Diffs are readable, pull requests are the review step, and nothing is locked in a database.
+item: **Safe by default.** The reference renderer escapes everything, never evaluates content, and works offline with a strict Content Security Policy.
+@@
+
+@heading h-start
+text: Quick start
+level: 1
+
+1. Open `renderer/render.html` in a browser. It works from disk, with no network. Drop any `.lnd` file on it, or pick one of the bundled examples.
+2. Validate a file: `python3 tools/lnd_check.py examples/en/hello.lnd` (Python 3.9 or newer, no dependencies). Add `--estricto` so warnings also fail, or `--json` for CI and agents.
+3. If you are an AI agent, or you are building one, read [AGENTS.md](AGENTS.md) first.
+@@
+
+@table tb-map
+title: What is in this repository
+
+| Path | Contents |
+|---|---|
+| `spec/` | The format specification (profile `lnd-1`) |
+| `renderer/render.html` | Reference renderer: one self-contained HTML file |
+| `tools/lnd_check.py` | Validator with stable diagnostic codes |
+| `examples/` | Small valid documents in English, Spanish and Chinese |
+| `docs/lnd/` | The sources of these docs, written in `.lnd` |
+| `docs/legal/` | Licensing notes and contribution terms |
+| `docs/guias/` | Guides, starting with auditable decisions (`@decision`) |
+| `docs/historias/` | Field notes, including one written by an AI agent |
+| `AGENTS.md`, `llms.txt` | Guidance for AI agents |
+| `BRAND_POLICY.md` | How to use the LANDDY name; `.lnd` is free to implement |
+| `docs/ACCESIBILIDAD.md` | Accessibility of the renderer and the site |
+@@
+
+@table tb-status
+title: Status
+
+| Part | Status |
+|---|---|
+| Specification, profile `lnd-1` (version 1.1) | Available now |
+| Reference renderer | Available now |
+| Validator `lnd_check.py` | Available now |
+| SDK, MCP client, CLI | Planned. Not in this repository yet |
+@@
+
+@heading h-license
+text: License
+level: 1
+
+Code (renderer, parser, validator, and future SDK, MCP client and CLI) is licensed under the [Apache License 2.0](LICENSE), which includes a patent grant. The specification text is licensed under [CC BY 4.0](spec/LICENSE). Details are in [docs/legal/LICENSING.md](docs/legal/LICENSING.md).
+@@
+
+@note n-lang
+type: idioma
+
+This README is also available in [Español](README.es.md) and [简体中文](README.zh-CN.md). All editions (English, Spanish, Chinese) are **machine translation** by AI, not yet reviewed by a person. The renderer interface (`?lang=en|es|zh`) and the validator messages (`--lang en|es|zh`) come in the three languages. Contact: [info@conocimiento.wiki](mailto:info@conocimiento.wiki) · [conocimiento.wiki](https://conocimiento.wiki).
+@@

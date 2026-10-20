@@ -1,0 +1,47 @@
+# Contribuir
+Gracias por ayudar. La mayoría de los aportes son chicos: un fixture que rompe el parser, una frase más clara en la spec, una corrección de traducción, un bug del renderer.
+
+// perfil: lnd-1.1 · ámbito: contributing · vistas sugeridas: web
+// idioma: es · traducción: automática (IA) desde el inglés, sin revisión humana
+
+---
+
+@heading h-how
+texto: Cómo proponer un cambio
+nivel: 1
+
+1. Abre primero un issue para todo lo que cambie la gramática o agregue un tipo de bloque. Describe el documento que no pudiste escribir sin ese cambio.
+2. Haz fork, una rama, y mantén el pull request en una sola cosa.
+3. Corre el validador sobre los ejemplos y sobre cada archivo que tocaste: `python3 tools/lnd_check.py --estricto examples/*/*.lnd docs/lnd/*/*.lnd`.
+4. Si cambiaste el renderer, abre `renderer/render.html` con cada ejemplo y revisa las vistas Web, Slides y Fuente. La consola del navegador debe quedar sin errores.
+5. Firma cada commit (ver abajo).
+@@
+
+@heading h-docs
+texto: La documentación se escribe en `.lnd`
+nivel: 1
+
+Los archivos Markdown de este repositorio se generan desde `docs/lnd/`. Edita la fuente `.lnd`, no la salida `.md`. Cada documento existe en inglés, español y chino simplificado con los mismos ids de bloque, en el mismo orden. Un cambio en un idioma se replica en los otros, o se marca en el pull request para que lo tome una persona que traduzca.
+@@
+
+@heading h-sign
+texto: Firma (DCO)
+nivel: 1
+
+Este proyecto usa el [Developer Certificate of Origin](https://developercertificate.org/). Agrega una línea `Signed-off-by` a cada commit con `git commit -s`. Al firmar declaras que tienes derecho a entregar el trabajo bajo la Licencia Apache 2.0 (código) o CC BY 4.0 (texto de la especificación). Este repositorio no pide un acuerdo de licencia de contribuidor aparte. Por qué, en [docs/legal/LICENSING.es.md](docs/legal/LICENSING.es.md).
+@@
+
+@features f-good
+titulo: Qué hace bueno un aporte
+item: **Fixtures.** Un `.lnd` mínimo que muestra un desacuerdo del parser, con el resultado esperado.
+item: **Claridad en la spec.** Reglas dichas una vez, con un ejemplo, y marcadas Normativo, Implementado o Propuesto.
+item: **Traducciones.** Se agradece mucho la revisión de personas nativas en chino y en español.
+item: **Reportes de seguridad.** No abras un issue público por una vulnerabilidad. Usa el aviso de seguridad privado del sitio que aloja el repositorio.
+item: **Palabras reservadas en chino.** Las claves zh-CN son provisionales (traducción automática). Hablantes nativos: abran un issue titulado «zh keyword: X → Y» con el motivo. Una corrección aceptada nunca rompe archivos: la palabra vieja se sigue aceptando (`aliases_legacy`) y `tools/lnd_keys.py --migrar` actualiza los archivos.
+@@
+
+@nota n-conduct
+tipo: conducta
+
+Sé amable, supón buena fe y habla del trabajo. Quien mantiene el proyecto puede cerrar hilos que se vuelvan personales.
+@@

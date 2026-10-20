@@ -1,0 +1,31 @@
+# Photo credits
+The photos on this site come from Unsplash and are used under the [Unsplash License](https://unsplash.com/license). They are self-hosted (no links to outside servers), in webp, with EXIF metadata removed.
+
+// profile: lnd-1.1 · scope: sitio público · suggested_views: web
+// página: en/credits.html · locale: en · translation: automática (IA)
+
+---
+
+@pagina p-credits
+slug: credits
+title: Photo credits · LANDDY
+descripcion: Photo credits: autor y enlace original de cada foto.
+@@
+
+@table tb-creditos
+title: Photo credits
+
+| Photo | Author | Original | Files |
+|---|---|---|---|
+| Open notebook and pens | Kelly Sikkema | [unsplash.com](https://unsplash.com/photos/an-open-notebook-and-pens-on-a-desk-hBdaqrr5Z3k) | `assets/img/cuaderno-800.webp`, `-1600.webp` |
+| Topographic map | Etienne Girardet | [unsplash.com](https://unsplash.com/photos/a-map-of-the-area-of-a-mountain-PtpRmtsh6A0) | `assets/img/mapa-relieve-800.webp`, `-1600.webp` |
+| Team with sticky notes | Vitaly Gariev | [unsplash.com](https://unsplash.com/photos/diverse-team-collaborating-on-sticky-notes-Imk2h0pyOvo) | `assets/img/equipo-800.webp`, `-1600.webp` |
+| Modern library | Fer Troulik | [unsplash.com](https://unsplash.com/photos/modern-library-interior-with-floor-to-ceiling-bookshelves-TQ8ICns1tgE) | `assets/img/biblioteca-800.webp`, `-1600.webp` |
+| Hand-drawn road map | Europeana (Raphaël Verwilghen, dominio público) | [unsplash.com](https://unsplash.com/photos/map-showing-transportation-routes-and-urban-areas-h2ISQGCqARg) | `assets/img/mapa-rutas-800.webp`, `-1600.webp` |
+@@
+
+@note n-licencia
+type: license
+
+The Unsplash License allows free use, including commercial use, without asking permission; credit is a courtesy we give anyway. The road map is also in the public domain (Europeana).
+@@

@@ -1,0 +1,109 @@
+# Producto
+Qué hay hoy, qué llega pronto y cuánto cuesta.
+
+// perfil: lnd-1.1 · ámbito: sitio público · vistas sugeridas: web
+// fuentes: estrategia (tabla «Por qué elegirnos», precio y topes) · arquitectura v2.1
+
+---
+
+@pagina p-producto
+slug: producto
+titulo: Producto · LANDDY
+descripcion: El formato .lnd, el visor y el validador funcionan hoy. La wiki privada con MCP llega en la Etapa 0.
+@@
+
+@hero hero-producto
+titulo: Cada función dice si existe hoy o si llega pronto.
+subtitulo: Preferimos que sepas qué puedes usar esta semana a venderte una lista larga.
+@@
+
+@heading h-hoy
+texto: Hoy
+nivel: 1
+sub: Abierto, gratis y sin cuenta.
+@@
+
+@producto pr-formato
+nombre: Formato `.lnd`
+rol: Texto plano con bloques con tipo e id estable. Especificación abierta con CC BY 4.0.
+estado: Hoy
+@@
+
+@producto pr-visor
+nombre: Visor
+rol: Un solo archivo HTML que abre cualquier `.lnd` sin red, en nueve vistas. Licencia Apache-2.0.
+estado: Hoy
+@@
+
+@producto pr-validador
+nombre: Validador
+rol: `lnd_check.py`, sin dependencias. Falla el CI si un archivo está roto o trae un secreto escrito. Licencia Apache-2.0.
+estado: Hoy
+@@
+
+@heading h-pronto
+texto: Pronto
+nivel: 1
+sub: Etapa 0 de la wiki privada para agentes. El formato abierto sale el 2026-11-19; la wiki privada, después (fecha Supuesto).
+@@
+
+@table tb-pronto
+titulo: Lo que trae la Etapa 0
+
+| Promesa | Cómo se cumple | Estado |
+|---|---|---|
+| Tus datos son tuyos | Los `.lnd` viven en tu repositorio; si te vas, ya los tienes | Pronto |
+| Cada respuesta trae su fuente | El servidor MCP devuelve la afirmación, el archivo y el commit | Pronto |
+| El agente no escribe en `main` | Sus cambios llegan como pull request que tú aceptas | Pronto |
+| Editas sin salir del navegador | El editor guarda cada cambio como commit | Pronto |
+@@
+
+@image im-equipo
+src: assets/img/equipo-1600.webp
+alt: Personas frente a una pared de vidrio con notas adhesivas de colores, ordenando ideas
+credito: Vitaly Gariev
+titulo: Foto ilustrativa: el plan Equipo es para varias personas sobre la misma wiki.
+@@
+
+@heading h-precio
+texto: Precio de lanzamiento
+nivel: 1
+sub: Pago único para la primera ola de 150 lugares. Precios decididos y públicos (2026-10-19).
+@@
+
+@table tb-precio
+titulo: Pago único
+vista: precios
+certeza: Verificado
+
+| Plan | Precio | Incluye | Lugares |
+|---|---|---|---|
+| Solo | US$89 | 1 wiki, 1 asiento | 80 |
+| Equipo | US$349 | 3 wikis, 5 asientos | 50 |
+| Agencia | US$899 | 10 wikis, 15 asientos; instalación propia desde el primer día | 20, por lista |
+@@
+
+@table tb-topes
+titulo: Topes y términos
+
+| Concepto | Valor |
+|---|---|
+| Cambios de agente | 500 por asiento al día |
+| Lecturas MCP | 5.000 por asiento al día |
+| Índice | 2 GB por asiento |
+| No cubre | Tokens de modelo (siempre con tu propia key), asientos extra (US$5 por asiento al mes), uso sobre los topes, SSO, marca blanca, SLA |
+| «De por vida» | Vida del servicio. Reembolso en 30 días |
+| Después del lanzamiento | Planes mensuales: Pro US$12, Equipo US$9 por usuario, Negocio US$149 |
+@@
+
+@nota n-quien
+tipo: para quién
+
+Para desarrolladores y equipos chicos que ya trabajan con agentes de código o de soporte y quieren una wiki privada para ellos, con fuentes, en su propio Git. Todavía no es para empresas que piden SSO, SLA y contrato.
+@@
+
+@cta cta-producto
+texto: El pago único abre primero para la lista de espera.
+url: lanzamiento.html
+boton: Ver fechas de lanzamiento
+@@

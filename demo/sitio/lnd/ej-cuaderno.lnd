@@ -1,0 +1,123 @@
+# Cuaderno de investigación: dos preguntas, un cuaderno
+Un cuaderno agéntico escrito en .lnd. Cada tarea de investigación es un bloque, cada hallazgo conserva su fuente, cada lección es memoria reutilizable y cada decisión dice qué tan segura es o se abstiene. Un caso es técnico (la búsqueda de un centro de ayuda) y otro no (una panadería de barrio que elige proveedor de harina). Datos de ejemplo; nada de esto se midió.
+
+// perfil: lnd-1.1 · claves: es · ámbito: example · vistas sugeridas: tablero, web, fuente
+
+---
+
+@fuente f-bakery-quotes
+titulo: Tres cotizaciones de harina que recibió la panadería, semana 1
+url: https://example.org/bakery/quotes
+fecha: 2026-10-12
+@@
+
+@fuente f-bakery-tasting
+titulo: Cata a ciegas del pan hecho con cada harina, seis clientes habituales
+url: https://example.org/bakery/tasting
+fecha: 2026-10-15
+@@
+
+@fuente f-search-trial
+titulo: Prueba de dos formas de búsqueda con 40 preguntas reales del centro de ayuda
+url: https://example.org/help/search-trial
+fecha: 2026-10-16
+@@
+
+@tarea t-quotes
+titulo: Pedir a tres molinos precio y condiciones de entrega
+estado: hecho
+prioridad: alta
+responsable: equipo
+@@
+
+@tarea t-tasting
+titulo: Hornear el mismo pan con cada harina y hacer una cata a ciegas
+estado: hecho
+prioridad: alta
+depende: t-quotes
+responsable: equipo
+@@
+
+@tarea t-search-trial
+titulo: Comparar búsqueda por palabras y búsqueda por significado con preguntas reales
+estado: hecho
+prioridad: media
+responsable: equipo
+@@
+
+@tarea t-traffic
+titulo: Juntar una semana de tráfico real antes de elegir dónde corre el centro de ayuda
+estado: pendiente
+prioridad: media
+depende: d-hosting
+responsable: equipo
+@@
+
+@afirmacion c-flour-b
+texto: Los clientes eligieron el pan con la harina B en cuatro de seis catas.
+fuente: f-bakery-tasting
+certeza: Supuesto
+@@
+
+@afirmacion c-flour-delivery
+texto: Solo los molinos A y B entregan dos veces por semana; el molino C, una.
+fuente: f-bakery-quotes
+certeza: Verificado
+@@
+
+@afirmacion c-search
+texto: La búsqueda por significado encontró el artículo correcto en 31 de 40 preguntas; la búsqueda por palabras, en 24.
+fuente: f-search-trial
+certeza: Supuesto
+@@
+
+@experiencia x-taste-blind
+leccion: Haz las catas a ciegas y con clientes habituales; el personal siempre prefiere la harina que ya conoce.
+origen: @(c-flour-b)
+aplica_a: panadería, proveedores, cata
+usos: 1
+estado: Supuesto
+@@
+
+@experiencia x-real-questions
+leccion: Prueba la búsqueda con preguntas que la gente hizo de verdad, no con preguntas escritas por el equipo.
+origen: @(c-search)
+aplica_a: búsqueda, centro de ayuda
+usos: 2
+estado: Verificado
+@@
+
+@decision d-flour
+pregunta: ¿Qué molino le vende la harina a la panadería desde el mes que viene?
+opciones: Molino A · Molino B · Molino C
+criterio: A los clientes les gustó el pan | 3 | 3 | 4 | 3
+criterio: Entrega dos veces por semana | 2 | 5 | 5 | 1
+criterio: Precio por saco | 1 | 4 | 3 | 5
+elegida: Molino B
+candidatas: Molino B · Molino A
+confianza: 0.7
+estado: decidida
+fecha: 2026-10-18
+fuente: @(c-flour-b) · @(c-flour-delivery)
+reabrir_si: dos entregas tarde en un mes o que los clientes empiecen a dejar pan en el plato
+@@
+
+@decision d-search
+pregunta: ¿Qué búsqueda usa primero el centro de ayuda?
+opciones: Búsqueda por palabras · Búsqueda por significado
+candidatas: Búsqueda por significado · Búsqueda por palabras
+elegida: Búsqueda por significado
+confianza: 0.6
+estado: decidida
+fecha: 2026-10-19
+fuente: @(c-search)
+reabrir_si: menos de 70 de 100 preguntas reales encuentran el artículo correcto al cabo de un mes
+@@
+
+@decision d-hosting
+pregunta: ¿Dónde corre el centro de ayuda?
+opciones: Hosting estático · Servidor propio · Ambos
+candidatas: Hosting estático · Servidor propio
+estado: abstenida
+reabrir_si: tengamos una semana de cifras de tráfico real
+@@

@@ -1,0 +1,5 @@
+/* Fuentes autoalojadas (SIL OFL 1.1, ver OFL.txt). Sin peticiones a terceros. */
+@font-face{font-family:"Fraunces";src:url("fraunces.woff2") format("woff2");font-weight:400 600;font-style:normal;font-display:swap}
+@font-face{font-family:"Public Sans";src:url("publicsans.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("ibmplexmono-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("ibmplexmono-semibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}

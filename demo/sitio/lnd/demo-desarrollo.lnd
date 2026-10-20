@@ -1,0 +1,137 @@
+# Demo desarrollo · Mi primera app con IA
+Cómo documentar una app pequeña hecha con ayuda de la IA, sin jerga: qué quería, qué le pedí, qué salió y qué aprendí. **Ejemplo ficticio**: la app, la persona y las fechas son inventadas.
+
+// perfil: lnd-1.1 · claves: es · ámbito: demo · proyecto ficticio · vistas sugeridas: web, tablero, slides
+
+---
+
+@hero hero-dev
+titulo: «Recetario de la familia», hecho en un fin de semana
+subtitulo: Una web sencilla para guardar las recetas de la abuela y compartirlas con los primos. La escribió Lucía con ayuda de un asistente de IA (ejemplo ficticio).
+@@
+
+@nota n-vibe
+tipo: definición
+
+Hacer una app conversando con la IA se llama a veces *vibecoding*: tú dices qué quieres en palabras normales y la IA escribe el código. Funciona mejor si anotas cada intento. Este archivo `.lnd` es ese cuaderno: lo lees tú, lo lee tu equipo y lo puede leer tu agente.
+@@
+
+@heading h-pasos
+texto: Así lo hice
+nivel: 1
+sub: Cuatro preguntas que sirven para cualquier proyecto.
+@@
+
+@proceso pr-vibe
+titulo: Del deseo a la app
+inicio: p-quiero
+
+Cada vuelta tiene los mismos cuatro pasos. Cuando algo falla, vuelves al paso 2 con lo que aprendiste.
+@@
+
+@paso p-quiero
+titulo: Qué quiero
+orden: 1
+
+Una página donde la familia sube una receta con foto, ingredientes y pasos, y la busca por nombre. Nada de cuentas complicadas: un enlace para la familia basta.
+@@
+
+@paso p-pedi
+titulo: Qué le pedí a la IA
+orden: 2
+
+«Hazme una web de recetas: lista, buscador y un formulario para agregar una receta con foto. Que se vea bien en el teléfono y que las recetas se guarden en un archivo.»
+@@
+
+@paso p-salio
+titulo: Qué salió
+orden: 3
+
+En diez minutos había una web que funcionaba. El buscador no encontraba «pure» si la receta decía «puré», y las fotos del teléfono pesaban demasiado.
+@@
+
+@paso p-aprendi
+titulo: Qué aprendí
+orden: 4
+
+Pedir una cosa a la vez y dar un ejemplo concreto. La segunda vez pedí: «Que el buscador ignore las tildes» y «Reduce las fotos a 1200 px antes de guardarlas». Las dos quedaron bien.
+@@
+
+@heading h-tablero
+texto: Lo que falta
+nivel: 1
+sub: Un tablero simple: por hacer, haciendo y listo.
+@@
+
+@tablero tb-recetas
+titulo: Recetario · tareas (ficticio)
+columna: pendiente · Por hacer
+columna: en_curso · Haciendo · wip 2
+columna: hecho · Listo
+hecho: hecho
+@@
+
+@tarea t-buscador
+titulo: Buscador que ignora tildes
+estado: hecho
+responsable: Lucía
+@@
+
+@tarea t-fotos
+titulo: Fotos más livianas
+estado: hecho
+responsable: Lucía
+@@
+
+@tarea t-imprimir
+titulo: Botón para imprimir una receta
+estado: en_curso
+responsable: Lucía
+@@
+
+@tarea t-porciones
+titulo: Calcular ingredientes para más porciones
+estado: pendiente
+responsable: Lucía
+@@
+
+@tarea t-copia
+titulo: Copia de seguridad semanal de las recetas
+estado: pendiente
+responsable: Primo Tomás
+@@
+
+@heading h-decision
+texto: Una decisión, explicada fácil
+nivel: 1
+@@
+
+@decision d-guardar
+pregunta: ¿Dónde guardo las recetas: en un archivo o en una base de datos en la nube?
+opciones: Un archivo en la misma web · Una base de datos en la nube
+elegida: Un archivo en la misma web
+estado: decidida
+fecha: 2026-09-14
+reabrir_si: la familia sube más de 500 recetas o varias personas editan a la vez
+
+Elegí un archivo porque somos pocos, es gratis y lo puedo copiar a una memoria USB. Si el recetario crece mucho, lo paso a una base de datos.
+@@
+
+@heading h-leccion
+texto: Lo que me llevo
+nivel: 1
+@@
+
+@experiencia x-pedir
+leccion: Pide a la IA un cambio a la vez, con un ejemplo real, y prueba antes de pedir el siguiente.
+origen: @(p-aprendi)
+aplica_a: trabajar con IA, cualquier app
+usos: 3
+estado: Verificado
+@@
+
+@cta cta-tablero
+texto: Mira las tareas como tablero.
+url: ?demo=demo-desarrollo&vista=tablero
+boton: Ver el tablero
+@@

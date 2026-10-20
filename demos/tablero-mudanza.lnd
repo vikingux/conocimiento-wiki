@@ -1,0 +1,37 @@
+# Tablero de una mudanza
+Un tablero kanban de ejemplo. Ábrelo en la vista Tablero y después en Fuente para ver la línea `estado` de cada tarea.
+
+// perfil: lnd-1.1 · claves: es · ámbito: demo · vistas sugeridas: tablero, web
+
+---
+
+@tablero tb-mudanza
+titulo: Mudanza de sábado
+columna: pendiente · Pendiente
+columna: en_curso · En curso · wip 2
+columna: hecho · Hecho
+hecho: hecho
+@@
+
+@tarea t-cajas
+titulo: Conseguir cajas
+estado: hecho
+prioridad: P0
+responsable: Ana
+@@
+
+@tarea t-camion
+titulo: Reservar el camión
+estado: en_curso
+prioridad: P0
+responsable: Luis
+depende: t-cajas
+@@
+
+@tarea t-llaves
+titulo: Entregar las llaves viejas
+estado: pendiente
+prioridad: P1
+responsable: Ana
+depende: t-camion
+@@

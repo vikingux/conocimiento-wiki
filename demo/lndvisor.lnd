@@ -1,0 +1,16 @@
+# Configuración de lndvisor
+Cambia un valor, guarda y vuelve a abrir el programa.
+
+// perfil: lnd-1.1 · claves: es
+
+---
+
+@config lndvisor
+puerto: 8080
+escuchar: 127.0.0.1
+abrir_navegador: si
+carpeta: sitio
+registro: si
+mcp: si
+// mcp_token: escribe aquí una clave si abres el sitio a la red
+@@

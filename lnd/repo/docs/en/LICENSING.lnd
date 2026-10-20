@@ -1,0 +1,53 @@
+# Licensing
+What license covers each part of this repository, what that lets you do, and why contributions need only a sign-off.
+
+// profile: lnd-1.1 · scope: legal · suggested_views: web
+// locale: en · translation: borrador redactado con IA; las ediciones es y zh-CN son traducción automática
+// not legal advice; the LICENSE file is the binding text
+
+---
+
+@table tb-parts
+title: Who gets which license
+
+| Part | License | File |
+|---|---|---|
+| Renderer, parser, validator | Apache License 2.0 | `LICENSE` |
+| Future SDK, MCP client and CLI | Apache License 2.0 | `LICENSE` |
+| Specification text (`spec/`) | Creative Commons Attribution 4.0 (CC BY 4.0) | `spec/LICENSE` |
+| Examples (`examples/`) | Apache License 2.0 | `LICENSE` |
+@@
+
+@heading h-why
+text: Why Apache-2.0
+level: 1
+
+Apache-2.0 lets anyone use, modify and ship the tools, including in closed products, as long as they keep the license and the `NOTICE` file. It also includes an explicit **patent grant**: every contributor licenses the patents their contribution needs, and that license ends for anyone who sues over those patents. For a format that should be implemented by many independent tools, that protection matters more than a shorter license text.
+@@
+
+@heading h-spec
+text: Why CC BY 4.0 for the specification
+level: 1
+
+Anyone may copy, translate and adapt the specification, including to write a competing implementation, as long as they credit the source. A format only spreads if implementers can quote its rules freely.
+@@
+
+@heading h-contrib
+text: Contributions: DCO, no CLA
+level: 1
+
+Contributions come in under the same license they go out under (Apache-2.0 for code, CC BY 4.0 for spec text). The `Signed-off-by` line of the [Developer Certificate of Origin](https://developercertificate.org/) records that you have the right to submit the work. No contributor license agreement is needed for this repository.
+@@
+
+@note n-server
+type: alcance
+
+Some hosted services built on the format are licensed differently and live in separate repositories, which may ask for a contributor license agreement. That does not change anything here: everything in this repository stays Apache-2.0 or CC BY 4.0.
+@@
+
+@heading h-mark
+text: Name and marks
+level: 1
+
+Apache-2.0 does not grant rights to names or logos (section 6). You may say a tool «reads LANDDY `.lnd` files». A trademark policy and a «LANDDY compatible» mark tied to the test fixtures are planned.
+@@

@@ -1,0 +1,28 @@
+# Hola, conocimiento.wiki
+Un documento chico: un título, un dato con su fuente y una nota. Ábrelo en el visor y cambia entre Web, Slides y Fuente.
+
+// perfil: lnd-1.1 · claves: es · ámbito: demo · vistas sugeridas: web, slides, fuente
+
+---
+
+@heading h-dato
+texto: Un dato con fuente
+nivel: 1
+@@
+
+@afirmacion a-hervor
+texto: Al nivel del mar, el agua pura hierve a 100 °C.
+certeza: Verificado
+fuente: f-quimica
+@@
+
+@fuente f-quimica
+titulo: Cualquier texto introductorio de química
+tipo: referencia
+@@
+
+@nota n-prueba
+tipo: consejo
+
+Cambia `certeza` a `Supuesto` y vuelve a mirar el bloque: el visor muestra la diferencia.
+@@

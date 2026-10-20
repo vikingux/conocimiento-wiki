@@ -1,0 +1,95 @@
+# Empieza en 10 pasos
+De la carpeta vacía a un documento que tu equipo y tus agentes de IA pueden usar. Sirve igual para un caso legal, un proyecto o la feria de la escuela.
+
+// perfil: lnd-1.1 · claves: es · ámbito: guía · vistas sugeridas: web, slides
+
+---
+
+@heading h-10
+texto: Cómo usar .lnd en 10 pasos para todo
+nivel: 1
+sub: Sirve igual para un caso legal, un proyecto o la lista de compras de una escuela.
+@@
+
+@proceso pr-10
+titulo: .lnd en 10 pasos
+inicio: p-01
+
+Diez pasos, de la carpeta vacía a un documento que tu equipo y tus agentes pueden usar. La skill y la spec son la guía del agente en cada paso.
+@@
+
+@paso p-01
+titulo: Crea una carpeta para el tema
+orden: 1
+
+Un tema, una carpeta: «Caso 12», «Proyecto web», «Feria escolar».
+@@
+
+@paso p-02
+titulo: Crea un archivo de texto con extensión .lnd
+orden: 2
+
+Cualquier editor sirve. La primera línea es el título con `#`.
+@@
+
+@paso p-03
+titulo: Escribe una o dos frases de qué es
+orden: 3
+
+Debajo del título. Si algo no está comprobado, dilo: **Supuesto**.
+@@
+
+@paso p-04
+titulo: Agrega bloques para las cosas que importan
+orden: 4
+
+Una tarea, un pago, una fuente o un paso es un bloque que empieza con `@tipo id` y termina con `@@`.
+@@
+
+@paso p-05
+titulo: Dale a cada bloque un id corto y estable
+orden: 5
+
+Por ejemplo `t-llamar` o `pago-01`. Así otros documentos pueden enlazarlo.
+@@
+
+@paso p-06
+titulo: Pon la fuente junto al dato
+orden: 6
+
+Un bloque `@fuente` con título, enlace y fecha. El dato apunta a su fuente.
+@@
+
+@paso p-07
+titulo: Anota las decisiones con su porqué
+orden: 7
+
+Un bloque `@decision` guarda la pregunta, las opciones, la elegida y cuándo conviene reabrirla.
+@@
+
+@paso p-08
+titulo: Ábrelo en el visor y conecta tu agente
+orden: 8
+
+Botón «Abrir .lnd» para verlo como página, tablero o presentación. Con «Conectar un agente» enlazas tu agente por MCP: lista, busca y lee los documentos.
+@@
+
+@paso p-09
+titulo: Valida antes de compartir
+orden: 9
+
+El validador avisa si falta cerrar un bloque o si algo está mal formado.
+@@
+
+@paso p-10
+titulo: Comparte la carpeta
+orden: 10
+
+Por USB, correo o un repositorio. Quien la reciba la abre sin instalar nada.
+@@
+
+@cta cta-pasos
+texto: ¿Ya tienes tu primer .lnd? Conecta tu agente.
+url: ?demo=documentacion&vista=web
+boton: Guía para agentes
+@@

@@ -1,0 +1,59 @@
+# Acerca
+Qué es LANDDY, en qué creemos y quién lo hace.
+
+// perfil: lnd-1.1 · ámbito: sitio público · vistas sugeridas: web
+
+---
+
+@pagina p-acerca
+slug: acerca
+titulo: Acerca · LANDDY
+descripcion: Un formato abierto para conocimiento que personas y agentes pueden leer, citar y revisar.
+@@
+
+@hero hero-acerca
+titulo: El conocimiento se copia, y cada copia envejece.
+subtitulo: LANDDY guarda una sola versión, con fuente y fecha, y la muestra en la forma que cada lector necesita.
+@@
+
+@heading h-creemos
+texto: En qué creemos
+nivel: 1
+@@
+
+@features f-creemos
+item: **El texto plano dura.** Un `.lnd` se abre con cualquier editor dentro de veinte años.
+item: **Lo que no tiene fuente es un supuesto.** Y se marca como tal, en la página y en la respuesta del agente.
+item: **Las personas aprueban.** Un agente propone; alguien revisa el pull request.
+item: **El formato es de todos.** Código Apache-2.0 con concesión de patentes, especificación CC BY 4.0. El servidor alojado se financia con licencia comercial.
+@@
+
+@image im-biblioteca
+src: assets/img/biblioteca-1600.webp
+alt: Biblioteca moderna con estanterías de madera iluminadas y un ventanal que da a un jardín
+credito: Fer Troulik
+titulo: Una wiki que se puede citar es una biblioteca con el número de página puesto.
+@@
+
+@heading h-familia
+texto: Las piezas
+nivel: 1
+@@
+
+@table tb-familia
+titulo: Cuatro productos sobre un mismo archivo
+
+| Pieza | Qué hace | Estado |
+|---|---|---|
+| LANDDY `.lnd` | El formato y su visor | Hoy |
+| conocimiento.wiki | La wiki privada en tu Git, con API y MCP que citan | Pronto |
+| Paquidermus | El motor que responde cada pregunta con la cita | Pronto |
+| Landdy Sites | Crear un `.lnd` conversando, con tu propia key | Pronto |
+@@
+
+@heading h-equipo
+texto: Equipo
+nivel: 1
+
+Un fundador independiente, que trabaja con un asistente de IA para escribir código, documentos y borradores. Sin inversión externa hasta hoy. Contacto: [info@conocimiento.wiki](mailto:info@conocimiento.wiki).
+@@

@@ -1,0 +1,48 @@
+# 贡献指南
+感谢你的帮助。大多数贡献都很小：一个让解析器出错的测试用例、规范里一句更清楚的话、一处翻译修正、一个渲染器 bug。
+**本文为机器辅助翻译，待中文母语者审校。如有出入，以英文版为准。**
+
+// 规范版本: lnd-1.1 · 范围: contributing · 建议视图: 网页
+// 语种: zh-Hans · 翻译: automática (IA) desde el inglés, sin revisión humana
+
+---
+
+@章节 h-how
+文本: 如何提出修改
+层级: 1
+
+1. 凡是改变语法或新增块类型的修改，请先开 issue。说明没有这个修改你写不出的那份文档。
+2. Fork、建分支，每个 pull request 只做一件事。
+3. 对示例和你改动过的每个文件运行校验器：`python3 tools/lnd_check.py --estricto examples/*/*.lnd docs/lnd/*/*.lnd`。
+4. 如果改了渲染器，请用每个示例打开 `renderer/render.html`，检查网页、幻灯片和源码视图。浏览器控制台必须没有错误。
+5. 每个提交都要签署（见下文）。
+@@
+
+@章节 h-docs
+文本: 文档用 `.lnd` 编写
+层级: 1
+
+本仓库的 Markdown 文件由 `docs/lnd/` 生成。请编辑 `.lnd` 源文件，而不是生成的 `.md`。每份文档都有英文、西班牙文和简体中文版本，块 id 相同、顺序相同。修改一种语言时，请同步其他语言，或在 pull request 中注明，以便译者跟进。
+@@
+
+@章节 h-sign
+文本: 签署（DCO）
+层级: 1
+
+本项目采用 [Developer Certificate of Origin](https://developercertificate.org/)。用 `git commit -s` 为每个提交加上 `Signed-off-by` 行。签署即表示你有权以 Apache License 2.0（代码）或 CC BY 4.0（规范文本）提交该作品。本仓库不需要额外的贡献者许可协议。原因见 [docs/legal/LICENSING.zh-CN.md](docs/legal/LICENSING.zh-CN.md)。
+@@
+
+@功能 f-good
+标题: 什么样的贡献最有用
+条目: **测试用例。** 一个能暴露解析分歧的最小 `.lnd`，并附上预期结果。
+条目: **规范的清晰度。** 每条规则只说一次，配一个例子，并标明规范性、已实现或提议中。
+条目: **翻译。** 特别欢迎中文和西班牙文母语者审校。
+条目: **安全报告。** 不要为漏洞开公开 issue。请使用代码托管平台的私密安全通告功能。
+条目: **中文保留字。** zh-CN 键名为暂定（机器翻译）。欢迎母语者提交标题为「zh keyword: X → Y」的 issue 并说明理由。被采纳的修正绝不会破坏现有文件：旧词仍被接受（`aliases_legacy`），`tools/lnd_keys.py --migrar` 会更新文件。
+@@
+
+@备注 n-conduct
+类型: conducta
+
+友善待人，假定善意，只讨论工作本身。维护者可以关闭变成人身攻击的讨论。
+@@
