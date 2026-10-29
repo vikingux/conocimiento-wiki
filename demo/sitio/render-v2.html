@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-reWRCu5tYyIYfhB3p8tjAsVNh83nutf3ht6Xoqbp4/w=' 'self'; style-src 'unsafe-inline'; font-src data:; img-src 'self' https: data: blob:; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com https://www.openstreetmap.org; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-vbhxKKqT+izE0j33PpwnfoGZ+0UAFoyuuXPi6g0KNdA=' 'self'; style-src 'unsafe-inline'; font-src data:; img-src 'self' https: data: blob:; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com https://www.openstreetmap.org; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>conocimiento.wiki · visor .lnd</title>
@@ -821,7 +821,7 @@ function parseLnd(src){src=lndNorm(src);
     if(t==="@@"){ if(!cur) doc.diags.push(`Línea ${i+1}: «@@» sin bloque abierto`); close(); return; }
     if(t==="---"){ close(); closeLoose(); sec++; seenSep=true; return; }
     const m=/^@([A-Za-z_][\w-]*)(?:\s+(\S+))?\s*$/.exec(line);
-    if(m){ close(); closeLoose(); cur={tipo:m[1].toLowerCase(), id:m[2]||null, props:{}, body:[], comments:[], linea:i+1, sec}; mode="props"; return; }
+    if(m){ close(); closeLoose(); cur={tipo:m[1].toLowerCase(), id:m[2]||null, props:Object.create(null), body:[], comments:[], linea:i+1, sec}; mode="props"; return; }
     if(cur){
       if(mode==="props"){
         if(t===""){ mode="body"; return; }
@@ -831,7 +831,7 @@ function parseLnd(src){src=lndNorm(src);
       }
       cur.body.push(unesc(line));
     } else if(!seenSep && !doc.items.length){ doc.intro.push(unesc(line)); }
-    else { if(!loose) loose={tipo:"md", id:null, props:{}, body:[], comments:[], linea:i+1, sec}; loose.body.push(unesc(line)); }
+    else { if(!loose) loose={tipo:"md", id:null, props:Object.create(null), body:[], comments:[], linea:i+1, sec}; loose.body.push(unesc(line)); }
   });
   if(mlKey) doc.diags.push(`Línea ${mlStart}: valor multilínea «${mlKey}::» sin cierre «::»`);
   close(); closeLoose();
@@ -1445,7 +1445,7 @@ function parseLnd(src){src=lndNorm(src);
     if(t==="@@"){if(!cur)doc.diags.push({n:"error",c:"LND-SYN-001",l:i+1,m:"«@@» sin bloque abierto"});close(i,true);return;}
     if(t==="---"){close(i-1);closeLoose(i);sec++;seenSep=true;return;}
     const m=/^@([A-Za-z_][\w-]*)(?:\s+(\S+))?\s*$/.exec(line);
-    if(m){close(i-1);closeLoose(i);cur={tipo:m[1].toLowerCase(),id:m[2]||null,props:{},pl:{},body:[],comments:[],start:i,end:i,sec};mode="props";return;}
+    if(m){close(i-1);closeLoose(i);cur={tipo:m[1].toLowerCase(),id:m[2]||null,props:Object.create(null),pl:Object.create(null),body:[],comments:[],start:i,end:i,sec};mode="props";return;}
     if(/^@[A-Za-z_][\w-]*\s+\S+\s+\S/.test(line))doc.diags.push({n:"aviso",c:"LND-SYN-003",l:i+1,m:"«"+line.slice(0,40)+"» parece bloque y no lo es"});
     if(cur){
       if(mode==="props"){
@@ -1456,7 +1456,7 @@ function parseLnd(src){src=lndNorm(src);
       }
       cur.body.push(unesc(line));
     }else if(!seenSep&&!doc.items.length){doc.intro.push(unesc(line));}
-    else{if(!loose)loose={tipo:"md",id:null,auto:true,props:{},pl:{},body:[],comments:[],start:i,end:i,sec};loose.body.push(unesc(line));}
+    else{if(!loose)loose={tipo:"md",id:null,auto:true,props:Object.create(null),pl:Object.create(null),body:[],comments:[],start:i,end:i,sec};loose.body.push(unesc(line));}
   });
   if(mlKey)doc.diags.push({n:"error",c:"LND-SYN-002",l:mlStart+1,m:"«"+mlKey+"::» sin cierre «::»"});
   close(lines.length-1);closeLoose(lines.length);

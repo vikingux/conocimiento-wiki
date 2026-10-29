@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-q/pbb75OjiD8NQ2t/ph0kvN9VcpCUxU/bmQoKoOetUs=' 'self'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-/J2uPPK2IacOqy4KXpGYTjkRQctuCODsJk1vgQA3t2g=' 'self'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -747,7 +747,7 @@ function parse(src){
       cur.enProps=false;cur.cuerpo.push(l);continue;
     }
     const m=/^@([a-z_][\w-]*)(?:\s+(\S+))?\s*$/.exec(l);
-    if(m){cur={tipo:m[1],id:m[2]||"",props:{},cuerpo:[],enProps:true};continue;}
+    if(m){cur={tipo:m[1],id:m[2]||"",props:Object.create(null),cuerpo:[],enProps:true};continue;}
     if(l.startsWith("# ")&&!doc.titulo){doc.titulo=l.slice(2);continue;}
     if(l.trim()&&!l.startsWith("// ")&&l.trim()!=="---")doc.intro.push(l);
   }
